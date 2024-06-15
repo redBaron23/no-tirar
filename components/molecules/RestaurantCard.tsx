@@ -3,6 +3,7 @@ import { pages } from "../../constants/pages";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import ItemsLeftBadge from "../atoms/ItemsLeftBadge";
 
 interface Props {
   restaurant: RestaurantType;
@@ -36,8 +37,8 @@ const RestaurantCard = ({
           height={25}
           className="h-full w-full object-cover object-center"
         />
-        <div className="absolute left-2 top-2 flex items-center gap-2 rounded-full bg-gray-900 bg-opacity-75 px-2 py-1 text-xs text-white">
-          <span>{itemsLeft} left</span>
+        <div className="absolute left-2 top-2 w-full">
+          <ItemsLeftBadge itemsLeft={itemsLeft} />
         </div>
         <div className="absolute bottom-2 left-0 flex items-center gap-2 bg-transparent p-2">
           <div className="flex items-center gap-2">
@@ -55,19 +56,21 @@ const RestaurantCard = ({
       <div className="p-4">
         <div className="flex items-center justify-between">
           <h4 className="text-base font-semibold">{bagName}</h4>
-          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-            <StarIcon className="fill-primary h-3 w-3" />
-            <span>{rating}</span>
-          </div>
         </div>
         <p className="text-sm text-gray-500 dark:text-gray-400">
           Pickup between {pickupTime}
         </p>
       </div>
       <div className="flex items-center justify-between gap-2 p-4">
-        <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-          <MapPinIcon className="h-4 w-4" />
-          <span>{distance} km</span>
+        <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <StarIcon className="fill-primary w-3" />
+            <span>{rating}</span>
+          </div>
+          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <MapPinIcon className="w-4" />
+            <span>{distance} km</span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-base font-semibold">${price}</span>

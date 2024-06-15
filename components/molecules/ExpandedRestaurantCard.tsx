@@ -4,6 +4,9 @@ import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 import Image from "next/image";
 import Link from "next/link";
 import Counter from "./Counter";
+import ItemsLeftBadge from "../atoms/ItemsLeftBadge";
+import PriceDisplay from "../atoms/PriceDisplay";
+import Divider from "../atoms/Divider";
 
 interface Props {
   restaurant: RestaurantType;
@@ -32,41 +35,45 @@ export default function Component({ restaurant }: Props) {
             <ArrowLeftIcon className="h-6 w-6 text-gray-500" />
           </Link>
         </div>
-        <div className="absolute bottom-2 left-2 flex flex-col">
-          <div className="w-1/2 rounded-full bg-yellow-300 py-1 text-center text-sm font-semibold">
-            {restaurant.itemsLeft} left
-          </div>
-          <div className="flex flex-row items-center rounded-lg bg-transparent p-2">
-            <Image
-              src={restaurant.logo}
-              alt="Restaurant Logo"
-              width={30}
-              height={30}
-              className="rounded-full"
-            />
-            <span className="ml-2 font-semibold text-white">
+        <div className="absolute bottom-4 left-2 flex flex-col">
+          <ItemsLeftBadge itemsLeft={restaurant.itemsLeft} />
+          <div className="flex flex-row items-center gap-4 rounded-lg bg-transparent p-2">
+            <div className="relative h-24 w-24">
+              <Image
+                src={restaurant.logo}
+                alt="Restaurant Logo"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
+
+            <h1 className="ml-2 text-4xl font-semibold text-white md:text-6xl">
               {restaurant.name}
-            </span>
+            </h1>
           </div>
         </div>
       </div>
-      <div className="flex flex-grow flex-col p-4">
-        <div className="mb-2 flex items-center justify-between">
-          <h2 className="text-lg font-semibold">{restaurant.name}</h2>
-          <div className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
-            {restaurant.bagName}
+      <div className="flex flex-grow flex-col justify-between p-4">
+        <div>
+          <div className="mb-2 flex items-center justify-between">
+            <div className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
+              {restaurant.bagName}
+            </div>
+            <PriceDisplay
+              originalPrice={restaurant.originalPrice}
+              price={restaurant.price}
+            />
+          </div>
+          <div className="align-center mb-4 flex gap-2 text-gray-500">
+            <ClockIcon className="inline-block h-4 w-4" />
+            Pick up: {restaurant.pickupTime}
+            <span className="w-16 self-center rounded-full bg-green-100 px-2 text-xs font-semibold text-green-800">
+              Today
+            </span>
           </div>
         </div>
-        <div className="mb-2 text-gray-500">
-          €{restaurant.price.toFixed(2)}{" "}
-          <span className="line-through">
-            €{restaurant.originalPrice.toFixed(2)}
-          </span>
-        </div>
-        <div className="mb-4 text-gray-500">
-          <ClockIcon className="mr-1 inline-block h-4 w-4" />
-          Pick up: {restaurant.pickupTime} (Today)
-        </div>
+        <Divider />
         <div className="mb-4 text-gray-500">
           <LocateIcon className="mr-1 inline-block h-4 w-4" />
           Distance: {restaurant.distance} km
@@ -74,6 +81,7 @@ export default function Component({ restaurant }: Props) {
             More information about the store
           </span>
         </div>
+        <Divider />
         <div className="mb-4 rounded-lg bg-green-100 p-4 text-green-800">
           <p className="mb-2 font-semibold">What you could get</p>
           <p>
@@ -87,8 +95,8 @@ export default function Component({ restaurant }: Props) {
             Ingredients & allergens
           </p>
         </div>
-        <div className="mt-auto flex flex-col items-center">
-          <Counter maxQuantity={10} />
+        <Counter maxQuantity={10} />
+        <div className="flex flex-col items-center">
           <div className="mt-4 w-full p-4">
             <button className="w-full rounded-lg bg-green-500 py-3 font-semibold text-white">
               Reserve
