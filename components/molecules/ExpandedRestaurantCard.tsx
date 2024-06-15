@@ -1,24 +1,11 @@
 import { pages } from "@/constants/pages";
+import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface Restaurant {
-  id: number;
-  imageUrl: string;
-  name: string;
-  logo: string;
-  bagName: string;
-  rating: number;
-  pickupTime: string;
-  distance: number;
-  price: number;
-  originalPrice: number;
-  itemsLeft: number;
-}
-
 interface Props {
-  restaurant: Restaurant;
+  restaurant: RestaurantType;
 }
 
 export default function Component({ restaurant }: Props) {

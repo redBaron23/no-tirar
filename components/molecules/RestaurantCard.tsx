@@ -1,35 +1,28 @@
+import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 import { pages } from "../../constants/pages";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface RestaurantCardProps {
-  id: string;
-  imageUrl: string;
-  restaurantName: string;
-  restaurantLogo: string;
-  bagName: string;
-  rating: number;
-  pickupTime: string;
-  distance: number;
-  price: number;
-  originalPrice: number;
-  itemsLeft: number;
+interface Props {
+  restaurant: RestaurantType;
 }
 
 const RestaurantCard = ({
-  id,
-  imageUrl,
-  restaurantName,
-  restaurantLogo,
-  bagName,
-  rating,
-  pickupTime,
-  distance,
-  price,
-  originalPrice,
-  itemsLeft,
-}: RestaurantCardProps) => {
+  restaurant: {
+    id,
+    imageUrl,
+    name,
+    logo,
+    bagName,
+    rating,
+    pickupTime,
+    distance,
+    price,
+    originalPrice,
+    itemsLeft,
+  },
+}: Props) => {
   return (
     <Link
       href={`${pages.restaurant}/${id}`}
@@ -49,13 +42,13 @@ const RestaurantCard = ({
         <div className="absolute bottom-2 left-0 flex items-center gap-2 bg-transparent p-2">
           <div className="flex items-center gap-2">
             <Image
-              src={restaurantLogo}
+              src={logo}
               alt="Restaurant Logo"
               width={25}
               height={25}
               className="w-8 h-8 rounded-full"
             />
-            <h3 className="text-base font-semibold">{restaurantName}</h3>
+            <h3 className="text-base font-semibold">{name}</h3>
           </div>
         </div>
       </div>
