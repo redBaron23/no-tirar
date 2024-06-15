@@ -1,5 +1,5 @@
-import RestaurantCardList from "@/app/components/organisms/RestaurantCardList";
-import generateRestaurants from "@/constants/mockData";
+import RestaurantCardList from "../components/organisms/RestaurantCardList";
+import generateRestaurants from "../constants/mockData";
 
 const restaurants = generateRestaurants(10);
 
