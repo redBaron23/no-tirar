@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run config && next dev",
+    "build": "npm run config && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "config": "npm config set legacy-peer-deps true"
   },
   "dependencies": {
     "@types/react": "npm:types-react@rc",
