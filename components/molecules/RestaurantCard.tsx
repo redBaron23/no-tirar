@@ -34,9 +34,9 @@ const RestaurantCard = ({
           alt="Restaurant Image"
           width={25}
           height={25}
-          className="object-cover object-center w-full h-full"
+          className="h-full w-full object-cover object-center"
         />
-        <div className="absolute top-2 left-2 flex items-center gap-2 rounded-full bg-gray-900 bg-opacity-75 px-2 py-1 text-xs text-white">
+        <div className="absolute left-2 top-2 flex items-center gap-2 rounded-full bg-gray-900 bg-opacity-75 px-2 py-1 text-xs text-white">
           <span>{itemsLeft} left</span>
         </div>
         <div className="absolute bottom-2 left-0 flex items-center gap-2 bg-transparent p-2">
@@ -46,7 +46,7 @@ const RestaurantCard = ({
               alt="Restaurant Logo"
               width={25}
               height={25}
-              className="w-8 h-8 rounded-full"
+              className="h-8 w-8 rounded-full"
             />
             <h3 className="text-base font-semibold">{name}</h3>
           </div>
@@ -56,7 +56,7 @@ const RestaurantCard = ({
         <div className="flex items-center justify-between">
           <h4 className="text-base font-semibold">{bagName}</h4>
           <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-            <StarIcon className="w-3 h-3 fill-primary" />
+            <StarIcon className="fill-primary h-3 w-3" />
             <span>{rating}</span>
           </div>
         </div>
@@ -66,7 +66,7 @@ const RestaurantCard = ({
       </div>
       <div className="flex items-center justify-between gap-2 p-4">
         <div className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
-          <MapPinIcon className="w-4 h-4" />
+          <MapPinIcon className="h-4 w-4" />
           <span>{distance} km</span>
         </div>
         <div className="flex items-center gap-2">

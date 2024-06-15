@@ -1,8 +1,9 @@
+import React from "react";
 import { pages } from "@/constants/pages";
 import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import Counter from "./Counter";
 
 interface Props {
   restaurant: RestaurantType;
@@ -10,7 +11,7 @@ interface Props {
 
 export default function Component({ restaurant }: Props) {
   return (
-    <div className="flex flex-col h-full bg-white rounded-lg overflow-hidden">
+    <div className="flex h-full flex-col overflow-hidden rounded-lg bg-white">
       <div className="relative flex-grow" style={{ height: "300px" }}>
         <Image
           src={restaurant.imageUrl}
@@ -18,24 +19,24 @@ export default function Component({ restaurant }: Props) {
           layout="fill"
           objectFit="cover"
         />
-        <div className="absolute top-2 right-2 flex space-x-2">
-          <div className="bg-white rounded-full p-1">
-            <HeartIcon className="w-6 h-6 text-red-500" />
+        <div className="absolute right-2 top-2 flex space-x-2">
+          <div className="rounded-full bg-white p-1">
+            <HeartIcon className="h-6 w-6 text-red-500" />
           </div>
-          <div className="bg-white rounded-full p-1">
-            <ShareIcon className="w-6 h-6 text-gray-500" />
+          <div className="rounded-full bg-white p-1">
+            <ShareIcon className="h-6 w-6 text-gray-500" />
           </div>
         </div>
-        <div className="absolute top-2 left-2 flex space-x-2">
-          <Link href={pages.index} className="bg-white rounded-full p-1">
-            <ArrowLeftIcon className="w-6 h-6 text-gray-500" />
+        <div className="absolute left-2 top-2 flex space-x-2">
+          <Link href={pages.index} className="rounded-full bg-white p-1">
+            <ArrowLeftIcon className="h-6 w-6 text-gray-500" />
           </Link>
         </div>
         <div className="absolute bottom-2 left-2 flex flex-col">
-          <div className="bg-yellow-300 w-1/2 rounded-full py-1 text-center text-sm font-semibold">
+          <div className="w-1/2 rounded-full bg-yellow-300 py-1 text-center text-sm font-semibold">
             {restaurant.itemsLeft} left
           </div>
-          <div className="flex flex-row items-center p-2 rounded-lg bg-transparent">
+          <div className="flex flex-row items-center rounded-lg bg-transparent p-2">
             <Image
               src={restaurant.logo}
               alt="Restaurant Logo"
@@ -49,58 +50,50 @@ export default function Component({ restaurant }: Props) {
           </div>
         </div>
       </div>
-      <div className="p-4 flex-grow flex flex-col">
-        <div className="flex items-center justify-between mb-2">
+      <div className="flex flex-grow flex-col p-4">
+        <div className="mb-2 flex items-center justify-between">
           <h2 className="text-lg font-semibold">{restaurant.name}</h2>
-          <div className="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
+          <div className="rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-800">
             {restaurant.bagName}
           </div>
         </div>
-        <div className="text-gray-500 mb-2">
+        <div className="mb-2 text-gray-500">
           €{restaurant.price.toFixed(2)}{" "}
           <span className="line-through">
             €{restaurant.originalPrice.toFixed(2)}
           </span>
         </div>
-        <div className="text-gray-500 mb-4">
-          <ClockIcon className="w-4 h-4 inline-block mr-1" />
+        <div className="mb-4 text-gray-500">
+          <ClockIcon className="mr-1 inline-block h-4 w-4" />
           Pick up: {restaurant.pickupTime} (Today)
         </div>
-        <div className="text-gray-500 mb-4">
-          <LocateIcon className="w-4 h-4 inline-block mr-1" />
+        <div className="mb-4 text-gray-500">
+          <LocateIcon className="mr-1 inline-block h-4 w-4" />
           Distance: {restaurant.distance} km
-          <span className="text-blue-500 cursor-pointer">
+          <span className="cursor-pointer text-blue-500">
             More information about the store
           </span>
         </div>
-        <div className="bg-green-100 text-green-800 p-4 rounded-lg mb-4">
-          <p className="font-semibold mb-2">What you could get</p>
+        <div className="mb-4 rounded-lg bg-green-100 p-4 text-green-800">
+          <p className="mb-2 font-semibold">What you could get</p>
           <p>
             Its a surprise! When you buy a Surprise Bag, it will be filled with
             the delicious food that the store has left at the end of the day.
           </p>
         </div>
         <div>
-          <p className="font-semibold mb-2">Meals</p>
-          <p className="text-blue-500 cursor-pointer">
+          <p className="mb-2 font-semibold">Meals</p>
+          <p className="cursor-pointer text-blue-500">
             Ingredients & allergens
           </p>
         </div>
-        <div className="flex items-center justify-between mt-4">
-          <div className="flex items-center">
-            <StarIcon className="w-5 h-5 text-green-500 mr-1" />
-            <span className="text-sm font-semibold">
-              {restaurant.rating} / 5.0
-            </span>
+        <div className="mt-auto flex flex-col items-center">
+          <Counter maxQuantity={10} />
+          <div className="mt-4 w-full p-4">
+            <button className="w-full rounded-lg bg-green-500 py-3 font-semibold text-white">
+              Reserve
+            </button>
           </div>
-          <span className="text-gray-500 text-sm cursor-pointer">
-            Top 3 highlights
-          </span>
-        </div>
-        <div className="mt-auto p-4">
-          <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold">
-            Reserve
-          </button>
         </div>
       </div>
     </div>
