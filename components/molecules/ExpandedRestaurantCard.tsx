@@ -89,7 +89,7 @@ export default function Component({ restaurant }: Props) {
         <div className="bg-green-100 text-green-800 p-4 rounded-lg mb-4">
           <p className="font-semibold mb-2">What you could get</p>
           <p>
-            It's a surprise! When you buy a Surprise Bag, it will be filled with
+            Its a surprise! When you buy a Surprise Bag, it will be filled with
             the delicious food that the store has left at the end of the day.
           </p>
         </div>
