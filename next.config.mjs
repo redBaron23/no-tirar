@@ -4,14 +4,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**.googleusercontent.com",
+        hostname: "*",
       },
-    ],
-    domains: [
-      "www.canva.com",
-      "i.pinimg.com",
-      "picsum.photos",
-      "loremflickr.com",
     ],
   },
   webpack(config) {
