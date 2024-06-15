@@ -1,6 +1,7 @@
+import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 import { faker } from "@faker-js/faker";
 
-function generateRestaurants(num: number) {
+function generateRestaurants(num: number): RestaurantType[] {
   const restaurantNames = [
     "Sushi Haven",
     "Burger Palace",
@@ -22,10 +23,10 @@ function generateRestaurants(num: number) {
     "Sweet Treats",
   ];
 
-  const restaurants = [];
+  const restaurants: RestaurantType[] = [];
 
   for (let i = 0; i < num; i++) {
-    const id = i + 1;
+    const id = faker.string.uuid();
     const name =
       restaurantNames[
         faker.number.int({ min: 0, max: restaurantNames.length - 1 })
@@ -33,22 +34,22 @@ function generateRestaurants(num: number) {
     const bagName =
       bagNames[faker.number.int({ min: 0, max: bagNames.length - 1 })];
     const rating = parseFloat(
-      faker.number.int({ min: 4, max: 5, precision: 0.1 }).toFixed(1)
+      faker.number.float({ min: 4, max: 5, precision: 0.1 }).toFixed(1)
     );
     const pickupTime = `${faker.number.int({
       min: 4,
       max: 7,
     })}:00 PM - ${faker.number.int({ min: 6, max: 9 })}:00 PM`;
     const distance = parseFloat(
-      faker.datatype.float({ min: 1, max: 3, precision: 0.1 }).toFixed(1)
+      faker.number.float({ min: 1, max: 3, precision: 0.1 }).toFixed(1)
     );
     const price = parseFloat(
-      faker.datatype.float({ min: 8, max: 15, precision: 0.01 }).toFixed(2)
+      faker.number.float({ min: 8, max: 15, precision: 0.01 }).toFixed(2)
     );
     const originalPrice = parseFloat(
-      (
-        price + faker.datatype.float({ min: 2, max: 4, precision: 0.01 })
-      ).toFixed(2)
+      (price + faker.number.float({ min: 2, max: 4, precision: 0.01 })).toFixed(
+        2
+      )
     );
     const itemsLeft = faker.number.int({ min: 1, max: 5 });
 
