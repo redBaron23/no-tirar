@@ -58,7 +58,7 @@ export default function Component({ restaurant }: Props) {
       </div>
       <div className="flex flex-grow flex-col justify-between p-4">
         <div className="flex items-center justify-between px-4">
-          <div className="flex flex-col gap-2">
+          <div className="mb-2 flex flex-col gap-2">
             <span className="w-28 rounded-full bg-green-100 px-2 py-1 text-center text-xs font-semibold text-green-800">
               {restaurant.bagName}
             </span>
@@ -66,10 +66,10 @@ export default function Component({ restaurant }: Props) {
             <div className="align-center flex gap-2 text-gray-500">
               <ClockIcon className="inline-block h-4 w-4" />
               Pick up: {restaurant.pickupTime}
-              <span className="w-16 self-center rounded-full bg-green-100 px-2 text-center text-xs font-semibold text-green-800">
-                Today
-              </span>
             </div>
+            <span className="w-16 rounded-full bg-green-100 text-center text-xs font-semibold text-green-800">
+              Today
+            </span>
           </div>
           <PriceDisplay
             originalPrice={restaurant.originalPrice}
