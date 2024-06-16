@@ -9,7 +9,7 @@ const SearchBar = () => {
         type="text"
         id="Search"
         placeholder="Search for..."
-        className="w-full rounded-md border-gray-200 py-2.5 ps-10 shadow-sm sm:text-sm"
+        className="w-full rounded-md border-gray-200 py-2.5 ps-10 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm"
       />
 
       <span className="absolute inset-y-0 start-0 grid w-10 place-content-center">
