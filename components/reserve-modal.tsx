@@ -50,7 +50,7 @@ export function ReserveModal({
           </div>
         </div>
         <div className="grid gap-6 p-6">
-          <div>
+          <div className="flex flex-col gap-2">
             <Label className="mb-2 font-semibold" htmlFor="payment">
               Payment Method
             </Label>
@@ -88,13 +88,11 @@ export function ReserveModal({
             </RadioGroup>
           </div>
           <div className="flex items-center justify-between">
-            <div>
-              <Label className="mb-2 font-semibold" htmlFor="quantity">
+            <div className="flex flex-col gap-2">
+              <Label className="font-semibold" htmlFor="quantity">
                 Quantity
               </Label>
-              <div className="flex items-center gap-2">
-                <Counter onChange={updatePrice} />
-              </div>
+              <Counter onChange={updatePrice} />
             </div>
             <div className="text-2xl font-bold">$ {price}</div>
           </div>

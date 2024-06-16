@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeSwitch from "@/components/atoms/ThemeSwitch";
+import SearchBar from "@/components/atoms/SearchBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +21,6 @@ export default function RootLayout({
       <body
         className={`${inter.className} bg-stone-100 text-black dark:bg-stone-900 dark:text-white`}
       >
-        <header className="p-4">
-          <ThemeSwitch />
-        </header>
         <main>{children}</main>
       </body>
     </html>

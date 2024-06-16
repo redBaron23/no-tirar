@@ -37,9 +37,9 @@ export default function Component({ restaurant }: Props) {
             <ArrowLeftIcon className="h-6 w-6 text-gray-500" />
           </Link>
         </div>
-        <div className="absolute bottom-4 left-2 flex flex-col">
+        <div className="absolute bottom-4 left-2 flex flex-col gap-2">
           <ItemsLeftBadge itemsLeft={restaurant.itemsLeft} />
-          <div className="flex flex-row items-center gap-4 rounded-lg bg-transparent p-2">
+          <div className="flex flex-row items-center rounded-lg bg-transparent p-2">
             <div className="relative h-24 w-24">
               <Image
                 src={restaurant.logo}

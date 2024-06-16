@@ -1,15 +1,18 @@
+import SearchBar from "@/components/atoms/SearchBar";
 import RestaurantCardList from "../components/templates/RestaurantCardList";
 import generateRestaurants from "../constants/mockData";
+import ThemeSwitch from "@/components/atoms/ThemeSwitch";
 
 const restaurants = generateRestaurants(10);
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between">
-      <div className="container mx-auto p-6">
-        <h1 className="mb-6 text-3xl font-bold">Restaurants</h1>
-        <RestaurantCardList restaurants={restaurants} />
-      </div>
+    <div>
+      <header className="flex items-center gap-2 p-4">
+        <SearchBar />
+        <ThemeSwitch />
+      </header>
+      <RestaurantCardList restaurants={restaurants} />
     </div>
   );
 }
