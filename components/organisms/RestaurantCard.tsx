@@ -49,7 +49,7 @@ const RestaurantCard = ({
               height={25}
               className="h-8 w-8 rounded-full"
             />
-            <h3 className="text-base font-semibold">{name}</h3>
+            <h3 className="font-semibold text-white">{name}</h3>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import RestaurantCard from "../molecules/RestaurantCard";
+import RestaurantCard from "../organisms/RestaurantCard";
 import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 
 interface RestaurantCardListProps {

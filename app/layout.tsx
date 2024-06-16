@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-white text-black dark:bg-gray-900 dark:text-white`}
+        className={`${inter.className} bg-stone-100 text-black dark:bg-stone-900 dark:text-white`}
       >
         <header className="p-4">
           <ThemeSwitch />

@@ -12,6 +12,8 @@ export const restaurantValidator = z.object({
   price: z.number(),
   originalPrice: z.number(),
   itemsLeft: z.number(),
+  stars: z.number(),
+  reviews: z.number(),
 });
 
 export const restaurantArrayValidator = z.array(restaurantValidator);

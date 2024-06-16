@@ -1,4 +1,4 @@
-import ExpandedRestaurantCard from "@/components/molecules/ExpandedRestaurantCard";
+import ExpandedRestaurantCard from "@/components/organisms/ExpandedRestaurantCard";
 import generateRestaurants from "@/constants/mockData";
 
 interface Props {
