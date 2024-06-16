@@ -16,6 +16,8 @@ interface Props {
   restaurant: RestaurantType;
 }
 
+const phoneNumber = "542216790804";
+
 export function ReserveModal({
   onSuccess,
   onClose,
@@ -23,10 +25,21 @@ export function ReserveModal({
   ...props
 }: Props) {
   const [price, setPrice] = useState(restaurant.price.toString());
+  const [quantity, setQuantity] = useState(1);
 
-  const updatePrice = (newQuantity: number) => {
+  const message = `Hola, me gustaría pedir ${quantity} de ${restaurant.bagName} a ${price}`;
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+  const handleChangeQuantity = (newQuantity: number) => {
     const newPrice = restaurant.price * newQuantity;
+
+    setQuantity(newQuantity);
     setPrice(newPrice.toFixed(2));
+  };
+
+  const handleReserve = () => {
+    window.open(whatsappUrl, "_blank");
   };
 
   return (
@@ -92,7 +105,7 @@ export function ReserveModal({
               <Label className="font-semibold" htmlFor="quantity">
                 Quantity
               </Label>
-              <Counter onChange={updatePrice} />
+              <Counter quantity={quantity} onChange={handleChangeQuantity} />
             </div>
             <div className="text-2xl font-bold">$ {price}</div>
           </div>
@@ -100,7 +113,10 @@ export function ReserveModal({
             Prices are subject to change. Taxes and fees may apply.
           </div>
           <div className="flex flex-col gap-2">
-            <Button className="w-full rounded-lg bg-green-500 py-3 font-semibold text-white hover:bg-green-600">
+            <Button
+              onClick={handleReserve}
+              className="w-full rounded-lg bg-green-500 py-3 font-semibold text-white hover:bg-green-600"
+            >
               Reserve
             </Button>
             <Button

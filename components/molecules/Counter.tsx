@@ -1,30 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 interface CounterProps {
   maxQuantity?: number;
   onChange: (newQuantity: number) => void;
+  quantity: number;
 }
 
-export default function Counter({ onChange, maxQuantity = 100 }: CounterProps) {
-  const [quantity, setQuantity] = useState<number>(1);
-
+export default function Counter({
+  quantity,
+  onChange,
+  maxQuantity = 100,
+}: CounterProps) {
   const handleIncrement = () => {
     if (quantity < maxQuantity) {
-      setQuantity(quantity + 1);
+      onChange(quantity + 1);
     }
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1);
+      onChange(quantity - 1);
     }
   };
-
-  useEffect(() => {
-    onChange(quantity);
-  }, [quantity, onChange]);
 
   return (
     <div className="flex w-32 items-center justify-between rounded-full border border-gray-200 px-4 text-black">

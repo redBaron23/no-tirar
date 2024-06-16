@@ -1,36 +1,41 @@
+"use client";
+
 import Link from "next/link";
-import GoogleMapsLink from "../atoms/GoogleMapsLink";
 
 export default function Location() {
+  const latitude = "-34.927823492001615";
+  const longitude = "-57.96231786435115";
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+
+  const handleClick = () => {
+    window.open(mapsUrl);
+  };
+
   return (
-    <GoogleMapsLink
-      latitude="-34.927823492001615"
-      longitude="-57.96231786435115"
+    <div
+      onClick={handleClick}
+      className="flex flex-col items-start gap-2 p-4 dark:bg-gray-800"
     >
-      <div className="flex flex-col items-start gap-2 p-4 dark:bg-gray-800">
-        <div className="flex items-center gap-2">
-          <MapPinIcon className="text-primary h-6 w-6" />
-          <span className="text-lg font-semibold">
-            123 Main Street, Cityville{" "}
-            <span className="text-gray-500 dark:text-gray-400">
-              (500m away)
-            </span>
-          </span>
-        </div>
-        <div className="flex w-full items-center justify-between">
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            <span className="mr-2">More information about the store</span>
-          </div>
-          <Link
-            href="#"
-            className="text-primary text-sm underline"
-            prefetch={false}
-          >
-            Learn More
-          </Link>
-        </div>
+      <div className="flex items-center gap-2">
+        <MapPinIcon className="text-primary h-6 w-6" />
+        <span className="text-lg font-semibold">
+          123 Main Street, Cityville{" "}
+          <span className="text-gray-500 dark:text-gray-400">(500m away)</span>
+        </span>
       </div>
-    </GoogleMapsLink>
+      <div className="flex w-full items-center justify-between">
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          <span className="mr-2">More information about the store</span>
+        </div>
+        <Link
+          href="#"
+          className="text-primary text-sm underline"
+          prefetch={false}
+        >
+          Learn More
+        </Link>
+      </div>
+    </div>
   );
 }
 
