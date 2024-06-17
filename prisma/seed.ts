@@ -15,7 +15,6 @@ async function main() {
         id: "0",
         email: "bot@grammarguardian.ar",
         name: "Grammar Guardian.ar",
-        isGuardian: true,
       },
     });
 
