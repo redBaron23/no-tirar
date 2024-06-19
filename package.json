@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run config && next dev",
-    "build": "npm run config && next build",
+    "dev": "npm run config && docker compose up -d && next dev",
+    "build": "npm run config && npx prisma generate && next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint",
-    "config": "npm config set legacy-peer-deps true"
+    "vercel-build": "npm config && prisma generate && prisma migrate deploy && prisma db seed && next build",
+    "config": "npm config set legacy-peer-deps true",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.7",
