@@ -12,8 +12,8 @@ const StarRating = ({ stars, reviews }: Props) => {
   }
 
   return (
-    <div className="align-center flex gap-1">
-      <FaStar className="flex text-green-700" />
+    <div className="flex items-center space-x-1 text-base">
+      <FaStar className="text-green-700" />
       <div>{stars}</div>
       <span>({reviews})</span>
     </div>
