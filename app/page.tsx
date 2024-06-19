@@ -1,12 +1,18 @@
+import TopBar from "@/components/molecules/TopBar";
 import RestaurantCardList from "../components/templates/RestaurantCardList";
 import generateRestaurants from "../constants/mockData";
+import { auth } from "@/lib/auth";
 
 const restaurants = generateRestaurants(10);
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
-    <div>
+    <>
+      <TopBar isLoggedIn={!!session} />
+
       <RestaurantCardList restaurants={restaurants} />
-    </div>
+    </>
   );
 }

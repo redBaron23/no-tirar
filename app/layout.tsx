@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/Providers";
 import { auth } from "@/lib/auth";
-import TopBar from "@/components/molecules/TopBar";
 import { inter, merriweather_sans } from "./fonts";
+import TabMenu from "@/components/molecules/TabMenu";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,8 +23,8 @@ const Layout = async ({
         className={`${inter.className} ${merriweather_sans.className} bg-gray-100 text-black dark:bg-stone-900 dark:text-white`}
       >
         <Providers session={session}>
-          <TopBar />
           <main>{children}</main>
+          <TabMenu />
         </Providers>
       </body>
     </html>
