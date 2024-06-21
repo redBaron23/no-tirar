@@ -9,10 +9,10 @@ export default async function Home() {
   const session = await auth();
 
   return (
-    <>
+    <div className="pb-20">
       <TopBar isLoggedIn={!!session} />
 
       <RestaurantCardList restaurants={restaurants} />
-    </>
+    </div>
   );
 }
