@@ -46,6 +46,8 @@ const icons: IconsType = {
   },
 };
 
+const HIDDEN_PATHS = [pages.restaurant];
+
 export default function TabMenu() {
   const router = useRouter();
   const pathname = usePathname();
@@ -58,6 +60,10 @@ export default function TabMenu() {
     router.push(icons[key].page);
     setSelected(key);
   };
+
+  if (HIDDEN_PATHS.some((path) => pathname.startsWith(path))) {
+    return <></>;
+  }
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100">

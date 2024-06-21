@@ -2,6 +2,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
+import LogoutButton from "../atoms/LogoutButton";
 
 export default async function Profile() {
   const session = await auth();
@@ -11,49 +12,54 @@ export default async function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="flex items-center justify-between bg-[#2e7d67] p-4">
-        <div className="flex items-center">
-          <Avatar>
-            <AvatarImage src={session?.user?.image || ""} />
-            <AvatarFallback>{session?.user?.name[0]}</AvatarFallback>
-          </Avatar>
-          <div className="ml-2 text-white">
-            <div className="font-bold">{session?.user?.name}</div>
+    <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
+      <div className="flex-grow">
+        <div className="flex items-center justify-between bg-[#2e7d67] p-4">
+          <div className="flex items-center">
+            <Avatar>
+              <AvatarImage src={session?.user?.image || ""} />
+              <AvatarFallback>{session?.user?.name[0]}</AvatarFallback>
+            </Avatar>
+            <div className="ml-2 text-white">
+              <div className="font-bold">{session?.user?.name}</div>
+            </div>
+          </div>
+          <SettingsIcon className="h-6 w-6 text-white" />
+        </div>
+        <div className="space-y-4 p-4">
+          <Card className="p-4 text-center">
+            <CardContent>
+              <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+              <div className="mt-4 text-gray-500">
+                No tienes ordenes todavia.
+              </div>
+              <Button className="mt-4 bg-[#2e7d67] text-white">
+                Find a Surprise Bag
+              </Button>
+            </CardContent>
+          </Card>
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="p-4 text-center">
+              <CardContent>
+                <div className="font-bold text-[#2e7d67]">CO2e evitado</div>
+                <CoffeeIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+                <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
+                <div className="text-gray-500">tazas de cafe</div>
+              </CardContent>
+            </Card>
+            <Card className="p-4 text-center">
+              <CardContent>
+                <div className="font-bold text-[#2e7d67]">Dinero ahorrado</div>
+                <CoinsIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+                <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
+                <div className="text-gray-500">ARS</div>
+              </CardContent>
+            </Card>
           </div>
         </div>
-        <SettingsIcon className="h-6 w-6 text-white" />
       </div>
-      <div className="space-y-4 p-4">
-        <Card className="text-center">
-          <CardContent>
-            <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-            <div className="mt-4 text-gray-500">
-              You don’t have any orders yet.
-            </div>
-            <Button className="mt-4 bg-[#2e7d67] text-white">
-              Find a Surprise Bag
-            </Button>
-          </CardContent>
-        </Card>
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="text-center">
-            <CardContent>
-              <div className="font-bold text-[#2e7d67]">CO2e avoided</div>
-              <CoffeeIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-              <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
-              <div className="text-gray-500">cups of coffee</div>
-            </CardContent>
-          </Card>
-          <Card className="text-center">
-            <CardContent>
-              <div className="font-bold text-[#2e7d67]">Money saved</div>
-              <CoinsIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-              <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
-              <div className="text-gray-500">AUD</div>
-            </CardContent>
-          </Card>
-        </div>
+      <div className="p-4">
+        <LogoutButton />
       </div>
     </div>
   );

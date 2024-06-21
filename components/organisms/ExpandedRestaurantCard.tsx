@@ -16,7 +16,7 @@ interface Props {
 
 export default function Component({ restaurant }: Props) {
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-lg bg-white">
+    <div className="flex h-full flex-col rounded-lg bg-white">
       <div className="relative flex-grow" style={{ height: "300px" }}>
         <Image
           src={restaurant.imageUrl}
