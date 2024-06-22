@@ -9,7 +9,7 @@ export default async function DiscoverPage() {
   const session = await auth();
 
   return (
-    <div className="pb-20">
+    <div className="pb-20 lg:pb-0">
       <TopBar isLoggedIn={!!session} />
 
       <RestaurantCardList restaurants={restaurants} />

@@ -22,7 +22,7 @@ export default async function Profile() {
           <div className="flex items-center gap-4">
             <Link
               href={pages.discover}
-              className="hidden self-start rounded-full p-1 transition-transform duration-200 hover:scale-110 lg:block"
+              className="hidden rounded-full p-1 transition-transform duration-200 hover:scale-110 lg:block"
             >
               <FiArrowLeft className="h-6 w-6 text-white" />
             </Link>
