@@ -44,7 +44,7 @@ export default async function Profile() {
                 No tienes ordenes todavia.
               </div>
               <Button className="mt-4 bg-[#2e7d67] text-white">
-                Find a Surprise Bag
+                Busca tu Bolsa Sorpresa
               </Button>
             </CardContent>
           </Card>
