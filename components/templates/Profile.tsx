@@ -16,7 +16,7 @@ export default async function Profile() {
   }
 
   return (
-    <div className="flex h-full flex-col overflow-y-scroll bg-gray-100">
+    <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
       <div className="flex items-center justify-between bg-[#2e7d67] p-4">
         <div className="flex items-center gap-4">
           <Link
@@ -35,7 +35,7 @@ export default async function Profile() {
         </div>
         <SettingsIcon className="h-6 w-6 text-white" />
       </div>
-      <div className="space-y-4 p-4">
+      <div className="grid h-full grid-rows-[auto_auto_1fr] gap-4 p-4">
         <Card className="p-4 text-center">
           <CardContent>
             <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
@@ -45,6 +45,7 @@ export default async function Profile() {
             </Button>
           </CardContent>
         </Card>
+
         <div className="grid grid-cols-2 gap-4">
           <Card className="p-4 text-center">
             <CardContent>
@@ -63,7 +64,8 @@ export default async function Profile() {
             </CardContent>
           </Card>
         </div>
-        <div className="p-4">
+
+        <div className="self-center lg:self-end lg:pb-8">
           <LogoutButton />
         </div>
       </div>
