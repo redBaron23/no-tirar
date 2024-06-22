@@ -1,14 +1,25 @@
 "use client";
 
 import { signIn } from "next-auth/react";
+import { ReactNode } from "react";
+import { IoMdLogIn } from "react-icons/io";
 
-const LoginButton = () => {
+interface Props {
+  children?: ReactNode;
+}
+
+const LoginButton = ({ children = "Iniciar Sesion" }: Props) => {
   return (
     <button
       onClick={() => signIn("google")}
-      className="inline-block transform rounded-full bg-white px-8 py-4 font-semibold text-blue-600 shadow-lg transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110"
+      className="flex items-center rounded-full bg-amber-500 px-6 py-2 text-white shadow-md transition-all duration-300 hover:bg-amber-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
     >
-      Get Started
+      <IoMdLogIn className="mr-2" />
+      <span className="relative overflow-hidden">
+        <span className="translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+          {children}
+        </span>
+      </span>
     </button>
   );
 };

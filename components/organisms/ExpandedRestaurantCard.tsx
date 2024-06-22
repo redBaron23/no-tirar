@@ -33,7 +33,7 @@ export default function Component({ restaurant }: Props) {
           </div>
         </div>
         <div className="absolute left-2 top-2 flex space-x-2">
-          <Link href={pages.index} className="rounded-full bg-white p-1">
+          <Link href={pages.discover} className="rounded-full bg-white p-1">
             <ArrowLeftIcon className="h-6 w-6 text-gray-500" />
           </Link>
         </div>

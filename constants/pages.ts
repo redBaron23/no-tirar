@@ -1,8 +1,8 @@
 const pages = {
   index: "/",
+  discover: "/discover",
   restaurant: "/restaurant",
   profile: "/profile",
-  getStarted: "/get-started",
 };
 
 export { pages };

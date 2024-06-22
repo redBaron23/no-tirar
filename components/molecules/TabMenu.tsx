@@ -27,17 +27,17 @@ const icons: IconsType = {
   discover: {
     filled: <RiCompassFill className="h-6 w-6 text-green-800" />,
     outlined: <RiCompassLine className="h-6 w-6 text-gray-700" />,
-    page: pages.index,
+    page: pages.discover,
   },
   explore: {
     filled: <FaShoppingBag className="h-6 w-6 text-green-800" />,
     outlined: <MdOutlineShoppingBag className="h-6 w-6 text-gray-700" />,
-    page: pages.index,
+    page: pages.discover,
   },
   favorites: {
     filled: <RiHeartFill className="h-6 w-6 text-green-800" />,
     outlined: <RiHeartLine className="h-6 w-6 text-gray-700" />,
-    page: pages.index,
+    page: pages.discover,
   },
   profile: {
     filled: <FaUserCircle className="h-6 w-6 text-green-800" />,
@@ -46,7 +46,7 @@ const icons: IconsType = {
   },
 };
 
-const HIDDEN_PATHS = [pages.restaurant, pages.getStarted];
+const HIDDEN_PATHS = [pages.restaurant];
 
 export default function TabMenu() {
   const router = useRouter();
@@ -61,7 +61,11 @@ export default function TabMenu() {
     setSelected(key);
   };
 
-  if (HIDDEN_PATHS.some((path) => pathname.startsWith(path))) {
+  if (
+    HIDDEN_PATHS.some(
+      (path) => pathname.startsWith(path) || pathname === pages.index,
+    )
+  ) {
     return <></>;
   }
 
