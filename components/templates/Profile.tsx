@@ -3,19 +3,29 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import LogoutButton from "../atoms/LogoutButton";
+import UnauthenticatedProfile from "../organisms/UnauthenticatedProfile";
+import Link from "next/link";
+import { FiArrowLeft } from "react-icons/fi";
+import { pages } from "@/constants/pages";
 
 export default async function Profile() {
   const session = await auth();
 
   if (!session?.user?.name) {
-    return <></>;
+    return <UnauthenticatedProfile />;
   }
 
   return (
     <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
       <div className="flex-grow">
         <div className="flex items-center justify-between bg-[#2e7d67] p-4">
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
+            <Link
+              href={pages.discover}
+              className="hidden self-start rounded-full p-1 transition-transform duration-200 hover:scale-110 lg:block"
+            >
+              <FiArrowLeft className="h-6 w-6 text-white" />
+            </Link>
             <Avatar>
               <AvatarImage src={session?.user?.image || ""} />
               <AvatarFallback>{session?.user?.name[0]}</AvatarFallback>

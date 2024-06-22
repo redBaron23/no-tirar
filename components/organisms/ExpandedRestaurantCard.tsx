@@ -3,6 +3,7 @@ import { pages } from "@/constants/pages";
 import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 import Image from "next/image";
 import Link from "next/link";
+import { FiArrowLeft, FiHeart, FiShare, FiClock } from "react-icons/fi";
 import ItemsLeftBadge from "../atoms/ItemsLeftBadge";
 import PriceDisplay from "../atoms/PriceDisplay";
 import Divider from "../atoms/Divider";
@@ -26,15 +27,15 @@ export default function Component({ restaurant }: Props) {
         />
         <div className="absolute right-2 top-2 flex space-x-2">
           <div className="rounded-full bg-white p-1">
-            <HeartIcon className="h-6 w-6 text-red-500" />
+            <FiHeart className="h-6 w-6 text-red-500" />
           </div>
           <div className="rounded-full bg-white p-1">
-            <ShareIcon className="h-6 w-6 text-gray-500" />
+            <FiShare className="h-6 w-6 text-gray-500" />
           </div>
         </div>
         <div className="absolute left-2 top-2 flex space-x-2">
           <Link href={pages.discover} className="rounded-full bg-white p-1">
-            <ArrowLeftIcon className="h-6 w-6 text-gray-500" />
+            <FiArrowLeft className="h-6 w-6 text-gray-500" />
           </Link>
         </div>
         <div className="absolute bottom-4 left-2 flex flex-col gap-2">
@@ -63,8 +64,8 @@ export default function Component({ restaurant }: Props) {
               {restaurant.bagName}
             </span>
             <StarRating stars={restaurant.stars} reviews={restaurant.reviews} />
-            <div className="align-center flex gap-2 text-gray-500">
-              <ClockIcon className="inline-block h-4 w-4" />
+            <div className="flex items-center gap-2 text-base text-gray-500">
+              <FiClock />
               Pick up: {restaurant.pickupTime}
             </div>
             <span className="w-16 rounded-full bg-green-100 text-center text-xs font-semibold text-green-800">
@@ -91,108 +92,5 @@ export default function Component({ restaurant }: Props) {
         </div>
       </div>
     </div>
-  );
-}
-
-function ArrowLeftIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m12 19-7-7 7-7" />
-      <path d="M19 12H5" />
-    </svg>
-  );
-}
-
-function ClockIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  );
-}
-
-function HeartIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-    </svg>
-  );
-}
-
-function LocateIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="2" x2="5" y1="12" y2="12" />
-      <line x1="19" x2="22" y1="12" y2="12" />
-      <line x1="12" x2="12" y1="2" y2="5" />
-      <line x1="12" x2="12" y1="19" y2="22" />
-      <circle cx="12" cy="12" r="7" />
-    </svg>
-  );
-}
-
-function ShareIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-      <polyline points="16 6 12 2 8 6" />
-      <line x1="12" x2="12" y1="2" y2="15" />
-    </svg>
   );
 }

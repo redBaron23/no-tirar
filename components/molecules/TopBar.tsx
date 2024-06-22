@@ -9,7 +9,7 @@ interface Props {
 
 export default function TopBar({ isLoggedIn }: Props) {
   return (
-    <header className="bg-background flex h-16 items-center justify-between gap-2 border-b px-4">
+    <header className="bg-background flex h-16 items-center justify-between gap-4 border-b px-4">
       {/* <Link href="#" className="text-lg font-bold" prefetch={false}>
         <Image
           src="/images/icon-512.png"
@@ -22,7 +22,7 @@ export default function TopBar({ isLoggedIn }: Props) {
       <div className="w-full flex-grow">
         <SearchBar />
       </div>
-      <div className="flex w-full items-center justify-end gap-4">
+      <div className="flex items-center justify-end gap-4">
         {isLoggedIn ? (
           <>
             <Button variant="ghost" size="icon" className="rounded-full">
@@ -33,8 +33,8 @@ export default function TopBar({ isLoggedIn }: Props) {
         ) : (
           <LoginButton />
         )}
-        <ProfileButton />
       </div>
+      <ProfileButton />
     </header>
   );
 }
