@@ -45,7 +45,7 @@ export default function GetStarted() {
             Rescata deliciosas comidas a precios increíbles
           </p>
           <Link
-            href={pages.discover}
+            href={pages.home}
             className="group relative overflow-hidden rounded-full bg-teal-500 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-teal-600 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-teal-300 sm:px-10 sm:py-4"
           >
             <span className="relative z-10">¡Empieza a rescatar!</span>

@@ -16,7 +16,7 @@ const withAuthRedirect = async (req: NextRequestWithAuth) => {
 
   //   Authenticated users default page
   if (isAuthenticated && isUnprotectedRoute(currentPath)) {
-    return NextResponse.redirect(new URL(pages.discover, req.url));
+    return NextResponse.redirect(new URL(pages.home, req.url));
   }
 
   return NextResponse.next();

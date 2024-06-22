@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 
 const restaurants = generateRestaurants(10);
 
-export default async function DiscoverPage() {
+export default async function HomePage() {
   const session = await auth();
 
   return (

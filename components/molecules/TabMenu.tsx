@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import {
-  RiCompassLine,
-  RiCompassFill,
   RiHeartLine,
   RiHeartFill,
+  RiHome5Line,
+  RiHome5Fill,
 } from "react-icons/ri";
 import { FaShoppingBag } from "react-icons/fa";
 import { MdOutlineShoppingBag } from "react-icons/md";
@@ -24,20 +24,20 @@ interface IconsType {
 }
 
 const icons: IconsType = {
-  discover: {
-    filled: <RiCompassFill className="h-6 w-6 text-green-800" />,
-    outlined: <RiCompassLine className="h-6 w-6 text-gray-700" />,
-    page: pages.discover,
+  home: {
+    filled: <RiHome5Fill className="h-6 w-6 text-green-800" />,
+    outlined: <RiHome5Line className="h-6 w-6 text-gray-700" />,
+    page: pages.home,
   },
   explore: {
     filled: <FaShoppingBag className="h-6 w-6 text-green-800" />,
     outlined: <MdOutlineShoppingBag className="h-6 w-6 text-gray-700" />,
-    page: pages.discover,
+    page: pages.home,
   },
   favorites: {
     filled: <RiHeartFill className="h-6 w-6 text-green-800" />,
     outlined: <RiHeartLine className="h-6 w-6 text-gray-700" />,
-    page: pages.discover,
+    page: pages.home,
   },
   profile: {
     filled: <FaUserCircle className="h-6 w-6 text-green-800" />,
@@ -54,7 +54,7 @@ export default function TabMenu() {
   const defaultPath = Object.keys(icons).find(
     (key) => icons[key].page === pathname,
   );
-  const [selected, setSelected] = useState<string>(defaultPath ?? "discover");
+  const [selected, setSelected] = useState<string>(defaultPath ?? "home");
 
   const handleClick = (key: string) => {
     router.push(icons[key].page);

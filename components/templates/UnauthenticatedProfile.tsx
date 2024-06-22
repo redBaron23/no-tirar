@@ -12,7 +12,7 @@ export default async function UnauthenticatedProfile() {
     <div className="flex flex-col gap-20 p-4">
       <div className="flex flex-col items-center">
         <Link
-          href={pages.discover}
+          href={pages.home}
           className="hidden self-start rounded-full bg-white p-1 transition-transform duration-200 hover:scale-110 lg:block"
         >
           <FiArrowLeft className="h-6 w-6 text-gray-500" />

@@ -1,6 +1,6 @@
 const pages = {
   index: "/",
-  discover: "/discover",
+  home: "/home",
   restaurant: "/restaurant",
   profile: "/profile",
 };
