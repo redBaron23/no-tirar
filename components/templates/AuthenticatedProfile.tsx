@@ -1,71 +1,41 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/auth";
 import LogoutButton from "../atoms/LogoutButton";
-import Link from "next/link";
-import { FiArrowLeft } from "react-icons/fi";
-import { pages } from "@/constants/pages";
-import { IoSettingsOutline as SettingsIcon } from "react-icons/io5";
 
-export default async function AuthenticatedProfile() {
-  const session = await auth();
-
+export default function AuthenticatedProfile() {
   return (
-    <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
-      <div className="flex items-center justify-between bg-[#2e7d67] p-4">
-        <div className="flex items-center gap-4">
-          <Link
-            href={pages.home}
-            className="hidden rounded-full p-1 transition-transform duration-200 hover:scale-110 lg:block"
-          >
-            <FiArrowLeft className="h-6 w-6 text-white" />
-          </Link>
-          <Avatar>
-            <AvatarImage src={session?.user?.image || ""} />
-            <AvatarFallback>{session!.user!.name![0]}</AvatarFallback>
-          </Avatar>
-          <div className="ml-2 text-white">
-            <div className="font-bold">{session?.user?.name}</div>
-          </div>
-        </div>
-        <Link href={pages.settings}>
-          <SettingsIcon className="h-6 w-6 text-white" />
-        </Link>
-      </div>
-      <div className="grid h-full grid-rows-[auto_auto_1fr] gap-4 p-4">
+    <div className="grid h-full grid-rows-[auto_auto_1fr] gap-4 p-4">
+      <Card className="p-4 text-center">
+        <CardContent>
+          <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+          <div className="mt-4 text-gray-500">No tienes ordenes todavia.</div>
+          <Button className="mt-4 bg-[#2e7d67] text-white">
+            Busca tu Bolsa Sorpresa
+          </Button>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-2 gap-4">
         <Card className="p-4 text-center">
           <CardContent>
-            <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-            <div className="mt-4 text-gray-500">No tienes ordenes todavia.</div>
-            <Button className="mt-4 bg-[#2e7d67] text-white">
-              Busca tu Bolsa Sorpresa
-            </Button>
+            <div className="font-bold text-[#2e7d67]">CO2e evitado</div>
+            <CoffeeIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+            <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
+            <div className="text-gray-500">tazas de cafe</div>
           </CardContent>
         </Card>
+        <Card className="p-4 text-center">
+          <CardContent>
+            <div className="font-bold text-[#2e7d67]">Dinero ahorrado</div>
+            <CoinsIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+            <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
+            <div className="text-gray-500">ARS</div>
+          </CardContent>
+        </Card>
+      </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="p-4 text-center">
-            <CardContent>
-              <div className="font-bold text-[#2e7d67]">CO2e evitado</div>
-              <CoffeeIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-              <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
-              <div className="text-gray-500">tazas de cafe</div>
-            </CardContent>
-          </Card>
-          <Card className="p-4 text-center">
-            <CardContent>
-              <div className="font-bold text-[#2e7d67]">Dinero ahorrado</div>
-              <CoinsIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-              <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
-              <div className="text-gray-500">ARS</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="self-center lg:self-end lg:pb-8">
-          <LogoutButton />
-        </div>
+      <div className="self-center lg:self-end lg:pb-8">
+        <LogoutButton />
       </div>
     </div>
   );

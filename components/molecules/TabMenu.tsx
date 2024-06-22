@@ -46,7 +46,7 @@ const icons: IconsType = {
   },
 };
 
-const HIDDEN_PATHS = [pages.restaurant];
+const HIDDEN_PATHS = [pages.restaurant, pages.settings];
 
 export default function TabMenu() {
   const router = useRouter();

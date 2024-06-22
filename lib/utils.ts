@@ -4,7 +4,10 @@ import { twMerge } from "tailwind-merge";
 import { PROTECTED_ROUTES, UNPROTECTED_ROUTES } from "@/constants";
 import { pages } from "@/constants/pages";
 
-const isPathOnArray = (currentPath: string, array: string[]): boolean => {
+export const isPathOnArray = (
+  currentPath: string,
+  array: string[],
+): boolean => {
   return array.some((route) => currentPath.startsWith(route));
 };
 
