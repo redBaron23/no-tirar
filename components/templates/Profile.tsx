@@ -17,59 +17,55 @@ export default async function Profile() {
 
   return (
     <div className="flex h-full flex-col overflow-y-scroll bg-gray-100">
-      <div className="flex-grow">
-        <div className="flex items-center justify-between bg-[#2e7d67] p-4">
-          <div className="flex items-center gap-4">
-            <Link
-              href={pages.discover}
-              className="hidden rounded-full p-1 transition-transform duration-200 hover:scale-110 lg:block"
-            >
-              <FiArrowLeft className="h-6 w-6 text-white" />
-            </Link>
-            <Avatar>
-              <AvatarImage src={session?.user?.image || ""} />
-              <AvatarFallback>{session?.user?.name[0]}</AvatarFallback>
-            </Avatar>
-            <div className="ml-2 text-white">
-              <div className="font-bold">{session?.user?.name}</div>
-            </div>
+      <div className="flex items-center justify-between bg-[#2e7d67] p-4">
+        <div className="flex items-center gap-4">
+          <Link
+            href={pages.discover}
+            className="hidden rounded-full p-1 transition-transform duration-200 hover:scale-110 lg:block"
+          >
+            <FiArrowLeft className="h-6 w-6 text-white" />
+          </Link>
+          <Avatar>
+            <AvatarImage src={session?.user?.image || ""} />
+            <AvatarFallback>{session?.user?.name[0]}</AvatarFallback>
+          </Avatar>
+          <div className="ml-2 text-white">
+            <div className="font-bold">{session?.user?.name}</div>
           </div>
-          <SettingsIcon className="h-6 w-6 text-white" />
         </div>
-        <div className="space-y-4 p-4">
+        <SettingsIcon className="h-6 w-6 text-white" />
+      </div>
+      <div className="space-y-4 p-4">
+        <Card className="p-4 text-center">
+          <CardContent>
+            <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+            <div className="mt-4 text-gray-500">No tienes ordenes todavia.</div>
+            <Button className="mt-4 bg-[#2e7d67] text-white">
+              Busca tu Bolsa Sorpresa
+            </Button>
+          </CardContent>
+        </Card>
+        <div className="grid grid-cols-2 gap-4">
           <Card className="p-4 text-center">
             <CardContent>
-              <ShoppingBagIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-              <div className="mt-4 text-gray-500">
-                No tienes ordenes todavia.
-              </div>
-              <Button className="mt-4 bg-[#2e7d67] text-white">
-                Busca tu Bolsa Sorpresa
-              </Button>
+              <div className="font-bold text-[#2e7d67]">CO2e evitado</div>
+              <CoffeeIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+              <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
+              <div className="text-gray-500">tazas de cafe</div>
             </CardContent>
           </Card>
-          <div className="grid grid-cols-2 gap-4">
-            <Card className="p-4 text-center">
-              <CardContent>
-                <div className="font-bold text-[#2e7d67]">CO2e evitado</div>
-                <CoffeeIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-                <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
-                <div className="text-gray-500">tazas de cafe</div>
-              </CardContent>
-            </Card>
-            <Card className="p-4 text-center">
-              <CardContent>
-                <div className="font-bold text-[#2e7d67]">Dinero ahorrado</div>
-                <CoinsIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
-                <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
-                <div className="text-gray-500">ARS</div>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="p-4 text-center">
+            <CardContent>
+              <div className="font-bold text-[#2e7d67]">Dinero ahorrado</div>
+              <CoinsIcon className="mx-auto h-16 w-16 text-[#2e7d67]" />
+              <div className="mt-2 text-2xl font-bold text-[#2e7d67]">0</div>
+              <div className="text-gray-500">ARS</div>
+            </CardContent>
+          </Card>
         </div>
-      </div>
-      <div className="p-4">
-        <LogoutButton />
+        <div className="p-4">
+          <LogoutButton />
+        </div>
       </div>
     </div>
   );
