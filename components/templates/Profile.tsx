@@ -16,7 +16,7 @@ export default async function Profile() {
   }
 
   return (
-    <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
+    <div className="flex h-full flex-col overflow-y-scroll bg-gray-100">
       <div className="flex-grow">
         <div className="flex items-center justify-between bg-[#2e7d67] p-4">
           <div className="flex items-center gap-4">
