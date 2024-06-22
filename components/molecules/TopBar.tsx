@@ -19,18 +19,22 @@ export default function TopBar({ isLoggedIn }: Props) {
           className="rounded-full"
         />
       </Link> */}
-      <SearchBar />
-      {isLoggedIn ? (
-        <>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <BellIcon className="h-5 w-5 text-gray-700" />
-            <span className="sr-only">Notifications</span>
-          </Button>
-          {/* <ProfileButton /> */}
-        </>
-      ) : (
-        <LoginButton />
-      )}
+      <div className="w-full flex-grow">
+        <SearchBar />
+      </div>
+      <div className="flex w-full items-center justify-end gap-4">
+        {isLoggedIn ? (
+          <>
+            <Button variant="ghost" size="icon" className="rounded-full">
+              <BellIcon className="h-5 w-5 text-gray-700" />
+              <span className="sr-only">Notifications</span>
+            </Button>
+          </>
+        ) : (
+          <LoginButton />
+        )}
+        <ProfileButton />
+      </div>
     </header>
   );
 }

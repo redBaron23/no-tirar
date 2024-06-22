@@ -1,9 +1,9 @@
 "use client";
 
-import { CgProfile } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { pages } from "@/constants/pages";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const ProfileButton = () => {
   const router = useRouter();
@@ -16,10 +16,10 @@ const ProfileButton = () => {
     <Button
       variant="ghost"
       size="icon"
-      className="rounded-full"
+      className="hidden rounded-full lg:block"
       onClick={handleClick}
     >
-      <CgProfile className="h-6 w-6 text-gray-700" />
+      <FaRegUserCircle className="h-6 w-6 text-gray-700" />
       <span className="sr-only">User Menu</span>
     </Button>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   RiCompassLine,
   RiCompassFill,
@@ -70,7 +70,7 @@ export default function TabMenu() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100">
+    <div className="fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100 lg:hidden">
       <div className="flex cursor-pointer items-center justify-around">
         {Object.keys(icons).map((key) => (
           <div
