@@ -15,8 +15,6 @@ export default async function Layout({
 
   const isLoggedIn = !!session?.user?.name;
 
-  console.log({ isLoggedIn });
-
   return (
     <>
       {isLoggedIn ? authenticated : unauthenticated}
