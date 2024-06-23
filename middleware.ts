@@ -4,7 +4,7 @@ import {
 } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { isProtectedRoute, isUnprotectedRoute } from "./lib/utils";
+import { isUnprotectedRoute } from "./lib/utils";
 import { pages } from "./constants/pages";
 
 const withAuthRedirect = async (req: NextRequestWithAuth) => {

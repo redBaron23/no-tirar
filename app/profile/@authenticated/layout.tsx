@@ -11,7 +11,7 @@ const pagesToShowAlwaysBackButton = [pages.settings];
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth();
 
-  console.log("Layout 2");
+  const firstNameLetter = session?.user?.name ? session?.user?.name[0] : "U";
 
   return (
     <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
@@ -20,7 +20,7 @@ export default async function Layout({ children }: PropsWithChildren) {
           <BackButton pagesToShowAlways={pagesToShowAlwaysBackButton} />
           <Avatar>
             <AvatarImage src={session?.user?.image || ""} />
-            <AvatarFallback>{session!.user!.name![0]}</AvatarFallback>
+            <AvatarFallback>{firstNameLetter}</AvatarFallback>
           </Avatar>
           <div className="ml-2 text-white">
             <div className="font-bold">{session?.user?.name}</div>
