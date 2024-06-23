@@ -13,6 +13,8 @@ export default async function Layout({
 }: Props) {
   const session = await auth();
 
+  console.log("Layout1");
+
   const isLoggedIn = !!session?.user?.name;
 
   return (

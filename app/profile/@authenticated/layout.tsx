@@ -11,6 +11,8 @@ const pagesToShowAlwaysBackButton = [pages.settings];
 export default async function Layout({ children }: PropsWithChildren) {
   const session = await auth();
 
+  console.log("Layout 2");
+
   return (
     <div className="flex h-full flex-col overflow-y-auto bg-gray-100">
       <div className="flex items-center justify-between bg-[#2e7d67] p-4">
