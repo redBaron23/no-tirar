@@ -1,24 +1,41 @@
 "use client";
 
+import { useAction } from "next-safe-action/hooks";
 import { UserRole } from "@prisma/client";
 import { Button } from "../ui/button";
-import { useFormStatus } from "react-dom";
-
+import { updateUser } from "@/app/actions/user/updateUser";
 interface Props {
   role: UserRole;
 }
 
 const ChangeRoleForm = ({ role }: Props) => {
-  const { pending } = useFormStatus();
+  const { execute, result, status } = useAction(updateUser);
+
+  const currentRole = result?.data?.role || role;
+
   const newRole =
-    role === UserRole.CUSTOMER ? UserRole.BUSINESS : UserRole.CUSTOMER;
+    currentRole === UserRole.CUSTOMER ? UserRole.BUSINESS : UserRole.CUSTOMER;
+
+  const isLoading = status === "executing";
 
   return (
-    <form>
-      <Button isLoading={pending} className="bg-red-600 hover:bg-red-500">
+    <div className="flex flex-col items-center gap-6">
+      <Button
+        isLoading={isLoading}
+        onClick={() => execute({ newRole })}
+        className="bg-red-600 hover:bg-red-500"
+      >
         Transform to {newRole.toLowerCase()} account
       </Button>
-    </form>
+      {result?.data?.role && (
+        <p className="text-center text-base">
+          El nuevo role es{" "}
+          <strong>{result?.data?.role.toLocaleLowerCase()}</strong>
+          <br />
+          desconectarse y conectarse nuevamente para que tenga efecto
+        </p>
+      )}
+    </div>
   );
 };
 
