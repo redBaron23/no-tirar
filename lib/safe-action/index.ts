@@ -4,6 +4,7 @@ import {
 } from "next-safe-action";
 import { z } from "zod";
 import { auth } from "../auth";
+import { UserRole } from "@prisma/client";
 
 class ActionError extends Error {}
 
@@ -21,7 +22,6 @@ const actionClient = createSafeActionClient({
       actionName: z.string(),
     });
   },
-  // Define logging middleware.
 }).use(async ({ next, clientInput, metadata }) => {
   console.log("LOGGING MIDDLEWARE");
 
@@ -36,26 +36,31 @@ const actionClient = createSafeActionClient({
   return result;
 });
 
-// Auth client defined by extending the base one.
-// Note that the same initialization options and middleware functions of the base client
-// will also be used for this one.
-const authActionClient = actionClient
-  // Define authorization middleware.
-  .use(async ({ next }) => {
-    const session = await auth();
+const authActionClient = actionClient.use(async ({ next }) => {
+  const session = await auth();
 
-    if (!session) {
-      throw new Error("Session not found!");
-    }
+  if (!session) {
+    throw new Error("Session not found!");
+  }
 
-    const userId = session.user.id;
+  const userId = session.user.id;
 
-    if (!userId) {
-      throw new Error("Session is not valid!");
-    }
+  if (!userId) {
+    throw new Error("Session is not valid!");
+  }
 
-    // Return the next middleware with `userId` value in the context
-    return next({ ctx: { userId } });
-  });
+  return next({ ctx: { userId, session } });
+});
 
-export { authActionClient };
+const businessActionClient = authActionClient.use(async ({ next, ctx }) => {
+  const userId = ctx.userId;
+  const role = ctx.session.user.role;
+
+  if (role !== UserRole.BUSINESS) {
+    throw new Error("Lack of permissions");
+  }
+
+  return next({ ctx: { userId } });
+});
+
+export { authActionClient, businessActionClient };

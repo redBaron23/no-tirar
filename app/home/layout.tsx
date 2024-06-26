@@ -1,4 +1,6 @@
+import TopBar from "@/components/molecules/TopBar";
 import { auth } from "@/lib/auth";
+import { UserRole } from "@prisma/client";
 import { type PropsWithChildren } from "react";
 
 type Props = PropsWithChildren<{
@@ -9,12 +11,15 @@ type Props = PropsWithChildren<{
 export default async function Layout({ business, customer, children }: Props) {
   const session = await auth();
 
-  const isBusiness = false;
+  const isBusiness = session?.user.role === UserRole.BUSINESS;
 
   return (
-    <>
-      {isBusiness ? business : customer}
-      {children}
-    </>
+    <div className="pb-20 lg:pb-0">
+      <TopBar isLoggedIn={!!session} role={session?.user.role} />
+      <section className="flex flex-col items-center">
+        {isBusiness ? business : customer}
+        {children}
+      </section>
+    </div>
   );
 }

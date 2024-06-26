@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
-import SearchBar from "../atoms/SearchBar";
 import LoginButton from "../atoms/LoginButton";
 import ProfileButton from "../atoms/ProfileButton";
+import { UserRole } from "@prisma/client";
+import SearchBar from "../atoms/SearchBar";
 
 interface Props {
   isLoggedIn: boolean;
+  role?: UserRole;
 }
 
-export default function TopBar({ isLoggedIn }: Props) {
+export default function TopBar({ isLoggedIn, role }: Props) {
+  const isBusiness = role === UserRole.BUSINESS;
   return (
     <header className="bg-background flex h-16 items-center justify-between gap-4 border-b px-4">
       {/* <Link href="#" className="text-lg font-bold" prefetch={false}>
@@ -19,9 +22,7 @@ export default function TopBar({ isLoggedIn }: Props) {
           className="rounded-full"
         />
       </Link> */}
-      <div className="w-full flex-grow">
-        <SearchBar />
-      </div>
+      <div className="w-full flex-grow">{!isBusiness && <SearchBar />}</div>
       <div className="flex items-center justify-end gap-4">
         {isLoggedIn ? (
           <>
