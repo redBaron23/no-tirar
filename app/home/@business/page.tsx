@@ -1,55 +1,106 @@
+import Chip from "@/components/atoms/Chip";
+import DaySelect from "@/components/molecules/DaySelect";
+import LineChart from "@/components/organisms/LineChart";
+import OrdersSection from "@/components/templates/OrdersSection";
+import ReviewsSection from "@/components/templates/ReviewsSection";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+
+const reviews = [
+  {
+    name: "Danielle Austin",
+    rating: "5 stars",
+    review:
+      "Commercial remain film sport value can week. The system always theory month edge remain.",
+  },
+  {
+    name: "Heather Aguilar",
+    rating: "4 stars",
+    review:
+      "Bring those organization may total media after. Generation short scene media follow these community.",
+  },
+  {
+    name: "Antonio Webb",
+    rating: "1 star",
+    review:
+      "Friend may business late suggest almost. Could everyone season glass.",
+  },
+  {
+    name: "Earl Moon",
+    rating: "2 stars",
+    review:
+      "Drug stay treatment occur meet. Wonder religion short option another set.",
+  },
+  {
+    name: "Thomas Cummings",
+    rating: "4 stars",
+    review:
+      "Manager best body leg interest investment industry. Explain leader hit find system.",
+  },
+  {
+    name: "Jamie Anderson",
+    rating: "3 stars",
+    review:
+      "Teach natural push finish. Early support performance indeed environment turn.",
+  },
+  {
+    name: "Michelle Davidson",
+    rating: "4 stars",
+    review:
+      "Offer treat system fight education mouth baby. Everyone teacher able air.",
+  },
+  {
+    name: "Samuel Smith",
+    rating: "5 stars",
+    review:
+      "Ahead strategy glass style church suggest. Support thought candidate detail theory.",
+  },
+  {
+    name: "Leon Clark",
+    rating: "2 stars",
+    review: "A out partner century. Discussion hit image manage social.",
+  },
+  {
+    name: "Nicholas Young",
+    rating: "2 stars",
+    review: "Bed chair beautiful point start sea. Age something usually girl.",
+  },
+];
+
+const OPTIONS = [
+  {
+    label: "Hoy",
+  },
+  {
+    label: "Ayer",
+  },
+  {
+    label: "Ultimos 7 dias",
+  },
+  {
+    label: "Ultimos 30 dias",
+  },
+];
+
 export default function Page() {
   return (
-    <div className="min-w-screen flex min-h-screen items-center justify-center bg-gray-900 px-5 py-5">
-      <div
-        className="w-full rounded bg-gray-800 px-5 py-5 text-gray-500 shadow-xl lg:w-1/2"
-        x-data="{chartData:chartData()}"
-        x-init="chartData.fetch()"
-      >
-        <div className="flex flex-wrap items-end">
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold leading-tight">Income</h3>
-          </div>
-          <div className="relative">
-            <button className="h-6 text-xs hover:text-gray-300 focus:outline-none">
-              <span x-text="chartData.options[chartData.selectedOption].label"></span>
-              <i className="mdi mdi-chevron-down ml-1"></i>
-            </button>
-            <div className="absolute right-0 top-auto z-30 -mr-3 mt-1 w-32 min-w-full rounded bg-gray-700 text-sm shadow-lg">
-              <span className="absolute right-0 top-0 -mt-1 mr-3 h-3 w-3 rotate-45 transform bg-gray-700"></span>
-              <div className="relative z-10 w-full rounded bg-gray-700 py-1">
-                <ul className="list-reset text-xs">
-                  <template x-for="(item,index) in chartData.options">
-                    <li className="cursor-pointer px-4 py-2 transition-colors duration-100 hover:bg-gray-600 hover:text-white">
-                      <span x-text="item.label"></span>
-                    </li>
-                  </template>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="mb-5 flex flex-wrap items-end">
-          <h4
-            className="mr-2 inline-block text-2xl font-semibold leading-tight text-white lg:text-3xl"
-            x-text="'$'+(chartData.data?chartData.data[chartData.date].total.comma_formatter():0)"
-          >
-            0
-          </h4>
-          <span className="inline-block">
-            <span x-text="chartData.data&&chartData.data[chartData.date].upDown<0?'▼':'▲'">
-              0
-            </span>{" "}
-            <span x-text="chartData.data?chartData.data[chartData.date].upDown:0">
-              0
-            </span>
-            %
-          </span>
-        </div>
-        <div>
-          <canvas id="chart" className="w-full"></canvas>
-        </div>
-      </div>
+    <div className="flex flex-col gap-8 p-4">
+      <h1 className="text-3xl font-semibold leading-tight text-gray-800">
+        Historial de Pedidos
+      </h1>
+      <DaySelect />
+      <OrdersSection />
+
+      {/* <div>
+        <h3 className="text-xl font-semibold leading-tight text-gray-800">
+          Resumen
+        </h3>
+        <LineChart />
+      </div> */}
+      {/* <ReviewsSection reviews={reviews} /> */}
     </div>
   );
 }
