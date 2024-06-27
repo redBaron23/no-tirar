@@ -25,7 +25,7 @@ const Layout = async ({
       >
         <Providers session={session}>
           <main className="h-[calc(100vh-70px)] lg:h-screen">{children}</main>
-          <TabMenu />
+          <TabMenu userRole={session?.user.role} />
         </Providers>
       </body>
     </html>

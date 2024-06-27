@@ -2,6 +2,7 @@
 
 import { OrderStatus } from "@prisma/client";
 import MiniOrder from "../molecules/MiniOrder";
+import OrderSearchBar from "../molecules/OrderSearchBar";
 
 const transactions = [
   {
@@ -26,7 +27,8 @@ const transactions = [
 
 const OrdersSection = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-2">
+      <OrderSearchBar />
       <h3 className="text-xl font-semibold">Hoy</h3>
       {transactions.map((transaction) => (
         <MiniOrder

@@ -4,6 +4,9 @@ const pages = {
   restaurant: "/restaurant",
   profile: "/profile",
   settings: "/profile/settings",
+  board: "/board",
+  users: "/users",
+  dashboard: "/dashboard",
 };
 
 export { pages };
