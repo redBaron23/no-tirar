@@ -15,6 +15,7 @@ import { FaUserCircle, FaRegUserCircle } from "react-icons/fa";
 import { useRouter, usePathname } from "next/navigation";
 import { pages } from "@/constants/pages";
 import { UserRole } from "@prisma/client";
+import { MdMenuBook } from "react-icons/md";
 
 interface IconProps {
   filled: React.ReactNode;
@@ -66,6 +67,12 @@ const businessIcons: IconsType = {
     outlined: <RiDashboardLine className="h-6 w-6 text-gray-700" />,
     page: pages.board,
     text: "Tablero",
+  },
+  menu: {
+    filled: <MdMenuBook className="h-6 w-6 text-green-800" />,
+    outlined: <MdMenuBook className="h-6 w-6 text-gray-700" />,
+    page: pages.menu,
+    text: "Menu",
   },
   profile: {
     filled: <FaUserCircle className="h-6 w-6 text-green-800" />,

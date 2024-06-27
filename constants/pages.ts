@@ -7,6 +7,7 @@ const pages = {
   board: "/board",
   users: "/users",
   dashboard: "/dashboard",
+  menu: "/menu",
 };
 
 export { pages };
