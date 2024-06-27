@@ -1,8 +1,27 @@
+"use client";
+
+import { OrderStatus } from "@prisma/client";
 import MiniOrder from "../molecules/MiniOrder";
 
 const transactions = [
-  { id: "x1db-a5k7", date: "Hoy 11:55", status: "REALIZADO", amount: 4653 },
-  { id: "x1db-5k7", date: "Hoy 12:00", status: "RETIRO", amount: "3200" },
+  {
+    id: "x1db-a5k7",
+    date: "Hoy 11:55",
+    status: OrderStatus.COMPLETED,
+    amount: 4653,
+  },
+  {
+    id: "x1db-5k7",
+    date: "Hoy 12:00",
+    status: OrderStatus.CANCELED,
+    amount: 3200,
+  },
+  {
+    id: "x1db-5k7",
+    date: "Hoy 12:00",
+    status: OrderStatus.IN_PROGRESS,
+    amount: 3200,
+  },
 ];
 
 const OrdersSection = () => {
