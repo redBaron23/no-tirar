@@ -27,7 +27,7 @@ const transactions = [
 
 const OrdersSection = () => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-4">
       <OrderSearchBar />
       <h3 className="text-xl font-semibold">Hoy</h3>
       {transactions.map((transaction) => (
