@@ -10,7 +10,7 @@ const OPTIONS = [
   { label: "Últimos 30 días" },
 ];
 
-const DaySelect: React.FC = () => {
+const DaySelect = () => {
   const [selectedOption, setSelectedOption] = useState("Hoy");
 
   const handleChipClick = (label: string) => {
@@ -18,17 +18,15 @@ const DaySelect: React.FC = () => {
   };
 
   return (
-    <div className="w-80 md:w-full">
-      <div className="flex gap-2 overflow-x-auto whitespace-nowrap py-2">
-        {OPTIONS.map((option, index) => (
-          <Chip
-            key={`${index}/${option.label}`}
-            label={option.label}
-            isSelected={selectedOption === option.label}
-            onClick={() => handleChipClick(option.label)}
-          />
-        ))}
-      </div>
+    <div className="flex gap-2 overflow-x-auto whitespace-nowrap py-2">
+      {OPTIONS.map((option, index) => (
+        <Chip
+          key={`${index}/${option.label}`}
+          label={option.label}
+          isSelected={selectedOption === option.label}
+          onClick={() => handleChipClick(option.label)}
+        />
+      ))}
     </div>
   );
 };

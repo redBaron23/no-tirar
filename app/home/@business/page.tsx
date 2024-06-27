@@ -70,24 +70,9 @@ const reviews = [
   },
 ];
 
-const OPTIONS = [
-  {
-    label: "Hoy",
-  },
-  {
-    label: "Ayer",
-  },
-  {
-    label: "Ultimos 7 dias",
-  },
-  {
-    label: "Ultimos 30 dias",
-  },
-];
-
 export default function Page() {
   return (
-    <div className="flex flex-col gap-8 p-4">
+    <div className="flex w-full flex-col gap-8 p-4">
       <h1 className="text-3xl font-semibold leading-tight text-gray-800">
         Historial de Pedidos
       </h1>

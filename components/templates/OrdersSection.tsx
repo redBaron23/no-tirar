@@ -6,6 +6,24 @@ import OrderSearchBar from "../molecules/OrderSearchBar";
 
 const transactions = [
   {
+    id: "x1db-5k7",
+    date: "Hoy 12:00",
+    status: OrderStatus.IN_PROGRESS,
+    amount: 3200,
+  },
+  {
+    id: "x1db-5k7",
+    date: "Hoy 12:00",
+    status: OrderStatus.IN_PROGRESS,
+    amount: 3200,
+  },
+  {
+    id: "x1db-5k7",
+    date: "Hoy 12:00",
+    status: OrderStatus.IN_PROGRESS,
+    amount: 3200,
+  },
+  {
     id: "x1db-a5k7",
     date: "Hoy 11:55",
     status: OrderStatus.COMPLETED,
@@ -17,10 +35,17 @@ const transactions = [
     status: OrderStatus.CANCELED,
     amount: 3200,
   },
+
+  {
+    id: "x1db-a5k7",
+    date: "Hoy 11:55",
+    status: OrderStatus.COMPLETED,
+    amount: 4653,
+  },
   {
     id: "x1db-5k7",
     date: "Hoy 12:00",
-    status: OrderStatus.IN_PROGRESS,
+    status: OrderStatus.CANCELED,
     amount: 3200,
   },
 ];
