@@ -23,7 +23,7 @@ export const CurvedChart = ({ orders, sales, data }: CurvedChartProps) => {
   return (
     <Card className="w-full max-w-3xl">
       <CardHeader>
-        <div className="flex gap-6">
+        <div className="ml-2 flex gap-6">
           <div>
             <div className="text-sm text-gray-500">Pedidos</div>
             <div className="text-2xl font-bold">{orders}</div>
@@ -44,7 +44,7 @@ export const CurvedChart = ({ orders, sales, data }: CurvedChartProps) => {
 const FilledTimeseriesChart = ({
   className,
   data,
-  margin = { top: 10, right: 40, bottom: 40, left: 40 },
+  margin = { top: 10, right: 40, bottom: 40, left: 20 },
   xGridValues = [1, 2, 3, 4, 5, 6, 7],
 }: FilledTimeseriesChartProps) => {
   return (

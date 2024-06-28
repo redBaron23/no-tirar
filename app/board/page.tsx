@@ -2,6 +2,7 @@ import { CurvedChart } from "@/components/curved-chart";
 import DaySelect from "@/components/molecules/DaySelect";
 import TopBar from "@/components/molecules/TopBar";
 import { auth } from "@/lib/auth";
+import { Serie } from "@nivo/line";
 import { LineChart } from "lucide-react";
 import { FiChevronRight } from "react-icons/fi";
 
