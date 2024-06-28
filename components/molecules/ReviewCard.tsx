@@ -1,37 +1,37 @@
-"use client";
-
-import { Card, CardContent, CardHeader } from "../ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { StarIcon } from "lucide-react";
+import { FaStar } from "react-icons/fa";
+import dayjs from "dayjs";
 
 interface Props {
-  name: string;
-  rating: string;
-  review: string;
+  restaurantName: string;
+  reviewText: string;
+  rating: number;
+  dateTime: string;
 }
 
-const ReviewCard = ({ name, rating, review }: Props) => (
-  <Card className="mx-auto w-full max-w-sm">
-    <CardHeader className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <Avatar className="h-10 w-10 border">
-          <AvatarImage src="/placeholder-user.jpg" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <div>
-          <h3 className="text-lg font-medium">{name}</h3>
-          <p className="text-muted-foreground text-sm">Verified Customer</p>
-        </div>
+const ReviewCard = ({
+  restaurantName,
+  reviewText,
+  rating,
+  dateTime,
+}: Props) => {
+  const parsedDate = dayjs(dateTime);
+  const formattedDate = parsedDate.format("DD/MM/YY");
+  const formattedTime = parsedDate.format("hh:mm A");
+
+  return (
+    <div className="flex max-w-xs flex-col rounded-lg border bg-white p-4 shadow-md">
+      <div className="flex">
+        {Array.from({ length: rating }).map((_, index) => (
+          <FaStar key={index} className="text-xl text-green-500" />
+        ))}
       </div>
-      <div className="flex items-center gap-1">
-        <StarIcon className="h-5 w-5 fill-yellow-500" />
-        <span className="text-lg font-medium">{rating}</span>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <p className="text-muted-foreground">{review}</p>
-    </CardContent>
-  </Card>
-);
+      <h3 className="mt-2 text-lg font-semibold">{restaurantName}</h3>
+      <p className="mt-1 text-sm text-gray-700">{reviewText}</p>
+      <p className="mt-2 text-xs text-gray-500">
+        {formattedDate} · {formattedTime}
+      </p>
+    </div>
+  );
+};
 
 export default ReviewCard;

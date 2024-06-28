@@ -21,7 +21,7 @@ export const CurvedChart = ({ orders, sales, data }: CurvedChartProps) => {
   const parsedSales = formatCurrency(sales);
 
   return (
-    <Card className="w-full max-w-3xl">
+    <Card className="w-full max-w-3xl bg-white shadow-md">
       <CardHeader>
         <div className="ml-2 flex gap-6">
           <div>
