@@ -5,6 +5,21 @@ import { auth } from "@/lib/auth";
 import { LineChart } from "lucide-react";
 import { FiChevronRight } from "react-icons/fi";
 
+const data: Serie[] = [
+  {
+    id: "Desktop",
+    data: [
+      { x: "10 AM", y: 43 },
+      { x: "12 PM", y: 61 },
+      { x: "2 PM", y: 26 },
+      { x: "4 PM", y: 90 },
+      { x: "6 PM", y: 95 },
+      { x: "8 PM", y: 110 },
+      { x: "10 PM", y: 130 },
+    ],
+  },
+];
+
 export default async function Page() {
   const session = await auth();
 
@@ -25,7 +40,7 @@ export default async function Page() {
         </div>
         <DaySelect />
         {/* <LineChart /> */}
-        <CurvedChart />
+        <CurvedChart data={data} orders={25} sales={42000} />
       </section>
     </div>
   );

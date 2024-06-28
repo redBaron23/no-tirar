@@ -1,6 +1,4 @@
-import Chip from "@/components/atoms/Chip";
 import DaySelect from "@/components/molecules/DaySelect";
-import LineChart from "@/components/organisms/LineChart";
 import OrdersSection from "@/components/templates/OrdersSection";
 import ReviewsSection from "@/components/templates/ReviewsSection";
 import {
@@ -78,13 +76,6 @@ export default function Page() {
       </h1>
       <DaySelect />
       <OrdersSection />
-
-      {/* <div>
-        <h3 className="text-xl font-semibold leading-tight text-gray-800">
-          Resumen
-        </h3>
-        <LineChart />
-      </div> */}
       {/* <ReviewsSection reviews={reviews} /> */}
     </div>
   );

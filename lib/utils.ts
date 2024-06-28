@@ -23,3 +23,21 @@ export const isUnprotectedRoute = (currentPath: string): boolean =>
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+/**
+ * Formats a number as currency.
+ * @param amount - The number to format.
+ * @param locale - The locale string (default is 'en-US').
+ * @param currency - The currency code (default is 'USD').
+ * @returns A string representing the formatted currency.
+ */
+export function formatCurrency(
+  amount: number,
+  locale: string = "es-AR",
+  currency: string = "ARS",
+): string {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: currency,
+  }).format(amount);
+}
