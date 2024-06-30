@@ -3,34 +3,39 @@
 import { Button } from "@/components/ui/button";
 import { Step, StepItem, Stepper, useStepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
-import BusinessStep from "@/components/molecules/BusinessStep";
-import ProductStep from "@/components/molecules/ProductStep";
+import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
+import ProductInfoForm from "@/components/organisms/ProductInfoForm";
 
-const steps = [{ label: "Paso 1" }, { label: "Paso 2" }] satisfies StepItem[];
+const steps = [
+  { label: "Información General" },
+  { label: "Productos" },
+] satisfies StepItem[];
 
-const CompleteRestaurant = () => {
+const CompleteEstablishment = () => {
   return (
     <div className="flex flex-col items-center pb-5">
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-bold text-gray-800">
-            Configura tu negocio
+            Configura tu establecimiento
           </h1>
           <p className="text-gray-600">
-            Configura tu negocio para poder comenzar a usar {APP_NAME}
+            Configura tu establecimiento para poder comenzar a usar {APP_NAME}
           </p>
         </div>
-        <Stepper orientation="vertical" initialStep={0} steps={steps}>
-          {steps.map((stepProps, index) => {
-            return (
-              <Step key={stepProps.label} {...stepProps}>
-                {index === 0 && <BusinessStep />}
-                {index === 1 && <ProductStep />}
-              </Step>
-            );
-          })}
-          <Footer />
-        </Stepper>
+        <div className="pb-10">
+          <Stepper orientation="vertical" initialStep={0} steps={steps}>
+            {steps.map((stepProps, index) => {
+              return (
+                <Step key={stepProps.label} {...stepProps}>
+                  {index === 0 && <GeneralInfoStep />}
+                  {index === 1 && <ProductInfoForm />}
+                </Step>
+              );
+            })}
+            <Footer />
+          </Stepper>
+        </div>
       </div>
     </div>
   );
@@ -86,4 +91,4 @@ const Footer = () => {
   );
 };
 
-export default CompleteRestaurant;
+export default CompleteEstablishment;

@@ -1,15 +1,18 @@
 "use client";
+import { cn } from "@/lib/utils";
 
 interface CounterProps {
   maxQuantity?: number;
   onChange: (newQuantity: number) => void;
   quantity: number;
+  borderRadius?: string; // New prop for customizable border radius
 }
 
 export default function Counter({
   quantity,
   onChange,
   maxQuantity = 100,
+  borderRadius = "rounded-md", // Default border radius
 }: CounterProps) {
   const handleIncrement = () => {
     if (quantity < maxQuantity) {
@@ -24,13 +27,21 @@ export default function Counter({
   };
 
   return (
-    <div className="flex w-32 items-center justify-between rounded-full border border-gray-200 px-4 text-black">
+    <div
+      className={cn(
+        "flex w-32 items-center justify-between border border-gray-200 px-4 text-black",
+        borderRadius,
+      )}
+    >
       <button
         type="button"
         onClick={handleDecrement}
-        className={`${
-          quantity === 1 ? "cursor-not-allowed opacity-50" : ""
-        } size-10 leading-10 text-gray-600 transition hover:opacity-75`}
+        className={cn(
+          "size-10 leading-10 text-gray-600 transition hover:opacity-75",
+          {
+            "cursor-not-allowed opacity-50": quantity === 1,
+          },
+        )}
         disabled={quantity === 1}
       >
         &minus;
@@ -50,9 +61,12 @@ export default function Counter({
       <button
         type="button"
         onClick={handleIncrement}
-        className={`${
-          quantity === maxQuantity ? "cursor-not-allowed opacity-50" : ""
-        } size-10 leading-10 text-gray-600 transition hover:opacity-75`}
+        className={cn(
+          "size-10 leading-10 text-gray-600 transition hover:opacity-75",
+          {
+            "cursor-not-allowed opacity-50": quantity === maxQuantity,
+          },
+        )}
         disabled={quantity === maxQuantity}
       >
         +

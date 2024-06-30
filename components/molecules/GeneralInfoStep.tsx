@@ -2,18 +2,18 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { MapPinIcon, ImageIcon } from "lucide-react";
 
-const BusinessStep = () => {
+const GeneralInfoStep = () => {
   return (
     <div className="bg-secondary my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border p-4 text-gray-600">
       <form className="grid w-full grid-cols-1 gap-8">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="grid gap-2">
             <Label className="text-gray-700" htmlFor="name">
-              Nombre del Restaurante
+              Nombre del Establecimiento
             </Label>
             <Input
               id="name"
-              placeholder="Ingresa el nombre de tu restaurante"
+              placeholder="Ingresa el nombre de tu establecimiento"
             />
           </div>
           <div className="grid gap-2">
@@ -24,7 +24,7 @@ const BusinessStep = () => {
               <MapPinIcon className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
               <Input
                 id="address"
-                placeholder="Ingresa la dirección de tu restaurante"
+                placeholder="Ingresa la dirección de tu establecimiento"
                 className="pl-8"
               />
             </div>
@@ -65,4 +65,4 @@ const BusinessStep = () => {
   );
 };
 
-export default BusinessStep;
+export default GeneralInfoStep;
