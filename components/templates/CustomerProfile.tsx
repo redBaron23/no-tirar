@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import LogoutButton from "../atoms/LogoutButton";
 
-export default function AuthenticatedProfile() {
+export default function CustomerProfile() {
   return (
     <div className="grid h-full grid-rows-[auto_auto_1fr] gap-4 p-4">
       <Card className="p-4 text-center">
