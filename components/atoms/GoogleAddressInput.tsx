@@ -1,19 +1,15 @@
 "use client";
 
-import * as React from "react";
-import { usePlacesWidget } from "react-google-autocomplete";
-import { forwardRef } from "react";
-import { Input as BaseInput, InputProps } from "../ui/input";
+import AutoComplete from "react-google-autocomplete";
 
 const GoogleAddressInput = () => {
-  const { ref } = usePlacesWidget({
-    apiKey: "AIzaSyAhJWAOLkOLOori0EwDOdYu914h3o2F5CQ", // Reemplaza con tu clave de API
-    onPlaceSelected: (place) => {
-      console.log(place);
-    },
-  });
-
-  return <input></input>;
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY);
+  return (
+    <AutoComplete
+      apiKey={process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY}
+      onPlaceSelected={(place) => console.log(place)}
+    />
+  );
 };
 
 export default GoogleAddressInput;
