@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
@@ -28,7 +30,7 @@ const ProductInfoStep: React.FC = () => {
       productType: "bandeja-sorpresa",
       startTime: "",
       endTime: "",
-      quantity: 1, // Set initial quantity to 1
+      quantity: 1,
       price: 0,
     },
   });
@@ -65,7 +67,7 @@ const ProductInfoStep: React.FC = () => {
           </div>
           <div className="grid gap-2">
             <Label className="text-gray-700" htmlFor="time-range">
-              Rango de Horario para Recoger
+              Franja horaria de pickup
             </Label>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Input
@@ -99,7 +101,7 @@ const ProductInfoStep: React.FC = () => {
             <MoneyInput
               control={control}
               name="price"
-              label="Precio"
+              label="Precio por producto"
               placeholder="Ingresa el precio"
             />
           </div>

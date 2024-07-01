@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Step, StepItem, Stepper, useStepper } from "@/components/ui/stepper";
+import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
 import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
-import ProductInfoForm from "@/components/organisms/ProductInfoForm";
+import ProductInfoStep from "@/components/organisms/ProductInfoStep";
+import StepFooter from "../organisms/StepperFooter";
 
 const steps = [
   { label: "Información General" },
@@ -13,13 +13,13 @@ const steps = [
 
 const CompleteEstablishment = () => {
   return (
-    <div className="flex flex-col items-center pb-5">
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold text-gray-800">
+    <div className="flex flex-col items-center px-4 pb-8 lg:px-0">
+      <div className="flex w-full max-w-4xl flex-col gap-8">
+        <div className="flex flex-col gap-4">
+          <h1 className="text-center text-3xl font-bold text-gray-800 lg:text-left">
             Configura tu establecimiento
           </h1>
-          <p className="text-gray-600">
+          <p className="text-center text-lg text-gray-600 lg:text-left">
             Configura tu establecimiento para poder comenzar a usar {APP_NAME}
           </p>
         </div>
@@ -29,65 +29,15 @@ const CompleteEstablishment = () => {
               return (
                 <Step key={stepProps.label} {...stepProps}>
                   {index === 0 && <GeneralInfoStep />}
-                  {index === 1 && <ProductInfoForm />}
+                  {index === 1 && <ProductInfoStep />}
                 </Step>
               );
             })}
-            <Footer />
+            <StepFooter />
           </Stepper>
         </div>
       </div>
     </div>
-  );
-};
-
-const Footer = () => {
-  const {
-    nextStep,
-    prevStep,
-    resetSteps,
-    isDisabledStep,
-    hasCompletedAllSteps,
-    isLastStep,
-    isOptionalStep,
-  } = useStepper();
-  return (
-    <>
-      {hasCompletedAllSteps && (
-        <div className="bg-secondary text-primary flex h-40 items-center justify-center rounded-md border">
-          <h1 className="text-xl">¡Woohoo! ¡Todos los pasos completados! 🎉</h1>
-        </div>
-      )}
-      <div className="flex w-full justify-end gap-2">
-        {hasCompletedAllSteps ? (
-          <Button size="sm" onClick={resetSteps}>
-            Reiniciar
-          </Button>
-        ) : (
-          <>
-            <Button
-              disabled={isDisabledStep}
-              onClick={prevStep}
-              size="sm"
-              variant="secondary"
-            >
-              Anterior
-            </Button>
-            <Button
-              size="sm"
-              onClick={nextStep}
-              className="bg-green-600 text-white"
-            >
-              {isLastStep
-                ? "Finalizar"
-                : isOptionalStep
-                  ? "Saltar"
-                  : "Siguiente"}
-            </Button>
-          </>
-        )}
-      </div>
-    </>
   );
 };
 

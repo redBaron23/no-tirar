@@ -1,6 +1,7 @@
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { MapPinIcon, ImageIcon } from "lucide-react";
+import GoogleAddressInput from "@/components/atoms/GoogleAddressInput";
 
 const GeneralInfoStep = () => {
   return (
@@ -21,13 +22,14 @@ const GeneralInfoStep = () => {
               Dirección
             </Label>
             <div className="relative">
-              <MapPinIcon className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
+              {/* <MapPinIcon className="text-muted-foreground absolute left-2.5 top-2.5 h-4 w-4" />
               <Input
                 id="address"
                 placeholder="Ingresa la dirección de tu establecimiento"
                 className="pl-8"
-              />
+              /> */}
             </div>
+            <GoogleAddressInput />
             <div className="text-muted-foreground text-sm">
               Haz clic en el ícono del mapa para seleccionar tu ubicación.
             </div>
