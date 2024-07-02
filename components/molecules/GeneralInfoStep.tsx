@@ -1,14 +1,17 @@
+"use client";
+
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { ImageIcon } from "lucide-react";
 import GoogleAddressInput from "@/components/atoms/GoogleAddressInput";
 import { Libraries, useLoadScript } from "@react-google-maps/api";
 import { Skeleton } from "../ui/skeleton";
+import ImageInput from "../atoms/ImageInput";
 
 const libraries: Libraries = ["places"];
 
 const GeneralInfoStep = () => {
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!,
     libraries,
   });
@@ -32,31 +35,8 @@ const GeneralInfoStep = () => {
             </div>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
-            <div className="grid gap-2">
-              <Label className="text-gray-700" htmlFor="profile-photo">
-                Foto de Perfil
-              </Label>
-              <label htmlFor="profile-upload" className="cursor-pointer">
-                <div className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-gray-200">
-                  <ImageIcon className="h-8 w-8 text-gray-500" />
-                </div>
-                <input id="profile-upload" type="file" className="hidden" />
-              </label>
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-gray-700" htmlFor="background-photo">
-                Foto de Fondo
-              </Label>
-              <label
-                htmlFor="background-upload"
-                className="w-full cursor-pointer"
-              >
-                <div className="relative flex h-16 w-full items-center justify-center overflow-hidden rounded-md bg-gray-200">
-                  <ImageIcon className="h-8 w-8 text-gray-500" />
-                </div>
-                <input id="background-upload" type="file" className="hidden" />
-              </label>
-            </div>
+            <ImageInput type="profile" />
+            <ImageInput type="background" />
           </div>
         </form>
       ) : (

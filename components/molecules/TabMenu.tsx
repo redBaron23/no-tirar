@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   RiHeartLine,
   RiHeartFill,
@@ -9,13 +9,15 @@ import {
   RiDashboardLine,
   RiDashboardFill,
 } from "react-icons/ri";
-import { FaShoppingBag } from "react-icons/fa";
-import { MdOutlineShoppingBag, MdOutlineDashboard } from "react-icons/md";
-import { FaUserCircle, FaRegUserCircle } from "react-icons/fa";
+import { FaShoppingBag, FaUserCircle, FaRegUserCircle } from "react-icons/fa";
+import {
+  MdOutlineShoppingBag,
+  MdOutlineDashboard,
+  MdMenuBook,
+} from "react-icons/md";
 import { useRouter, usePathname } from "next/navigation";
 import { pages } from "@/constants/pages";
 import { UserRole } from "@prisma/client";
-import { MdMenuBook } from "react-icons/md";
 
 interface IconProps {
   filled: React.ReactNode;
@@ -115,18 +117,27 @@ interface Props {
   userRole?: UserRole;
 }
 
+const getDefaultPath = (icons: IconsType, pathname: string) => {
+  return (
+    Object.keys(icons).find((key) => icons[key].page === pathname) ?? "home"
+  );
+};
+
 export default function TabMenu({ userRole = UserRole.CUSTOMER }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const icons = iconsByRole[userRole];
-  const defaultPath = Object.keys(icons).find(
-    (key) => icons[key].page === pathname,
+
+  const [selected, setSelected] = useState<string>(
+    getDefaultPath(icons, pathname),
   );
-  const [selected, setSelected] = useState<string>(defaultPath ?? "home");
+
+  useEffect(() => {
+    setSelected(getDefaultPath(icons, pathname));
+  }, [pathname, icons]);
 
   const handleClick = (key: string) => {
     router.push(icons[key].page);
-    setSelected(key);
   };
 
   if (
@@ -134,7 +145,7 @@ export default function TabMenu({ userRole = UserRole.CUSTOMER }: Props) {
       (path) => pathname.startsWith(path) || pathname === pages.index,
     )
   ) {
-    return <></>;
+    return null;
   }
 
   return (
