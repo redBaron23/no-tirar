@@ -15,10 +15,6 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   providers: [
-    // GithubProvider({
-    //   clientId: process.env.GITHUB_ID as string,
-    //   clientSecret: process.env.GITHUB_SECRET as string,
-    // }),Z
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
@@ -40,7 +36,6 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
-// Use it in server contexts
 export async function auth(
   ...args:
     | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]

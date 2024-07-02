@@ -1,40 +1,29 @@
 "use client";
 
+import { Controller, Control } from "react-hook-form";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import GoogleAddressInput from "@/components/atoms/GoogleAddressInput";
-import { Libraries, useLoadScript } from "@react-google-maps/api";
-import { Skeleton } from "../ui/skeleton";
 import ImageInput from "../atoms/ImageInput";
-import { cx } from "class-variance-authority";
-import { Controller, Control } from "react-hook-form";
-
-const libraries: Libraries = ["places"];
-
-interface GeneralInfoForm {
-  name: string;
-  address: string;
-  profileImage: File | null;
-  backgroundImage: File | null;
-}
+import { Skeleton } from "../ui/skeleton";
+import { Product, Restaurant } from "@prisma/client";
+import { useLoadScript } from "@react-google-maps/api";
+import { EstablishmentForm } from "@/types/forms/Establishment";
 
 interface Props {
   hide: boolean;
-  control: Control<GeneralInfoForm>;
+  control: Control<EstablishmentForm>;
 }
 
 const GeneralInfoStep = ({ hide, control }: Props) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!,
-    libraries,
+    libraries: ["places"],
   });
 
   return (
     <div
-      className={cx(
-        { hidden: hide },
-        "my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600",
-      )}
+      className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600 ${hide ? "hidden" : ""}`}
     >
       {isLoaded ? (
         <div className="grid w-full grid-cols-1 gap-8">

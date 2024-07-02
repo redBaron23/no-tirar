@@ -6,36 +6,21 @@ import { APP_NAME } from "@/constants";
 import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
 import ProductInfoStep from "@/components/organisms/ProductInfoStep";
 import StepFooter from "../organisms/StepperFooter";
+import { EstablishmentForm } from "@/types/forms/Establishment";
 
 const steps = [
   { label: "Información General" },
   { label: "Productos" },
 ] satisfies StepItem[];
 
-interface EstablishmentForm {
-  name: string;
-  address: string;
-  profileImage: File | null;
-  backgroundImage: File | null;
-  productType: string;
-  startTime: string;
-  endTime: string;
-  quantity: number;
-  price: number;
-}
-
 const CompleteEstablishment = () => {
   const form: UseFormReturn<EstablishmentForm> = useForm<EstablishmentForm>({
     defaultValues: {
       name: "",
+      description: "",
       address: "",
       profileImage: null,
       backgroundImage: null,
-      productType: "bandeja-sorpresa",
-      startTime: "",
-      endTime: "",
-      quantity: 1,
-      price: 0,
     },
   });
 
@@ -43,6 +28,7 @@ const CompleteEstablishment = () => {
 
   const onSubmit = (data: EstablishmentForm) => {
     console.log(data);
+    // Handle form submission here
   };
 
   return (
@@ -56,7 +42,7 @@ const CompleteEstablishment = () => {
             Configura tu establecimiento para poder comenzar a usar {APP_NAME}
           </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="pb-10">
+        <form className="pb-10">
           <Stepper orientation="vertical" initialStep={0} steps={steps}>
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>

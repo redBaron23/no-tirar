@@ -14,6 +14,7 @@ import MoneyInput from "../atoms/MoneyInput";
 import { Controller, Control } from "react-hook-form";
 import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
 import { cx } from "class-variance-authority";
+import { EstablishmentForm } from "@/types/forms/Establishment";
 
 interface ProductInfoForm {
   productType: string;
@@ -25,7 +26,7 @@ interface ProductInfoForm {
 
 interface Props {
   hide: boolean;
-  control: Control<ProductInfoForm>;
+  control: Control<EstablishmentForm>;
 }
 
 const ProductInfoStep = ({ hide, control }: Props) => {

@@ -22,16 +22,15 @@ const StepperFooter = () => {
   };
 
   const handleNextStep = () => {
-    if (isLastStep) {
+    if (!isLastStep) {
+      nextStep();
     }
-
-    nextStep();
   };
 
   return (
     <>
       {hasCompletedAllSteps && (
-        <div className="bg-secondary text-primary my-4 flex h-40 flex-col items-center justify-center gap-2 rounded-md border p-6">
+        <div className="my-4 flex h-40 flex-col items-center justify-center gap-2 rounded-md border bg-secondary p-6 text-primary">
           <h1 className="text-xl font-semibold">
             ¡Todos los pasos han sido completados! 🎉
           </h1>
@@ -62,6 +61,7 @@ const StepperFooter = () => {
               size="sm"
               onClick={handleNextStep}
               className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
+              type={isLastStep ? "submit" : "button"}
             >
               {isLastStep
                 ? "Finalizar"
