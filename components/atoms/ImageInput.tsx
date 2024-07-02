@@ -1,4 +1,7 @@
+"use client";
+
 import { useState } from "react";
+import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { Label } from "../ui/label";
 
@@ -24,7 +27,7 @@ const ImageInput = ({ type }: ImageInputProps) => {
   return (
     <div className="grid gap-2">
       <Label className="text-gray-700" htmlFor={`${type}-photo`}>
-        {type === "profile" ? "Foto de Perfil" : "Foto de Fondo"}
+        {type === "profile" ? "Imagen de Perfil" : "Imagen de Fondo"}
       </Label>
       <label
         htmlFor={`${type}-upload`}
@@ -42,7 +45,12 @@ const ImageInput = ({ type }: ImageInputProps) => {
           }`}
         >
           {image ? (
-            <img src={image} alt={`${type} preview`} className="object-cover" />
+            <Image
+              src={image}
+              alt={`${type} preview`}
+              layout="fill"
+              objectFit="cover"
+            />
           ) : (
             <ImageIcon className="h-8 w-8 text-gray-500" />
           )}
