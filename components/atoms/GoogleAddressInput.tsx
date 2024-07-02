@@ -1,4 +1,6 @@
-import { useState, useRef } from "react";
+"use client";
+
+import { useRef } from "react";
 import { Autocomplete } from "@react-google-maps/api";
 import { Input } from "../ui/input";
 
@@ -9,15 +11,19 @@ import { Input } from "../ui/input";
 //   libraries,
 // });
 
-const GoogleAddressInput = () => {
-  const [address, setAddress] = useState<string>("");
+interface GoogleAddressInputProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const GoogleAddressInput = ({ value, onChange }: GoogleAddressInputProps) => {
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
   const onPlaceChanged = () => {
     if (autocompleteRef.current !== null) {
       const place = autocompleteRef.current.getPlace();
       if (place.formatted_address) {
-        setAddress(place.formatted_address);
+        onChange(place.formatted_address);
       }
     }
   };
@@ -38,8 +44,8 @@ const GoogleAddressInput = () => {
         <Input
           type="text"
           placeholder="Enter your address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
         />
       </Autocomplete>
     </div>

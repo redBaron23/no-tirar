@@ -84,20 +84,6 @@ export function ReserveModal({
                 <DollarSignIcon className="h-5 w-5" />
                 Cash
               </Label>
-
-              {/* <Label
-                className="flex cursor-pointer items-center justify-between rounded-md border-2 border-gray-100 bg-white p-4 hover:bg-gray-100 hover:text-gray-900 peer-data-[state=checked]:border-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:peer-data-[state=checked]:border-gray-50 [&:has([data-state=checked])]:border-gray-900 dark:[&:has([data-state=checked])]:border-gray-50"
-                htmlFor="card"
-                aria-disabled
-              >
-                <RadioGroupItem
-                  className="peer sr-only"
-                  id="card"
-                  value="card"
-                />
-                <CreditCardIcon className="h-5 w-5" />
-                Card
-              </Label> */}
             </RadioGroup>
           </div>
           <div className="flex items-center justify-between">
@@ -105,7 +91,10 @@ export function ReserveModal({
               <Label className="font-semibold" htmlFor="quantity">
                 Quantity
               </Label>
-              <Counter quantity={quantity} onChange={handleChangeQuantity} />
+              <Counter
+                quantity={quantity}
+                onChangeQuantity={handleChangeQuantity}
+              />
             </div>
             <div className="text-2xl font-bold">$ {price}</div>
           </div>

@@ -1,29 +1,36 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { InputHTMLAttributes } from "react";
 
-interface CounterProps {
+interface CounterProps extends InputHTMLAttributes<HTMLInputElement> {
   maxQuantity?: number;
-  onChange: (newQuantity: number) => void;
+  onChangeQuantity: (newQuantity: number) => void;
   quantity: number;
   borderRadius?: string; // New prop for customizable border radius
 }
 
 export default function Counter({
   quantity,
-  onChange,
+  onChangeQuantity,
   maxQuantity = 100,
   borderRadius = "rounded-md", // Default border radius
+  ...inputProps // Spread the remaining input props
 }: CounterProps) {
   const handleIncrement = () => {
     if (quantity < maxQuantity) {
-      onChange(quantity + 1);
+      onChangeQuantity(quantity + 1);
     }
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
-      onChange(quantity - 1);
+      onChangeQuantity(quantity - 1);
     }
+  };
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const value = parseInt(e.target.value) || 1;
+    onChangeQuantity(value > maxQuantity ? maxQuantity : value);
   };
 
   return (
@@ -51,11 +58,9 @@ export default function Counter({
         type="number"
         id="Quantity"
         value={quantity}
-        onChange={(e) => {
-          const value = parseInt(e.target.value) || 1;
-          onChange(value > maxQuantity ? maxQuantity : value);
-        }}
+        onChange={handleInputChange}
         className="h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+        {...inputProps}
       />
 
       <button

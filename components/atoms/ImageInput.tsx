@@ -1,18 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { Label } from "../ui/label";
 
 interface ImageInputProps {
   type: "profile" | "background";
+  value: File | null;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ImageInput = ({ type }: ImageInputProps) => {
+const ImageInput = ({ type, value, onChange }: ImageInputProps) => {
   const [image, setImage] = useState<string | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -22,6 +24,9 @@ const ImageInput = ({ type }: ImageInputProps) => {
       };
       reader.readAsDataURL(e.target.files[0]);
     }
+
+    // Call the onChange prop to update the form state
+    onChange(e);
   };
 
   return (

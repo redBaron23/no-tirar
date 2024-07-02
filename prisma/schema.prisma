@@ -20,6 +20,10 @@ enum OrderStatus {
   COMPLETED
 }
 
+enum ProductType {
+  SURPRISE
+}
+
 model User {
   id            String       @id @default(cuid())
   name          String?
@@ -38,16 +42,34 @@ model User {
 }
 
 model Restaurant {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  address     String
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String   @id @default(cuid())
+  name            String
+  description     String?
+  address         String
+  profileImage    String?
+  backgroundImage String?
+  userId          String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  owner  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  orders Order[]
+  owner    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders   Order[]
+  products Product[]
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  name         String
+  description  String?
+  productType  ProductType
+  price        Decimal
+  quantity     Int
+  restaurantId String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  orders     Order[]
 }
 
 model Order {
@@ -57,11 +79,13 @@ model Order {
   status          OrderStatus @default(IN_PROGRESS)
   userId          String
   restaurantId    String
+  productId       String
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @default(now()) @updatedAt
 
   user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  product    Product    @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Account {

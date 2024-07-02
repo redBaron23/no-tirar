@@ -11,9 +11,9 @@ import {
   SelectItem,
 } from "../ui/select";
 import MoneyInput from "../atoms/MoneyInput";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { Controller, Control } from "react-hook-form";
 import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
-import { useState } from "react";
+import { cx } from "class-variance-authority";
 
 interface ProductInfoForm {
   productType: string;
@@ -23,28 +23,18 @@ interface ProductInfoForm {
   price: number;
 }
 
-const ProductInfoStep: React.FC = () => {
-  const [quantity, setQuantity] = useState(1);
-  const form: UseFormReturn<ProductInfoForm> = useForm<ProductInfoForm>({
-    defaultValues: {
-      productType: "bandeja-sorpresa",
-      startTime: "",
-      endTime: "",
-      quantity: 1,
-      price: 0,
-    },
-  });
+interface Props {
+  hide: boolean;
+  control: Control<ProductInfoForm>;
+}
 
-  const { control, handleSubmit } = form;
-
-  const onSubmit = (data: ProductInfoForm) => {
-    console.log(data);
-  };
-
+const ProductInfoStep = ({ hide, control }: Props) => {
   return (
-    <form
-      className="bg-secondary my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border p-4 text-gray-600"
-      onSubmit={handleSubmit(onSubmit)}
+    <div
+      className={cx(
+        hide && "hidden",
+        "my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600",
+      )}
     >
       <div className="grid w-full grid-cols-1 gap-8">
         <div className="grid gap-6 md:grid-cols-2">
@@ -70,17 +60,29 @@ const ProductInfoStep: React.FC = () => {
               Franja horaria de pickup
             </Label>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Input
-                id="start-time"
-                placeholder="Hora de Inicio"
-                type="time"
-                {...form.register("startTime")}
+              <Controller
+                name="startTime"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id="start-time"
+                    placeholder="Hora de Inicio"
+                    type="time"
+                    {...field}
+                  />
+                )}
               />
-              <Input
-                id="end-time"
-                placeholder="Hora de Fin"
-                type="time"
-                {...form.register("endTime")}
+              <Controller
+                name="endTime"
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    id="end-time"
+                    placeholder="Hora de Fin"
+                    type="time"
+                    {...field}
+                  />
+                )}
               />
             </div>
           </div>
@@ -90,11 +92,19 @@ const ProductInfoStep: React.FC = () => {
             <Label className="text-gray-700" htmlFor="quantity">
               Cantidad
             </Label>
-            <Counter
-              quantity={quantity}
-              onChange={(newQuantity) => setQuantity(newQuantity)}
-              maxQuantity={100}
-              borderRadius="rounded-md" // Ensure consistency with other inputs
+            <Controller
+              name="quantity"
+              control={control}
+              render={({ field }) => (
+                <Counter
+                  quantity={field.value}
+                  onChangeQuantity={(newQuantity) =>
+                    field.onChange(newQuantity)
+                  }
+                  maxQuantity={100}
+                  borderRadius="rounded-md"
+                />
+              )}
             />
           </div>
           <div className="grid gap-2">
@@ -107,7 +117,7 @@ const ProductInfoStep: React.FC = () => {
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 
