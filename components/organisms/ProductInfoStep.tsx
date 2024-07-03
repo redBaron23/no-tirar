@@ -14,26 +14,17 @@ import MoneyInput from "../atoms/MoneyInput";
 import { Controller, Control } from "react-hook-form";
 import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
 import { cx } from "class-variance-authority";
-import { EstablishmentForm } from "@/types/forms/Establishment";
-
-interface ProductInfoForm {
-  productType: string;
-  startTime: string;
-  endTime: string;
-  quantity: number;
-  price: number;
-}
+import dayjs from "dayjs";
+import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
 
 interface Props {
-  hide: boolean;
-  control: Control<EstablishmentForm>;
+  control: Control<CreateRestaurantType>;
 }
 
-const ProductInfoStep = ({ hide, control }: Props) => {
+const ProductInfoStep = ({ control }: Props) => {
   return (
     <div
       className={cx(
-        hide && "hidden",
         "my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600",
       )}
     >
@@ -69,7 +60,10 @@ const ProductInfoStep = ({ hide, control }: Props) => {
                     id="start-time"
                     placeholder="Hora de Inicio"
                     type="time"
-                    {...field}
+                    value={
+                      field.value ? dayjs(field.value).format("HH:mm") : ""
+                    }
+                    onChange={(e) => field.onChange(e.target.value)}
                   />
                 )}
               />
@@ -81,7 +75,10 @@ const ProductInfoStep = ({ hide, control }: Props) => {
                     id="end-time"
                     placeholder="Hora de Fin"
                     type="time"
-                    {...field}
+                    value={
+                      field.value ? dayjs(field.value).format("HH:mm") : ""
+                    }
+                    onChange={(e) => field.onChange(e.target.value)}
                   />
                 )}
               />

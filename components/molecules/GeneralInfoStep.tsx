@@ -6,16 +6,14 @@ import { Label } from "../ui/label";
 import GoogleAddressInput from "@/components/atoms/GoogleAddressInput";
 import ImageInput from "../atoms/ImageInput";
 import { Skeleton } from "../ui/skeleton";
-import { Product, Restaurant } from "@prisma/client";
 import { useLoadScript } from "@react-google-maps/api";
-import { EstablishmentForm } from "@/types/forms/Establishment";
+import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
 
 interface Props {
-  hide: boolean;
-  control: Control<EstablishmentForm>;
+  control: Control<CreateRestaurantType>;
 }
 
-const GeneralInfoStep = ({ hide, control }: Props) => {
+const GeneralInfoStep = ({ control }: Props) => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!,
     libraries: ["places"],
@@ -23,7 +21,7 @@ const GeneralInfoStep = ({ hide, control }: Props) => {
 
   return (
     <div
-      className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600 ${hide ? "hidden" : ""}`}
+      className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600`}
     >
       {isLoaded ? (
         <div className="grid w-full grid-cols-1 gap-8">

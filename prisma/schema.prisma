@@ -48,6 +48,8 @@ model Restaurant {
   address            String
   profileImageUrl    String?
   backgroundImageUrl String?
+  startTime          DateTime
+  endTime            DateTime
   userId             String
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt

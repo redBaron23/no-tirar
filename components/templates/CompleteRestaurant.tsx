@@ -7,6 +7,7 @@ import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
 import ProductInfoStep from "@/components/organisms/ProductInfoStep";
 import StepFooter from "../organisms/StepperFooter";
 import { EstablishmentForm } from "@/types/forms/Establishment";
+import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
 
 const steps = [
   { label: "Información General" },
@@ -14,22 +15,21 @@ const steps = [
 ] satisfies StepItem[];
 
 const CompleteEstablishment = () => {
-  const form: UseFormReturn<EstablishmentForm> = useForm<EstablishmentForm>({
-    defaultValues: {
-      name: "",
-      description: "",
-      address: "",
-      profileImage: null,
-      backgroundImage: null,
-    },
-  });
+  const form: UseFormReturn<CreateRestaurantType> =
+    useForm<CreateRestaurantType>({
+      defaultValues: {
+        name: "",
+        description: "",
+        address: "",
+        profileImage: null,
+        backgroundImage: null,
+        quantity: 1,
+      },
+    });
 
+  // Without this submit, is failing
   const { control, handleSubmit } = form;
-
-  const onSubmit = (data: EstablishmentForm) => {
-    console.log(data);
-    // Handle form submission here
-  };
+  const onSubmit = (data: CreateRestaurantType) => {};
 
   return (
     <div className="flex flex-col items-center px-4 pb-8 lg:px-0">
@@ -42,19 +42,15 @@ const CompleteEstablishment = () => {
             Configura tu establecimiento para poder comenzar a usar {APP_NAME}
           </p>
         </div>
-        <form className="pb-10">
+        <form onSubmit={handleSubmit(onSubmit)} className="pb-10">
           <Stepper orientation="vertical" initialStep={0} steps={steps}>
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>
-                {index === 0 && (
-                  <GeneralInfoStep hide={false} control={control} />
-                )}
-                {index === 1 && (
-                  <ProductInfoStep hide={false} control={control} />
-                )}
+                {index === 0 && <GeneralInfoStep control={control} />}
+                {index === 1 && <ProductInfoStep control={control} />}
               </Step>
             ))}
-            <StepFooter />
+            <StepFooter form={form} />
           </Stepper>
         </form>
       </div>

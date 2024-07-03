@@ -5,8 +5,19 @@ import { Button } from "../ui/button";
 import { useStepper } from "../ui/stepper";
 import { useRouter } from "next/navigation";
 import { pages } from "@/constants/pages";
+import { UseFormReturn } from "react-hook-form";
+import { useAction } from "next-safe-action/hooks";
+import { createRestaurant } from "@/app/actions/restaurant/createRestaurant";
+import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
 
-const StepperFooter = () => {
+interface StepperFooterProps {
+  form: UseFormReturn<CreateRestaurantType>;
+}
+
+const StepperFooter = ({ form }: StepperFooterProps) => {
+  const { result, executeAsync, isExecuting, hasSucceeded } =
+    useAction(createRestaurant);
+
   const {
     nextStep,
     prevStep,
@@ -21,9 +32,20 @@ const StepperFooter = () => {
     router.push(pages.home);
   };
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     if (!isLastStep) {
       nextStep();
+      return;
+    }
+
+    const data = form.getValues();
+    console.log(data);
+
+    try {
+      await executeAsync(data);
+      hasSucceeded && nextStep();
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -34,7 +56,10 @@ const StepperFooter = () => {
           <h1 className="text-xl font-semibold">
             ¡Todos los pasos han sido completados! 🎉
           </h1>
-          <p className="text-md">Ya puedes comenzar a utilizar {APP_NAME}</p>
+          <p className="text-md">
+            Ya puedes comenzar a utilizar {APP_NAME} con tu establecimiento{" "}
+            {result.data?.restaurant.name}
+          </p>
         </div>
       )}
       <div className="mt-4 flex w-full justify-end gap-2">
@@ -49,7 +74,7 @@ const StepperFooter = () => {
         ) : (
           <>
             <Button
-              disabled={isDisabledStep}
+              disabled={isDisabledStep || isExecuting}
               onClick={prevStep}
               size="sm"
               variant="secondary"
@@ -61,7 +86,7 @@ const StepperFooter = () => {
               size="sm"
               onClick={handleNextStep}
               className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
-              type={isLastStep ? "submit" : "button"}
+              isLoading={isExecuting}
             >
               {isLastStep
                 ? "Finalizar"
