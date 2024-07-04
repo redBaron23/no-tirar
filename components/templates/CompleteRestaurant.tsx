@@ -1,13 +1,17 @@
 "use client";
 
 import { useForm, UseFormReturn } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
 import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
 import ProductInfoStep from "@/components/organisms/ProductInfoStep";
 import StepFooter from "../organisms/StepperFooter";
-import { EstablishmentForm } from "@/types/forms/Establishment";
-import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
+import {
+  createRestaurantSchema,
+  CreateRestaurantType,
+} from "@/lib/validations/actions/restaurant/createRestaurant";
+import { useState, useEffect } from "react";
 
 const steps = [
   { label: "Información General" },
@@ -17,6 +21,7 @@ const steps = [
 const CompleteEstablishment = () => {
   const form: UseFormReturn<CreateRestaurantType> =
     useForm<CreateRestaurantType>({
+      resolver: zodResolver(createRestaurantSchema),
       defaultValues: {
         name: "",
         description: "",
@@ -27,8 +32,7 @@ const CompleteEstablishment = () => {
       },
     });
 
-  // Without this submit, is failing
-  const { control, handleSubmit } = form;
+  const { control, handleSubmit, formState } = form;
   const onSubmit = (data: CreateRestaurantType) => {};
 
   return (

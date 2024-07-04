@@ -11,10 +11,9 @@ import {
   SelectItem,
 } from "../ui/select";
 import MoneyInput from "../atoms/MoneyInput";
-import { Controller, Control } from "react-hook-form";
+import { Controller, Control, useWatch } from "react-hook-form";
 import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
 import { cx } from "class-variance-authority";
-import dayjs from "dayjs";
 import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
 
 interface Props {
@@ -60,26 +59,30 @@ const ProductInfoStep = ({ control }: Props) => {
                     id="start-time"
                     placeholder="Hora de Inicio"
                     type="time"
-                    value={
-                      field.value ? dayjs(field.value).format("HH:mm") : ""
-                    }
+                    value={field.value || ""}
                     onChange={(e) => field.onChange(e.target.value)}
                   />
                 )}
               />
+
               <Controller
                 name="endTime"
                 control={control}
-                render={({ field }) => (
-                  <Input
-                    id="end-time"
-                    placeholder="Hora de Fin"
-                    type="time"
-                    value={
-                      field.value ? dayjs(field.value).format("HH:mm") : ""
-                    }
-                    onChange={(e) => field.onChange(e.target.value)}
-                  />
+                render={({ field, fieldState: { error } }) => (
+                  <>
+                    <Input
+                      id="end-time"
+                      placeholder="Hora de Fin"
+                      type="time"
+                      value={field.value || ""}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                    {error && (
+                      <p className="mt-1 text-sm text-red-500">
+                        {error.message}
+                      </p>
+                    )}
+                  </>
                 )}
               />
             </div>

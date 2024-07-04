@@ -5,14 +5,21 @@ import { Button } from "../ui/button";
 import { useStepper } from "../ui/stepper";
 import { useRouter } from "next/navigation";
 import { pages } from "@/constants/pages";
-import { UseFormReturn } from "react-hook-form";
+import { UseFormReturn, useWatch } from "react-hook-form";
 import { useAction } from "next-safe-action/hooks";
 import { createRestaurant } from "@/app/actions/restaurant/createRestaurant";
 import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
+import { useState, useEffect } from "react";
 
 interface StepperFooterProps {
   form: UseFormReturn<CreateRestaurantType>;
 }
+
+// Define the fields for each step
+const stepFields: Array<Array<keyof CreateRestaurantType>> = [
+  ["name", "description", "address", "profileImage", "backgroundImage"],
+  ["productType", "startTime", "endTime", "quantity", "price"],
+];
 
 const StepperFooter = ({ form }: StepperFooterProps) => {
   const { result, executeAsync, isExecuting, hasSucceeded } =
@@ -21,18 +28,39 @@ const StepperFooter = ({ form }: StepperFooterProps) => {
   const {
     nextStep,
     prevStep,
-    isDisabledStep,
     hasCompletedAllSteps,
     isLastStep,
     isOptionalStep,
+    activeStep,
   } = useStepper();
   const router = useRouter();
+
+  const watchedFields = useWatch({
+    control: form.control,
+    name: stepFields[activeStep],
+  });
+
+  console.log({ watchedFields });
+
+  const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
+
+  useEffect(() => {
+    const checkFormValidity = async () => {
+      const results = await form.trigger(stepFields[activeStep]);
+      setIsNextButtonDisabled(!results);
+    };
+
+    checkFormValidity();
+  }, [watchedFields, form, activeStep]);
 
   const handleEndStep = () => {
     router.push(pages.home);
   };
 
   const handleNextStep = async () => {
+    const isValid = await form.trigger(stepFields[activeStep]);
+    if (!isValid) return;
+
     if (!isLastStep) {
       nextStep();
       return;
@@ -74,7 +102,7 @@ const StepperFooter = ({ form }: StepperFooterProps) => {
         ) : (
           <>
             <Button
-              disabled={isDisabledStep || isExecuting}
+              disabled={isExecuting || activeStep === 0}
               onClick={prevStep}
               size="sm"
               variant="secondary"
@@ -87,6 +115,7 @@ const StepperFooter = ({ form }: StepperFooterProps) => {
               onClick={handleNextStep}
               className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
               isLoading={isExecuting}
+              disabled={isExecuting || isNextButtonDisabled}
             >
               {isLastStep
                 ? "Finalizar"
