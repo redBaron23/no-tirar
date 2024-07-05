@@ -37,7 +37,7 @@ const AtomicSelect = ({
       <SelectContent>
         <SelectGroup>
           {options.map((option) => (
-            <SelectItem key={option.key} value={option.value}>
+            <SelectItem key={option.key} value={option.key}>
               {option.value}
             </SelectItem>
           ))}

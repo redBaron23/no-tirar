@@ -1,29 +1,16 @@
 "use client";
 
-import { createRestaurantSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
+import { createRestaurantFirstStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductType } from "@prisma/client";
 import { cx } from "class-variance-authority";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import MoneyInput from "../atoms/MoneyInput";
-import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 
 const ProductInfoStep = () => {
   const { register, handleSubmit, control } = useForm<
-    z.infer<typeof createRestaurantSchema>
+    z.infer<typeof createRestaurantFirstStepSchema>
   >({
-    resolver: zodResolver(createRestaurantSchema),
+    resolver: zodResolver(createRestaurantFirstStepSchema),
   });
 
   return (
@@ -32,7 +19,7 @@ const ProductInfoStep = () => {
         "my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600",
       )}
     >
-      <div className="grid w-full grid-cols-1 gap-8">
+      {/* <div className="grid w-full grid-cols-1 gap-8">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="grid gap-2">
             <Label className="text-gray-700" htmlFor="product-type">
@@ -132,7 +119,7 @@ const ProductInfoStep = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

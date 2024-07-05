@@ -1,10 +1,10 @@
+import { UserRole } from "@prisma/client";
 import {
   createSafeActionClient,
   DEFAULT_SERVER_ERROR_MESSAGE,
 } from "next-safe-action";
 import { z } from "zod";
 import { auth } from "../auth";
-import { UserRole } from "@prisma/client";
 
 class ActionError extends Error {}
 

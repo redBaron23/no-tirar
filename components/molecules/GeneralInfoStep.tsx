@@ -3,6 +3,7 @@
 import { createRestaurantFirstStep } from "@/app/actions/restaurant/createRestaurant";
 import { createRestaurantFirstStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { BusinessType, ContactMethodType } from "@prisma/client";
 import { useLoadScript } from "@react-google-maps/api";
 import { useAction } from "next-safe-action/hooks";
 import { Controller, useForm } from "react-hook-form";
@@ -16,23 +17,33 @@ import { Skeleton } from "../ui/skeleton";
 import { useStepper } from "../ui/stepper";
 
 const businessTypeOptions = [
-  { key: "panaderia", value: "Panaderia" },
-  { key: "restaurant-cafe", value: "Restaurant y Cafe" },
-  { key: "other", value: "Others" },
+  { key: BusinessType.BAKERY, value: "Panaderia" },
+  { key: BusinessType.RESTAURANT_AND_CAFE, value: "Restaurant y Cafe" },
+  { key: BusinessType.OTHER, value: "Others" },
 ];
 
 const contactOptions = [
-  { key: "phone", value: "Telefono" },
-  { key: "whatsapp", value: "Whatsapp" },
-  { key: "email", value: "Email" },
+  { key: ContactMethodType.PHONE, value: "Telefono" },
+  { key: ContactMethodType.WHATSAPP, value: "Whatsapp" },
+  { key: ContactMethodType.EMAIL, value: "Email" },
 ];
 
 type FormSchema = z.infer<typeof createRestaurantFirstStepSchema>;
 
 const GeneralInfoStep = () => {
   const { nextStep } = useStepper();
-  const { handleSubmit, control } = useForm<FormSchema>({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormSchema>({
     resolver: zodResolver(createRestaurantFirstStepSchema),
+    defaultValues: {
+      type: BusinessType.RESTAURANT_AND_CAFE,
+      contactMethod: ContactMethodType.WHATSAPP,
+      name: "",
+      phone: "",
+    },
   });
 
   const { isLoaded } = useLoadScript({
@@ -45,7 +56,7 @@ const GeneralInfoStep = () => {
   const onSubmit = async (data: FormSchema) => {
     try {
       await executeAsync(data);
-      nextStep();
+      // nextStep();
     } catch (e) {
       console.log(e);
     }
@@ -74,6 +85,11 @@ const GeneralInfoStep = () => {
                     />
                   )}
                 />
+                {errors.name && (
+                  <span className="text-sm text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
               </div>
               <div className="grid gap-2">
                 <Label className="text-gray-700" htmlFor="businessType">
@@ -87,14 +103,19 @@ const GeneralInfoStep = () => {
                       options={businessTypeOptions}
                       disabled={false}
                       onValueChange={field.onChange}
-                      value={field.value || businessTypeOptions[0].value}
+                      value={field.value}
                       placeholder="Seleccione un tipo de negocio"
                     />
                   )}
                 />
+                {errors.type && (
+                  <span className="text-sm text-red-500">
+                    {errors.type.message}
+                  </span>
+                )}
               </div>
               <div className="grid gap-2">
-                <Label className="text-gray-700" htmlFor="businessType">
+                <Label className="text-gray-700" htmlFor="contactMethod">
                   Metodo de Contacto
                 </Label>
                 <Controller
@@ -105,14 +126,19 @@ const GeneralInfoStep = () => {
                       options={contactOptions}
                       disabled={false}
                       onValueChange={field.onChange}
-                      value={field.value || contactOptions[0].value}
-                      placeholder="Seleccione un tipo de negocio"
+                      value={field.value}
+                      placeholder="Seleccione un metodo de contacto"
                     />
                   )}
                 />
+                {errors.contactMethod && (
+                  <span className="text-sm text-red-500">
+                    {errors.contactMethod.message}
+                  </span>
+                )}
               </div>
               <div className="grid gap-2">
-                <Label className="text-gray-700" htmlFor="name">
+                <Label className="text-gray-700" htmlFor="phone">
                   Telefono
                 </Label>
                 <Controller
@@ -127,51 +153,13 @@ const GeneralInfoStep = () => {
                     />
                   )}
                 />
+                {errors.phone && (
+                  <span className="text-sm text-red-500">
+                    {errors.phone.message}
+                  </span>
+                )}
               </div>
-              {/* <Label className="text-gray-700" htmlFor="address">
-                  Dirección
-                </Label>
-                <Controller
-                  name="address"
-                  control={control}
-                  render={({ field }) => (
-                    <GoogleAddressInput
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  )}
-                /> */}
             </div>
-            {/* <div className="grid gap-6 md:grid-cols-2">
-              <Controller
-                name="profileImage"
-                control={control}
-                render={({ field }) => (
-                  <ImageInput
-                    type="profile"
-                    value={field.value}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] || null;
-                      field.onChange(file);
-                    }}
-                  />
-                )}
-              />
-              <Controller
-                name="backgroundImage"
-                control={control}
-                render={({ field }) => (
-                  <ImageInput
-                    type="background"
-                    value={field.value}
-                    onChange={(e) => {
-                      const file = e.target.files?.[0] || null;
-                      field.onChange(file);
-                    }}
-                  />
-                )}
-              />
-            </div> */}
           </div>
         ) : (
           <div className="flex w-full flex-col gap-3">
@@ -187,9 +175,6 @@ const GeneralInfoStep = () => {
         )}
       </div>
       <div className="flex justify-end gap-4">
-        {/* <Button size="sm" variant="secondary" className="px-4 py-2">
-          Anterior
-        </Button> */}
         <Button
           size="sm"
           className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"

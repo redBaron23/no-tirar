@@ -5,63 +5,31 @@ import { businessActionClient } from "@/lib/safe-action";
 import { createRestaurantFirstStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 
 export const createRestaurantFirstStep = businessActionClient
-  .metadata({ actionName: "createRestaurant" })
+  .metadata({ actionName: "createRestaurantFirstStep" })
   .schema(createRestaurantFirstStepSchema)
   .action(async ({ parsedInput: restaurantData, ctx: { userId } }) => {
-    const existingRestaurant = await prisma.restaurant.findFirst({
-      where: { userId },
-    });
+    try {
+      const existingRestaurant = await prisma.restaurant.findFirst({
+        where: { userId },
+      });
 
-    const restaurant = await prisma.restaurant.upsert({
-      where: { id: existingRestaurant ? existingRestaurant.id : "" }, // Use the existing restaurant ID or a fallback value
-      update: {
-        ...restaurantData,
-      },
-      create: {
-        ...restaurantData,
-        userId,
-      },
-    });
+      const restaurant = await prisma.restaurant.upsert({
+        where: {
+          id: existingRestaurant ? existingRestaurant.id : "non-existent-id",
+        }, // Use a non-existent ID to force creation if not found
+        update: existingRestaurant ? { ...restaurantData } : {}, // Update only if restaurant exists
+        create: {
+          ...restaurantData,
+          userId,
+        },
+      });
 
-    return {
-      success: true,
-      restaurant,
-    };
+      return {
+        success: true,
+        restaurant,
+      };
+    } catch (error) {
+      console.error("Error in createRestaurantFirstStep:", error);
+      throw new Error("Something went wrong while executing the operation.");
+    }
   });
-
-// const profileImageUrl = profileImage
-//   ? await uploadImage(
-//       profileImage,
-//       `profiles/${userId}/profile-${Date.now()}`,
-//     )
-//   : null;
-
-// const backgroundImageUrl = backgroundImage
-//   ? await uploadImage(
-//       backgroundImage,
-//       `backgrounds/${userId}/background-${Date.now()}`,
-//     )
-//   : null;
-
-// // Insert restaurant data into Prisma
-// const restaurant = await prisma.restaurant.create({
-//   data: {
-//     ...restaurantData,
-//     profileImageUrl,
-//     backgroundImageUrl,
-//     userId,
-//     startTime: new Date(`1970-01-01T${restaurantData.startTime}`),
-//     endTime: new Date(`1970-01-01T${restaurantData.endTime}`),
-//     products: {
-//       create: {
-//         name: "Surprise Box", // You might want to adjust this
-//         description: "A surprise product", // You might want to adjust this
-//         productType,
-//         quantity,
-//         price,
-//       },
-//     },
-//   },
-//   include: {
-//     products: true,
-//   },
