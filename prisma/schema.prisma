@@ -24,6 +24,18 @@ enum ProductType {
   SURPRISE
 }
 
+enum BusinessType {
+  BAKERY
+  RESTAURANT_AND_CAFE
+  OTHER
+}
+
+enum ContactMethodType {
+  PHONE
+  EMAIL
+  WHATSAPP
+}
+
 model User {
   id            String       @id @default(cuid())
   name          String?
@@ -42,17 +54,20 @@ model User {
 }
 
 model Restaurant {
-  id                 String   @id @default(cuid())
+  id                 String            @id @default(cuid())
   name               String
+  type               BusinessType
+  phone              String?
+  contactMethod      ContactMethodType
   description        String?
-  address            String
+  address            String?
   profileImageUrl    String?
   backgroundImageUrl String?
-  startTime          DateTime
-  endTime            DateTime
+  startTime          DateTime?
+  endTime            DateTime?
   userId             String
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
 
   owner    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   orders   Order[]

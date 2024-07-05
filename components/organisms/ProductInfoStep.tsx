@@ -1,26 +1,31 @@
 "use client";
 
+import { createRestaurantSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProductType } from "@prisma/client";
+import { cx } from "class-variance-authority";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import MoneyInput from "../atoms/MoneyInput";
+import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "../ui/select";
-import MoneyInput from "../atoms/MoneyInput";
-import { Controller, Control, useWatch } from "react-hook-form";
-import Counter from "../molecules/Counter"; // Assuming Counter is in the same directory
-import { cx } from "class-variance-authority";
-import { CreateRestaurantType } from "@/lib/validations/actions/restaurant/createRestaurant";
 
-interface Props {
-  control: Control<CreateRestaurantType>;
-}
+const ProductInfoStep = () => {
+  const { register, handleSubmit, control } = useForm<
+    z.infer<typeof createRestaurantSchema>
+  >({
+    resolver: zodResolver(createRestaurantSchema),
+  });
 
-const ProductInfoStep = ({ control }: Props) => {
   return (
     <div
       className={cx(
@@ -33,18 +38,28 @@ const ProductInfoStep = ({ control }: Props) => {
             <Label className="text-gray-700" htmlFor="product-type">
               Tipo de Producto
             </Label>
-            <Select disabled>
-              <SelectTrigger id="product-type" className="w-full">
-                <SelectValue placeholder="Bandeja Sorpresa" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="bandeja-sorpresa">
-                    Bandeja Sorpresa
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <Controller
+              name="productType"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  disabled
+                  onValueChange={field.onChange}
+                  value={field.value || ProductType.SURPRISE}
+                >
+                  <SelectTrigger id="product-type" className="w-full">
+                    <SelectValue placeholder="Bandeja Sorpresa" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value={ProductType.SURPRISE}>
+                        Bandeja Sorpresa
+                      </SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
           <div className="grid gap-2">
             <Label className="text-gray-700" htmlFor="time-range">

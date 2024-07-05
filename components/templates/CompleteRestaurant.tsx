@@ -1,17 +1,8 @@
 "use client";
 
-import { useForm, UseFormReturn } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
 import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
-import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
-import ProductInfoStep from "@/components/organisms/ProductInfoStep";
-import StepFooter from "../organisms/StepperFooter";
-import {
-  createRestaurantSchema,
-  CreateRestaurantType,
-} from "@/lib/validations/actions/restaurant/createRestaurant";
-import { useState, useEffect } from "react";
 
 const steps = [
   { label: "Información General" },
@@ -19,44 +10,45 @@ const steps = [
 ] satisfies StepItem[];
 
 const CompleteEstablishment = () => {
-  const form: UseFormReturn<CreateRestaurantType> =
-    useForm<CreateRestaurantType>({
-      resolver: zodResolver(createRestaurantSchema),
-      defaultValues: {
-        name: "",
-        description: "",
-        address: "",
-        profileImage: null,
-        backgroundImage: null,
-        quantity: 1,
-      },
-    });
+  // const form: UseFormReturn<CreateRestaurantType> =
+  //   useForm<CreateRestaurantType>({
+  //     resolver: zodResolver(createRestaurantSchema),
+  //     defaultValues: {
+  //       name: "",
+  //       description: "",
+  //       address: "",
+  //       profileImage: null,
+  //       backgroundImage: null,
+  //       quantity: 1,
+  //       productType: ProductType.SURPRISE, // Default value set here
+  //     },
+  //   });
 
-  const { control, handleSubmit, formState } = form;
-  const onSubmit = (data: CreateRestaurantType) => {};
+  // const { control, handleSubmit, formState } = form;
+  // const onSubmit = (data: CreateRestaurantType) => {};
 
   return (
     <div className="flex flex-col items-center px-4 pb-8 lg:px-0">
       <div className="flex w-full max-w-4xl flex-col gap-8">
         <div className="flex flex-col gap-4">
           <h1 className="text-center text-3xl font-bold text-gray-800 lg:text-left">
-            Configura tu establecimiento
+            Configura tu negocio
           </h1>
           <p className="text-center text-lg text-gray-600 lg:text-left">
-            Configura tu establecimiento para poder comenzar a usar {APP_NAME}
+            Configura tu negocio para poder comenzar a usar {APP_NAME}
           </p>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="pb-10">
+        <div>
           <Stepper orientation="vertical" initialStep={0} steps={steps}>
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>
-                {index === 0 && <GeneralInfoStep control={control} />}
-                {index === 1 && <ProductInfoStep control={control} />}
+                {index === 0 && <GeneralInfoStep />}
+                {/* {index === 1 && <ProductInfoStep />} */}
               </Step>
             ))}
-            <StepFooter form={form} />
+            {/* <StepFooter form={form} /> */}
           </Stepper>
-        </form>
+        </div>
       </div>
     </div>
   );

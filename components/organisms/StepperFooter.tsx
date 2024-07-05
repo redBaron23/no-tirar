@@ -40,8 +40,6 @@ const StepperFooter = ({ form }: StepperFooterProps) => {
     name: stepFields[activeStep],
   });
 
-  console.log({ watchedFields });
-
   const [isNextButtonDisabled, setIsNextButtonDisabled] = useState(false);
 
   useEffect(() => {
