@@ -1,11 +1,13 @@
 "use client";
 
-import GeneralInfoStep from "@/components/molecules/GeneralInfoStep";
 import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
+import LocationStep from "../molecules/LocationStep";
 
 const steps = [
   { label: "Información General" },
+  { label: "Productos" },
+  { label: "Productos" },
   { label: "Productos" },
 ] satisfies StepItem[];
 
@@ -42,7 +44,8 @@ const CompleteEstablishment = () => {
           <Stepper orientation="vertical" initialStep={0} steps={steps}>
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>
-                {index === 0 && <GeneralInfoStep />}
+                {/* {index === 0 && <GeneralInfoStep />} */}
+                {index === 0 && <LocationStep />}
                 {/* {index === 1 && <ProductInfoStep />} */}
               </Step>
             ))}
