@@ -17,7 +17,7 @@ export default function Location() {
       className="flex flex-col items-start gap-2 p-4 dark:bg-gray-800"
     >
       <div className="flex items-center gap-2">
-        <MapPinIcon className="text-primary h-6 w-6" />
+        <MapPinIcon className="h-6 w-6 text-primary" />
         <span className="text-lg font-semibold">
           123 Main Street, Cityville{" "}
           <span className="text-gray-500 dark:text-gray-400">(500m away)</span>
@@ -29,7 +29,7 @@ export default function Location() {
         </div>
         <Link
           href="#"
-          className="text-primary text-sm underline"
+          className="text-sm text-primary underline"
           prefetch={false}
         >
           Learn More

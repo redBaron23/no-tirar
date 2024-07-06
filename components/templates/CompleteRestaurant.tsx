@@ -2,33 +2,22 @@
 
 import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
+import { Restaurant } from "@prisma/client";
+import GeneralInfoStep from "../molecules/GeneralInfoStep";
 import LocationStep from "../molecules/LocationStep";
+import ProductInfoStep from "../organisms/ProductInfoStep";
 
 const steps = [
   { label: "Información General" },
-  { label: "Productos" },
-  { label: "Productos" },
+  { label: "Ubicacion" },
   { label: "Productos" },
 ] satisfies StepItem[];
 
-const CompleteEstablishment = () => {
-  // const form: UseFormReturn<CreateRestaurantType> =
-  //   useForm<CreateRestaurantType>({
-  //     resolver: zodResolver(createRestaurantSchema),
-  //     defaultValues: {
-  //       name: "",
-  //       description: "",
-  //       address: "",
-  //       profileImage: null,
-  //       backgroundImage: null,
-  //       quantity: 1,
-  //       productType: ProductType.SURPRISE, // Default value set here
-  //     },
-  //   });
+interface Props {
+  restaurant: Restaurant;
+}
 
-  // const { control, handleSubmit, formState } = form;
-  // const onSubmit = (data: CreateRestaurantType) => {};
-
+const CompleteEstablishment = ({ restaurant }: Props) => {
   return (
     <div className="flex flex-col items-center px-4 pb-8 lg:px-0">
       <div className="flex w-full max-w-4xl flex-col gap-8">
@@ -44,12 +33,11 @@ const CompleteEstablishment = () => {
           <Stepper orientation="vertical" initialStep={0} steps={steps}>
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>
-                {/* {index === 0 && <GeneralInfoStep />} */}
-                {index === 0 && <LocationStep />}
-                {/* {index === 1 && <ProductInfoStep />} */}
+                {index === 0 && <GeneralInfoStep restaurant={restaurant} />}
+                {index === 1 && <LocationStep />}
+                {index === 1 && <ProductInfoStep />}
               </Step>
             ))}
-            {/* <StepFooter form={form} /> */}
           </Stepper>
         </div>
       </div>

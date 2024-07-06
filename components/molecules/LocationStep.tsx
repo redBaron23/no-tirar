@@ -1,8 +1,9 @@
 "use client";
 
-import { createRestaurantFirstStep } from "@/app/actions/restaurant/createRestaurant";
+import { createRestaurantSecondStep } from "@/app/actions/restaurant/createRestaurant";
 import { createRestaurantSecondStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Restaurant } from "@prisma/client";
 import { useLoadScript } from "@react-google-maps/api";
 import { useAction } from "next-safe-action/hooks";
 import { Controller, useForm } from "react-hook-form";
@@ -16,7 +17,8 @@ import { useStepper } from "../ui/stepper";
 type FormSchema = z.infer<typeof createRestaurantSecondStepSchema>;
 
 const LocationStep = () => {
-  const { nextStep } = useStepper();
+  const { nextStep, stepData } = useStepper<Restaurant>();
+
   const {
     handleSubmit,
     control,
@@ -33,12 +35,17 @@ const LocationStep = () => {
     libraries: ["places"],
   });
 
-  const { executeAsync, isExecuting } = useAction(createRestaurantFirstStep);
+  const { executeAsync, isExecuting } = useAction(createRestaurantSecondStep);
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      // await executeAsync(data);
-      nextStep();
+      const response = await executeAsync({
+        ...data,
+        restaurantId: stepData!.id,
+      });
+      const restaurant = response?.data?.restaurant;
+
+      nextStep(restaurant);
     } catch (e) {
       console.log(e);
     }

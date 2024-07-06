@@ -19,6 +19,7 @@ export const createRestaurantFirstStepSchema = z.object({
 
 export const createRestaurantSecondStepSchema = z.object({
   address: z.string().min(1, "La direccion es obligatoria"),
+  restaurantId: z.string(),
 });
 
 // .refine(

@@ -35,24 +35,18 @@ export const createRestaurantFirstStep = businessActionClient
 export const createRestaurantSecondStep = businessActionClient
   .metadata({ actionName: "createRestaurantSecondStep" })
   .schema(createRestaurantSecondStepSchema)
-  .action(async ({ parsedInput: restaurantData, ctx: { userId } }) => {
-    const existingRestaurant = await prisma.restaurant.findFirst({
-      where: { userId },
-    });
+  .action(
+    async ({ parsedInput: { address, restaurantId }, ctx: { userId } }) => {
+      const restaurant = await prisma.restaurant.update({
+        where: { id: restaurantId, userId: userId },
+        data: {
+          address,
+        },
+      });
 
-    // const restaurant = await prisma.restaurant.update({
-    //   where: {
-    //     id: existingRestaurant ? existingRestaurant.id : "non-existent-id",
-    //   }, // Use a non-existent ID to force creation if not found
-    //   update: existingRestaurant ? { ...restaurantData } : {}, // Update only if restaurant exists
-    //   create: {
-    //     ...restaurantData,
-    //     userId,
-    //   },
-    // });
-
-    return {
-      success: true,
-      restaurant,
-    };
-  });
+      return {
+        success: true,
+        restaurant,
+      };
+    },
+  );

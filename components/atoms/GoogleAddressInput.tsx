@@ -2,6 +2,7 @@
 
 import { Autocomplete, GoogleMap, Marker } from "@react-google-maps/api";
 import { useRef, useState } from "react";
+import { IoMdLocate } from "react-icons/io";
 import { Button } from "../ui/button"; // Assuming you have a Button component
 import { Input } from "../ui/input";
 
@@ -24,13 +25,17 @@ const GoogleAddressInput = ({ value, onChange }: GoogleAddressInputProps) => {
   const useCurrentLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        async (position) => {
           const { latitude, longitude } = position.coords;
           setMapCenter({ lat: latitude, lng: longitude });
           setMarkerPosition({ lat: latitude, lng: longitude });
           // Reverse geocode to get address
           const geocoder = new google.maps.Geocoder();
-          geocoder.geocode({ location: { lat: latitude, lng: longitude } });
+          const response = await geocoder.geocode({
+            location: { lat: latitude, lng: longitude },
+          });
+          const currentAddress = response.results[0].formatted_address;
+          onChange(currentAddress);
           setShowMap(true);
         },
         () => {
@@ -105,7 +110,14 @@ const GoogleAddressInput = ({ value, onChange }: GoogleAddressInputProps) => {
       )}
 
       {!showMap && (
-        <Button onClick={useCurrentLocation}>Usar ubicación actual</Button>
+        <Button
+          onClick={useCurrentLocation}
+          type="button"
+          className="flex gap-2 bg-green-600 px-4 py-2 text-white hover:bg-green-500"
+        >
+          <IoMdLocate />
+          Mi ubicación actual
+        </Button>
       )}
 
       {showMap && (

@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import * as React from "react";
 import { StepperProvider } from "./context";
 import { Step } from "./step";
-import type { StepItem, StepProps, StepperProps } from "./types";
+import type { IconType, StepItem, StepProps } from "./types";
 import { useMediaQuery } from "./use-media-query";
 import { useStepper } from "./use-stepper";
 
@@ -14,8 +14,32 @@ const VARIABLE_SIZES = {
   lg: "44px",
 };
 
-const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
-  (props, ref: React.Ref<HTMLDivElement>) => {
+export type StepperProps<T = any> = {
+  className?: string;
+  children: React.ReactNode;
+  orientation?: "horizontal" | "vertical";
+  state?: "loading" | "error";
+  responsive?: boolean;
+  checkIcon?: IconType;
+  errorIcon?: IconType;
+  onClickStep?: (step: number) => void;
+  mobileBreakpoint?: string;
+  expandVerticalSteps?: boolean;
+  initialStep?: number;
+  size?: keyof typeof VARIABLE_SIZES;
+  steps: StepItem[];
+  variant?: "circle" | "line";
+  styles?: Record<string, string>;
+  variables?: Record<string, string>;
+  scrollTracking?: boolean;
+  stepData?: T;
+};
+
+const Stepper = React.forwardRef(
+  <T,>(
+    props: StepperProps<T> & React.RefAttributes<HTMLDivElement>,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
     const {
       className,
       children,
@@ -34,6 +58,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
       styles,
       variables,
       scrollTracking = false,
+      stepData,
       ...rest
     } = props;
 
@@ -66,7 +91,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
     const isVertical = orientation === "vertical";
 
     return (
-      <StepperProvider
+      <StepperProvider<T>
         value={{
           initialStep,
           orientation,
@@ -84,6 +109,7 @@ const Stepper = React.forwardRef<HTMLDivElement, StepperProps>(
           steps,
           scrollTracking,
           styles,
+          stepData,
         }}
       >
         <div
@@ -181,5 +207,5 @@ const HorizontalContent = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export { Stepper, Step, useStepper };
-export type { StepProps, StepperProps, StepItem };
+export { Step, Stepper, useStepper };
+export type { StepItem, StepProps, StepperProps };
