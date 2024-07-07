@@ -1,14 +1,14 @@
 "use client";
-import { useReducer } from "react";
-import { Control, useController } from "react-hook-form";
+import { InputHTMLAttributes, useReducer } from "react";
 import { Input } from "../ui/input"; // Shadcn UI Input
 
-type MoneyInputProps = {
-  control: Control<any>;
+type Props = {
   name: string;
   label: string;
   placeholder: string;
-};
+  value: number;
+  onChange: (newValue: number) => void;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 // Argentine currency config
 const moneyFormatter = Intl.NumberFormat("es-AR", {
@@ -21,16 +21,12 @@ const moneyFormatter = Intl.NumberFormat("es-AR", {
 });
 
 export default function MoneyInput({
-  control,
   name,
   label,
   placeholder,
-}: MoneyInputProps) {
-  const {
-    field: { onChange, value },
-    fieldState: { error },
-  } = useController({ name, control });
-
+  value,
+  onChange,
+}: Props) {
   const initialValue = value
     ? moneyFormatter.format(value)
     : moneyFormatter.format(0);
@@ -53,16 +49,15 @@ export default function MoneyInput({
 
   return (
     <div className="form-item">
-      <label className="form-label">{label}</label>
       <div className="form-control">
         <Input
           placeholder={placeholder}
+          name={name}
           type="text"
           value={formattedValue}
           onChange={handleChange}
         />
       </div>
-      {error && <div className="form-message">{error.message as string}</div>}
     </div>
   );
 }

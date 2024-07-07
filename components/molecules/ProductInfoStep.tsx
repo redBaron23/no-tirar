@@ -13,7 +13,6 @@ import { Button } from "../ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -113,10 +112,10 @@ const ProductInfoStep = () => {
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
+                      {/* <FormDescription>
                         You can <span>@mention</span> other users and
                         organizations.
-                      </FormDescription>
+                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -185,19 +184,49 @@ const ProductInfoStep = () => {
                 />
               </div>
               <div className="grid gap-2">
-                <MoneyInput
+                <FormField
                   control={control}
                   name="regularPrice"
-                  label="Precio regular"
-                  placeholder="Ingresa el precio regular"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Precio regular</FormLabel>
+                      <FormControl>
+                        <MoneyInput
+                          {...field}
+                          label="Precio regular"
+                          placeholder="Ingresa el precio regular"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                        You can <span>@mention</span> other users and
+                        organizations.
+                      </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
               <div className="grid gap-2">
-                <MoneyInput
+                <FormField
                   control={control}
                   name="currentPrice"
-                  label="Precio actual"
-                  placeholder="Ingresa el precio con descuento"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Precio actual</FormLabel>
+                      <FormControl>
+                        <MoneyInput
+                          {...field}
+                          label="Precio actual"
+                          placeholder="Ingresa el precio con descuento"
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                        You can <span>@mention</span> other users and
+                        organizations.
+                      </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
             </div>

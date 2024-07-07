@@ -18,11 +18,11 @@ export const createRestaurantSecondStepSchema = z.object({
 export const createRestaurantThirdStepSchema = z
   .object({
     restaurantId: z.string(),
-    description: z.string(),
+    description: z.string().min(1, "Una descripcion es necesaria"),
     productType: z.nativeEnum(ProductType),
     startTime: z.string().min(1, "La hora de inicio es obligatoria"),
     endTime: z.string().min(1, "La hora de finalización es obligatoria"),
-    quantity: z.number().min(1, "La cantidad debe ser al menos 1"),
+    quantity: z.number().min(0, "La cantidad es requerida"),
     regularPrice: z.number().min(0, "El precio debe ser un número positivo"),
     currentPrice: z.number().min(0, "El precio debe ser un número positivo"),
   })
@@ -39,7 +39,7 @@ export const createRestaurantThirdStepSchema = z
   )
   .refine((data) => data.regularPrice > data.currentPrice, {
     message: "El precio regular debe ser mayor que el precio actual",
-    path: ["regularPrice", "currentPrice"],
+    path: ["regularPrice"],
   });
 
 // profileImage: z.instanceof(File).nullable().optional(),
