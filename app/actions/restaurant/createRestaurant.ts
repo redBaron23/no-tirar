@@ -9,6 +9,7 @@ import {
   createRestaurantSecondStepSchema,
   createRestaurantThirdStepSchema,
 } from "@/lib/validations/actions/restaurant/createRestaurant";
+import dayjs from "dayjs";
 
 export const createRestaurantFirstStep = businessActionClient
   .metadata({ actionName: "createRestaurantFirstStep" })
@@ -58,11 +59,23 @@ export const createRestaurantThirdStep = businessActionClient
   .metadata({ actionName: "createRestaurantThirdStep" })
   .schema(createRestaurantThirdStepSchema)
   .action(
-    async ({ parsedInput: { address, restaurantId }, ctx: { userId } }) => {
+    async ({
+      parsedInput: { startTime, endTime, restaurantId, ...productInput },
+      ctx: { userId },
+    }) => {
+      const isoStartTime = dayjs(`1970-01-01T${startTime}`).toISOString();
+      const isoEndTime = dayjs(`1970-01-01T${endTime}`).toISOString();
+
       const restaurant = await prisma.restaurant.update({
         where: { id: restaurantId, userId },
         data: {
-          address,
+          startTime: isoStartTime,
+          endTime: isoEndTime,
+          products: {
+            create: {
+              ...productInput,
+            },
+          },
         },
       });
 

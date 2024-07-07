@@ -31,13 +31,14 @@ export const createRestaurantSecondStepSchema = z.object({
 export const createRestaurantThirdStepSchema = z
   .object({
     restaurantId: z.string(),
+    name: z.string().min(1, "Un nombre es necesario"),
     description: z.string().min(1, "Una descripcion es necesaria"),
     productType: z.nativeEnum(ProductType),
     startTime: z.string().min(1, "La hora de inicio es obligatoria"),
     endTime: z.string().min(1, "La hora de finalización es obligatoria"),
     quantity: z.number().min(0, "La cantidad es requerida"),
-    regularPrice: z.number().min(0, "El precio debe ser un número positivo"),
-    currentPrice: z.number().min(0, "El precio debe ser un número positivo"),
+    regularPrice: z.number().min(1, "El precio debe ser un número mayor que 0"),
+    currentPrice: z.number().min(1, "El precio debe ser un número mayor que 0"),
   })
   .refine(
     (data) => {

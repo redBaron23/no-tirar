@@ -1,6 +1,7 @@
 "use client";
 
 import { createRestaurantThirdStep } from "@/app/actions/restaurant/createRestaurant";
+import FormInput from "@/components/atoms/form-inputs/FormInput";
 import { createRestaurantThirdStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType, Restaurant } from "@prisma/client";
@@ -45,6 +46,7 @@ const ProductInfoStep = () => {
     control,
     formState: { errors },
   } = form;
+
   console.log(errors);
 
   const { executeAsync, isExecuting } = useAction(createRestaurantThirdStep);
@@ -73,6 +75,12 @@ const ProductInfoStep = () => {
         >
           <div className="grid w-full grid-cols-1 gap-8">
             <div className="grid gap-6 md:grid-cols-2">
+              <FormInput
+                control={control}
+                name="name"
+                label="Nombre del producto"
+                placeholder="Ingresa el nombre"
+              />
               <FormSelect
                 control={control}
                 name="productType"
@@ -117,7 +125,6 @@ const ProductInfoStep = () => {
                 name="regularPrice"
                 label="Precio regular"
                 placeholder="Ingresa el precio regular"
-                description="You can @mention other users and organizations."
               />
               <FormMoneyInput
                 control={control}
