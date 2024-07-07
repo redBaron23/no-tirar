@@ -6,7 +6,7 @@ import { Restaurant } from "@prisma/client";
 import { useJsApiLoader } from "@react-google-maps/api";
 import GeneralInfoStep from "../molecules/GeneralInfoStep";
 import LocationStep from "../molecules/LocationStep";
-import ProductInfoStep from "../organisms/ProductInfoStep";
+import ProductInfoStep from "../molecules/ProductInfoStep";
 
 const steps = [
   { label: "Información General" },

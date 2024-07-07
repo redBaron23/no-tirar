@@ -80,7 +80,8 @@ model Product {
   name         String
   description  String?
   productType  ProductType
-  price        Decimal
+  regularPrice Decimal
+  currentPrice Decimal
   quantity     Int
   restaurantId String
   createdAt    DateTime    @default(now())

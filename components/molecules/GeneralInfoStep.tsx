@@ -95,7 +95,6 @@ const GeneralInfoStep = () => {
                 render={({ field }) => (
                   <AtomicSelect
                     options={businessTypeOptions}
-                    disabled={false}
                     onValueChange={field.onChange}
                     value={field.value}
                     placeholder="Seleccione un tipo de negocio"
@@ -118,7 +117,6 @@ const GeneralInfoStep = () => {
                 render={({ field }) => (
                   <AtomicSelect
                     options={contactOptions}
-                    disabled={false}
                     onValueChange={field.onChange}
                     value={field.value}
                     placeholder="Seleccione un metodo de contacto"

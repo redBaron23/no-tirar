@@ -1,7 +1,7 @@
 "use client";
 import { useReducer } from "react";
+import { Control, useController } from "react-hook-form";
 import { Input } from "../ui/input"; // Shadcn UI Input
-import { useController, Control } from "react-hook-form";
 
 type MoneyInputProps = {
   control: Control<any>;
@@ -31,7 +31,9 @@ export default function MoneyInput({
     fieldState: { error },
   } = useController({ name, control });
 
-  const initialValue = value ? moneyFormatter.format(value) : "";
+  const initialValue = value
+    ? moneyFormatter.format(value)
+    : moneyFormatter.format(0);
 
   const [formattedValue, setFormattedValue] = useReducer(
     (_: any, next: string) => {
