@@ -66,7 +66,7 @@ function StepperProvider<T>({
 
   const resetSteps = () => {
     setActiveStep(value.initialStep);
-    setStepData(null);
+    setStepData({} as T);
   };
 
   const setStep = (step: number, data?: T) => {

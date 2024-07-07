@@ -1,4 +1,4 @@
-import { BusinessType, ContactMethodType } from "@prisma/client";
+import { BusinessType, ContactMethodType, ProductType } from "@prisma/client";
 import { z } from "zod";
 
 export const createRestaurantFirstStepSchema = z.object({
@@ -7,19 +7,22 @@ export const createRestaurantFirstStepSchema = z.object({
   phone: z.string().min(1, "El telefono es obligatorio"),
   type: z.nativeEnum(BusinessType),
   contactMethod: z.nativeEnum(ContactMethodType),
-  // address: z.string().min(1, "Address is required"),
-  // profileImage: z.instanceof(File).nullable().optional(),
-  // backgroundImage: z.instanceof(File).nullable().optional(),
-  // productType: z.nativeEnum(ProductType),
-  // startTime: z.string().min(1, "Start time is required"),
-  // endTime: z.string().min(1, "End time is required"),
-  // quantity: z.number().min(1, "Quantity must be at least 1"),
-  // price: z.number().min(0, "Price must be a positive number"),
 });
 
 export const createRestaurantSecondStepSchema = z.object({
   address: z.string().min(1, "La direccion es obligatoria"),
   restaurantId: z.string(),
+});
+
+export const createRestaurantThirdStepSchema = z.object({
+  restaurantId: z.string(),
+  // profileImage: z.instanceof(File).nullable().optional(),
+  // backgroundImage: z.instanceof(File).nullable().optional(),
+  productType: z.nativeEnum(ProductType),
+  startTime: z.string().min(1, "Start time is required"),
+  endTime: z.string().min(1, "End time is required"),
+  quantity: z.number().min(1, "Quantity must be at least 1"),
+  price: z.number().min(0, "Price must be a positive number"),
 });
 
 // .refine(
@@ -33,11 +36,3 @@ export const createRestaurantSecondStepSchema = z.object({
 //     path: ["endTime"],
 //   },
 // );
-
-export type CreateRestaurantFirstStepType = z.infer<
-  typeof createRestaurantFirstStepSchema
->;
-
-export type CreateRestaurantSecondStepType = z.infer<
-  typeof createRestaurantSecondStepSchema
->;
