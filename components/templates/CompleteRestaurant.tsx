@@ -11,7 +11,7 @@ import ProductInfoStep from "../molecules/create-restaurant-steps/ProductInfoSte
 
 const steps = [
   { label: "Información General" },
-  { label: "Imagenes (opcional)" },
+  { label: "Imagenes" },
   { label: "Ubicacion" },
   { label: "Productos" },
 ] satisfies StepItem[];

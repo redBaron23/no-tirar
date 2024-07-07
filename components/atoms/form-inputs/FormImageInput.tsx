@@ -17,6 +17,7 @@ interface ImageInputProps {
   name: string;
   label: string;
   type: "profile" | "background";
+  defaultUrl?: string | null;
 }
 
 function getImageData(event: ChangeEvent<HTMLInputElement>) {
@@ -28,8 +29,14 @@ function getImageData(event: ChangeEvent<HTMLInputElement>) {
   return null;
 }
 
-const ImageInput = ({ control, name, label, type }: ImageInputProps) => {
-  const [preview, setPreview] = useState<string | null>(null);
+const ImageInput = ({
+  control,
+  name,
+  label,
+  type,
+  defaultUrl,
+}: ImageInputProps) => {
+  const [preview, setPreview] = useState<string | null | undefined>(defaultUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarClick = () => {

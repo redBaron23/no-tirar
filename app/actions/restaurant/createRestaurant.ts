@@ -2,8 +2,10 @@
 
 import { prisma } from "@/lib/prisma";
 import { businessActionClient } from "@/lib/safe-action";
+import { uploadImage } from "@/lib/supabaseClient";
 import {
   createRestaurantFirstStepSchema,
+  createRestaurantImagesStepSchema,
   createRestaurantSecondStepSchema,
   createRestaurantThirdStepSchema,
 } from "@/lib/validations/actions/restaurant/createRestaurant";
@@ -61,6 +63,35 @@ export const createRestaurantThirdStep = businessActionClient
         where: { id: restaurantId, userId },
         data: {
           address,
+        },
+      });
+
+      return {
+        success: true,
+        restaurant,
+      };
+    },
+  );
+
+export const createRestaurantImagesStep = businessActionClient
+  .metadata({ actionName: "createRestaurantImagesStep" })
+  .schema(createRestaurantImagesStepSchema)
+  .action(
+    async ({
+      parsedInput: { profileImage, restaurantId },
+      ctx: { userId },
+    }) => {
+      const profileImageUrl = await uploadImage(
+        profileImage,
+        `profile-${userId}`,
+      );
+
+      console.log({ profileImageUrl });
+
+      const restaurant = await prisma.restaurant.update({
+        where: { id: restaurantId, userId },
+        data: {
+          profileImageUrl,
         },
       });
 

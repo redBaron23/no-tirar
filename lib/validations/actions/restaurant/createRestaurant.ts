@@ -11,7 +11,10 @@ export const createRestaurantFirstStepSchema = z.object({
 });
 
 export const createRestaurantImagesStepSchema = z.object({
-  profileImage: z.instanceof(File).nullable().optional(),
+  restaurantId: z.string(),
+  profileImage: z.instanceof(File).refine((file) => file instanceof File, {
+    message: "El logo es obligatotorio.",
+  }),
   backgroundImage: z.instanceof(File).nullable().optional(),
 });
 

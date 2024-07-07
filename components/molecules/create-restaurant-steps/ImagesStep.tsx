@@ -1,6 +1,6 @@
 "use client";
 
-import { createRestaurantSecondStep } from "@/app/actions/restaurant/createRestaurant";
+import { createRestaurantImagesStep } from "@/app/actions/restaurant/createRestaurant";
 import FormImageInput from "@/components/atoms/form-inputs/FormImageInput";
 import { createRestaurantImagesStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,14 +20,15 @@ const ImagesStep = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(createRestaurantImagesStepSchema),
     defaultValues: {
-      profileImage: null,
-      backgroundImage: null,
+      restaurantId: restaurant?.id,
+      profileImage: undefined,
+      backgroundImage: undefined,
     },
   });
 
   const { control, handleSubmit } = form;
 
-  const { executeAsync, isExecuting } = useAction(createRestaurantSecondStep);
+  const { executeAsync, isExecuting } = useAction(createRestaurantImagesStep);
 
   const onSubmit = async (data: FormSchema) => {
     try {
@@ -58,12 +59,14 @@ const ImagesStep = () => {
                 name="profileImage"
                 label="Logo"
                 type="profile"
+                defaultUrl={restaurant?.profileImageUrl}
               />
               <FormImageInput
                 control={control}
-                name="profileImage"
-                label="Imagen de fondo"
+                name="backgroundImage"
+                label="Imagen de fondo (opcional)"
                 type="background"
+                defaultUrl={restaurant?.backgroundImageUrl}
               />
             </div>
           </div>
