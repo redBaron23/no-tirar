@@ -12,10 +12,15 @@ export const createRestaurantFirstStepSchema = z.object({
 
 export const createRestaurantImagesStepSchema = z.object({
   restaurantId: z.string(),
-  profileImage: z.instanceof(File).refine((file) => file instanceof File, {
-    message: "El logo es obligatotorio.",
-  }),
-  backgroundImage: z.instanceof(File).nullable().optional(),
+  profileImage: z
+    .union([z.instanceof(File), z.string()])
+    .refine((value) => value instanceof File || typeof value === "string", {
+      message: "El logo es obligatorio.",
+    }),
+  backgroundImage: z
+    .union([z.instanceof(File), z.string()])
+    .nullable()
+    .optional(),
 });
 
 export const createRestaurantSecondStepSchema = z.object({

@@ -15,14 +15,14 @@ import { useStepper } from "../../ui/stepper";
 type FormSchema = z.infer<typeof createRestaurantImagesStepSchema>;
 
 const ImagesStep = () => {
-  const { nextStep, stepData: restaurant } = useStepper<Restaurant>();
+  const { nextStep, prevStep, stepData: restaurant } = useStepper<Restaurant>();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(createRestaurantImagesStepSchema),
     defaultValues: {
       restaurantId: restaurant?.id,
-      profileImage: undefined,
-      backgroundImage: undefined,
+      profileImage: restaurant?.profileImageUrl || undefined,
+      backgroundImage: restaurant?.backgroundImageUrl || undefined,
     },
   });
 
@@ -72,6 +72,16 @@ const ImagesStep = () => {
           </div>
         </div>
         <div className="flex justify-end gap-4">
+          <Button
+            size="sm"
+            variant="outline"
+            className="px-4 py-2 hover:bg-green-500"
+            type="button"
+            onClick={prevStep}
+            disabled={isExecuting}
+          >
+            Anterior
+          </Button>
           <Button
             size="sm"
             className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
