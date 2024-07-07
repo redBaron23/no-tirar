@@ -78,21 +78,54 @@ export const createRestaurantImagesStep = businessActionClient
   .schema(createRestaurantImagesStepSchema)
   .action(
     async ({
-      parsedInput: { profileImage, restaurantId },
+      parsedInput: { profileImage, backgroundImage, restaurantId },
       ctx: { userId },
     }) => {
-      const profileImageUrl = await uploadImage(
-        profileImage,
-        `profile-${userId}`,
-      );
+      let profileImageUrl =
+        typeof profileImage === "string" ? profileImage : undefined;
+      let backgroundImageUrl =
+        typeof backgroundImage === "string" ? backgroundImage : undefined;
 
-      console.log({ profileImageUrl });
+      const uploadPromises = [];
+
+      if (profileImage instanceof File) {
+        uploadPromises.push(
+          uploadImage(profileImage, `profile-${restaurantId}`).then((url) => {
+            profileImageUrl = url;
+          }),
+        );
+      }
+
+      if (backgroundImage instanceof File) {
+        uploadPromises.push(
+          uploadImage(backgroundImage, `background-${restaurantId}`).then(
+            (url) => {
+              backgroundImageUrl = url;
+            },
+          ),
+        );
+      }
+
+      if (uploadPromises.length > 0) {
+        await Promise.all(uploadPromises);
+      }
+
+      const updateData: {
+        profileImageUrl?: string;
+        backgroundImageUrl?: string | null;
+      } = {};
+
+      if (profileImageUrl !== undefined) {
+        updateData.profileImageUrl = profileImageUrl;
+      }
+
+      if (backgroundImageUrl !== undefined) {
+        updateData.backgroundImageUrl = backgroundImageUrl;
+      }
 
       const restaurant = await prisma.restaurant.update({
         where: { id: restaurantId, userId },
-        data: {
-          profileImageUrl,
-        },
+        data: updateData,
       });
 
       return {

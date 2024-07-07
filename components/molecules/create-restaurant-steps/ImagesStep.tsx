@@ -46,6 +46,8 @@ const ImagesStep = () => {
     }
   };
 
+  console.log(restaurant?.profileImageUrl);
+
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
