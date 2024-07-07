@@ -8,6 +8,7 @@ import GeneralInfoStep from "../molecules/create-restaurant-steps/GeneralInfoSte
 import ImagesStep from "../molecules/create-restaurant-steps/ImagesStep";
 import LocationStep from "../molecules/create-restaurant-steps/LocationStep";
 import ProductInfoStep from "../molecules/create-restaurant-steps/ProductInfoStep";
+import SuccessStep from "../molecules/create-restaurant-steps/SuccessStep";
 
 const steps = [
   { label: "Información General" },
@@ -52,6 +53,7 @@ const CompleteEstablishment = ({ restaurant }: Props) => {
                 {index === 3 && <ProductInfoStep />}
               </Step>
             ))}
+            <SuccessStep />
           </Stepper>
         </div>
       </div>
