@@ -5,13 +5,13 @@ import { createRestaurantFirstStepSchema } from "@/lib/validations/actions/resta
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BusinessType, ContactMethodType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import AtomicSelect from "../atoms/AtomicSelect";
+import FormInput from "../atoms/form-inputs/FormInput";
+import FormPhoneInput from "../atoms/form-inputs/FormPhoneInput";
+import FormSelect from "../atoms/form-inputs/FormSelect";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { PhoneInput } from "../ui/phone-input";
+import { Form } from "../ui/form";
 import { useStepper } from "../ui/stepper";
 
 const businessTypeOptions = [
@@ -30,11 +30,7 @@ type FormSchema = z.infer<typeof createRestaurantFirstStepSchema>;
 
 const GeneralInfoStep = () => {
   const { nextStep, stepData: restaurant } = useStepper();
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormSchema>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(createRestaurantFirstStepSchema),
     defaultValues: {
       type: restaurant?.type || BusinessType.RESTAURANT_AND_CAFE,
@@ -43,6 +39,8 @@ const GeneralInfoStep = () => {
       phone: restaurant?.phone || "",
     },
   });
+
+  const { control, handleSubmit } = form;
 
   const { executeAsync, isExecuting } = useAction(createRestaurantFirstStep);
 
@@ -62,109 +60,52 @@ const GeneralInfoStep = () => {
   };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-      <div
-        className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600`}
-      >
-        <div className="grid w-full grid-cols-1 gap-8">
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="grid gap-2">
-              <Label className="text-gray-700" htmlFor="name">
-                Nombre del Establecimiento
-              </Label>
-              <Controller
+    <Form {...form}>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        <div className="my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600">
+          <div className="grid w-full grid-cols-1 gap-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              <FormInput
+                control={control}
                 name="name"
-                control={control}
-                render={({ field }) => (
-                  <Input id="name" placeholder="Ingresa el nombre" {...field} />
-                )}
+                label="Nombre del Establecimiento"
+                placeholder="Ingresa el nombre"
               />
-              {errors.name && (
-                <span className="text-sm text-red-500">
-                  {errors.name.message}
-                </span>
-              )}
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-gray-700" htmlFor="businessType">
-                Tipo de negocio
-              </Label>
-              <Controller
+              <FormSelect
+                control={control}
                 name="type"
-                control={control}
-                render={({ field }) => (
-                  <AtomicSelect
-                    options={businessTypeOptions}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    placeholder="Seleccione un tipo de negocio"
-                  />
-                )}
+                label="Tipo de negocio"
+                options={businessTypeOptions}
+                placeholder="Seleccione un tipo de negocio"
               />
-              {errors.type && (
-                <span className="text-sm text-red-500">
-                  {errors.type.message}
-                </span>
-              )}
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-gray-700" htmlFor="contactMethod">
-                Metodo de Contacto
-              </Label>
-              <Controller
+              <FormSelect
+                control={control}
                 name="contactMethod"
-                control={control}
-                render={({ field }) => (
-                  <AtomicSelect
-                    options={contactOptions}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    placeholder="Seleccione un metodo de contacto"
-                  />
-                )}
+                label="Metodo de Contacto"
+                options={contactOptions}
+                placeholder="Seleccione un metodo de contacto"
               />
-              {errors.contactMethod && (
-                <span className="text-sm text-red-500">
-                  {errors.contactMethod.message}
-                </span>
-              )}
-            </div>
-            <div className="grid gap-2">
-              <Label className="text-gray-700" htmlFor="phone">
-                Telefono
-              </Label>
-              <Controller
+              <FormPhoneInput
+                control={control}
                 name="phone"
-                control={control}
-                render={({ field }) => (
-                  <PhoneInput
-                    id="phone"
-                    placeholder="Ingresa el telefono"
-                    defaultCountry="AR"
-                    {...field}
-                  />
-                )}
+                label="Telefono"
+                placeholder="Ingresa el telefono"
               />
-              {errors.phone && (
-                <span className="text-sm text-red-500">
-                  {errors.phone.message}
-                </span>
-              )}
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex justify-end gap-4">
-        <Button
-          size="sm"
-          className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
-          type="submit"
-          isLoading={isExecuting}
-        >
-          Siguiente
-        </Button>
-      </div>
-    </form>
+        <div className="flex justify-end gap-4">
+          <Button
+            size="sm"
+            className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
+            type="submit"
+            isLoading={isExecuting}
+          >
+            Siguiente
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
 

@@ -5,24 +5,17 @@ import { createRestaurantThirdStepSchema } from "@/lib/validations/actions/resta
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType, Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import AtomicSelect from "../atoms/AtomicSelect";
-import MoneyInput from "../atoms/MoneyInput";
+import FormCounter from "../atoms/form-inputs/FormCounter";
+import FormMoneyInput from "../atoms/form-inputs/FormMoneyInput";
+import FormSelect from "../atoms/form-inputs/FormSelect";
+import FormTextarea from "../atoms/form-inputs/FormTextarea";
+import FormTimeInput from "../atoms/form-inputs/FormTimeInput";
 import { Button } from "../ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+import { Form } from "../ui/form";
 import { Label } from "../ui/label";
 import { useStepper } from "../ui/stepper";
-import { Textarea } from "../ui/textarea";
-import Counter from "./Counter";
 
 const PRODUCT_TYPE_OPTIONS = [
   { key: ProductType.SURPRISE, value: "Bandeja Sorpresa" },
@@ -80,155 +73,58 @@ const ProductInfoStep = () => {
         >
           <div className="grid w-full grid-cols-1 gap-8">
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="grid gap-2">
-                <Label className="text-gray-700" htmlFor="product-type">
-                  Tipo de Producto
-                </Label>
-                <Controller
-                  name="productType"
-                  control={control}
-                  render={({ field }) => (
-                    <AtomicSelect
-                      options={PRODUCT_TYPE_OPTIONS}
-                      disabled
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      placeholder="Seleccione un tipo de producto"
-                    />
-                  )}
-                />
-              </div>
-              <div className="grid gap-2">
-                <FormField
-                  control={control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Descripcion</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Describe brevemente que contendra la bandeja sorpresa"
-                          className="resize-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      {/* <FormDescription>
-                        You can <span>@mention</span> other users and
-                        organizations.
-                      </FormDescription> */}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormSelect
+                control={control}
+                name="productType"
+                label="Tipo de Producto"
+                options={PRODUCT_TYPE_OPTIONS}
+                placeholder="Seleccione un tipo de producto"
+                disabled
+              />
+              <FormTextarea
+                control={control}
+                name="description"
+                label="Descripcion"
+                placeholder="Describe brevemente que contendra la bandeja sorpresa"
+              />
               <div className="grid gap-2">
                 <Label className="text-gray-700" htmlFor="time-range">
                   Franja horaria de pickup
                 </Label>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <Controller
+                  <FormTimeInput
+                    control={control}
                     name="startTime"
-                    control={control}
-                    render={({ field }) => (
-                      <Input
-                        id="start-time"
-                        placeholder="Hora de Inicio"
-                        type="time"
-                        value={field.value || ""}
-                        onChange={(e) => field.onChange(e.target.value)}
-                      />
-                    )}
+                    placeholder="Hora de Inicio"
                   />
-
-                  <Controller
-                    name="endTime"
+                  <FormTimeInput
                     control={control}
-                    render={({ field, fieldState: { error } }) => (
-                      <>
-                        <Input
-                          id="end-time"
-                          placeholder="Hora de Fin"
-                          type="time"
-                          value={field.value || ""}
-                          onChange={(e) => field.onChange(e.target.value)}
-                        />
-                        {error && (
-                          <p className="mt-1 text-sm text-red-500">
-                            {error.message}
-                          </p>
-                        )}
-                      </>
-                    )}
+                    name="endTime"
+                    placeholder="Hora de Fin"
                   />
                 </div>
               </div>
             </div>
             <div className="grid gap-6 md:grid-cols-2">
-              <div className="grid gap-2">
-                <Label className="text-gray-700" htmlFor="quantity">
-                  Cantidad
-                </Label>
-                <Controller
-                  name="quantity"
-                  control={control}
-                  render={({ field }) => (
-                    <Counter
-                      quantity={field.value}
-                      onChangeQuantity={(newQuantity) =>
-                        field.onChange(newQuantity)
-                      }
-                      maxQuantity={100}
-                      borderRadius="rounded-md"
-                    />
-                  )}
-                />
-              </div>
-              <div className="grid gap-2">
-                <FormField
-                  control={control}
-                  name="regularPrice"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Precio regular</FormLabel>
-                      <FormControl>
-                        <MoneyInput
-                          {...field}
-                          label="Precio regular"
-                          placeholder="Ingresa el precio regular"
-                        />
-                      </FormControl>
-                      {/* <FormDescription>
-                        You can <span>@mention</span> other users and
-                        organizations.
-                      </FormDescription> */}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="grid gap-2">
-                <FormField
-                  control={control}
-                  name="currentPrice"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Precio actual</FormLabel>
-                      <FormControl>
-                        <MoneyInput
-                          {...field}
-                          label="Precio actual"
-                          placeholder="Ingresa el precio con descuento"
-                        />
-                      </FormControl>
-                      {/* <FormDescription>
-                        You can <span>@mention</span> other users and
-                        organizations.
-                      </FormDescription> */}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormCounter
+                control={control}
+                name="quantity"
+                label="Cantidad"
+                maxQuantity={100}
+              />
+              <FormMoneyInput
+                control={control}
+                name="regularPrice"
+                label="Precio regular"
+                placeholder="Ingresa el precio regular"
+                description="You can @mention other users and organizations."
+              />
+              <FormMoneyInput
+                control={control}
+                name="currentPrice"
+                label="Precio actual"
+                placeholder="Ingresa el precio con descuento"
+              />
             </div>
           </div>
         </div>

@@ -5,11 +5,11 @@ import { createRestaurantSecondStepSchema } from "@/lib/validations/actions/rest
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-import GoogleAddressInput from "../atoms/GoogleAddressInput";
+import FormGoogleAddressInput from "../atoms/form-inputs/FormGoogleAddressInput";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { Form } from "../ui/form";
 import { Skeleton } from "../ui/skeleton";
 import { useStepper } from "../ui/stepper";
 
@@ -22,11 +22,7 @@ interface Props {
 const LocationStep = ({ isLoaded }: Props) => {
   const { nextStep, stepData: restaurant } = useStepper<Restaurant>();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<FormSchema>({
+  const form = useForm<FormSchema>({
     resolver: zodResolver(createRestaurantSecondStepSchema),
     defaultValues: {
       address: restaurant?.address || "",
@@ -34,7 +30,7 @@ const LocationStep = ({ isLoaded }: Props) => {
     },
   });
 
-  console.log(errors);
+  const { control, handleSubmit } = form;
 
   const { executeAsync, isExecuting } = useAction(createRestaurantSecondStep);
 
@@ -55,54 +51,46 @@ const LocationStep = ({ isLoaded }: Props) => {
   };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-      <div
-        className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600`}
-      >
-        {isLoaded ? (
-          <div className="grid w-full grid-cols-1 gap-8">
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="grid gap-2">
-                <Label className="text-gray-700" htmlFor="name">
-                  Nombre del Establecimiento
-                </Label>
-                <Controller
-                  name="address"
+    <Form {...form}>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        <div
+          className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600`}
+        >
+          {isLoaded ? (
+            <div className="grid w-full grid-cols-1 gap-8">
+              <div className="grid gap-6 md:grid-cols-2">
+                <FormGoogleAddressInput
                   control={control}
-                  render={({ field }) => <GoogleAddressInput {...field} />}
+                  name="address"
+                  label="Dirección del Establecimiento"
                 />
-                {errors.address && (
-                  <span className="text-sm text-red-500">
-                    {errors.address.message}
-                  </span>
-                )}
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="flex w-full flex-col gap-3">
-            <Skeleton className="h-8 w-1/4 rounded-xl" />
-            <Skeleton className="h-8 w-full rounded-xl" />
-            <Skeleton className="h-8 w-1/4 rounded-xl" />
-            <Skeleton className="h-8 w-full rounded-xl" />
-            <Skeleton className="h-8 w-1/4 rounded-xl" />
-            <Skeleton className="h-8 w-full rounded-xl" />
-            <Skeleton className="h-8 w-1/4 rounded-xl" />
-            <Skeleton className="h-8 w-full rounded-xl" />
-          </div>
-        )}
-      </div>
-      <div className="flex justify-end gap-4">
-        <Button
-          size="sm"
-          className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
-          type="submit"
-          isLoading={isExecuting}
-        >
-          Siguiente
-        </Button>
-      </div>
-    </form>
+          ) : (
+            <div className="flex w-full flex-col gap-3">
+              <Skeleton className="h-8 w-1/4 rounded-xl" />
+              <Skeleton className="h-8 w-full rounded-xl" />
+              <Skeleton className="h-8 w-1/4 rounded-xl" />
+              <Skeleton className="h-8 w-full rounded-xl" />
+              <Skeleton className="h-8 w-1/4 rounded-xl" />
+              <Skeleton className="h-8 w-full rounded-xl" />
+              <Skeleton className="h-8 w-1/4 rounded-xl" />
+              <Skeleton className="h-8 w-full rounded-xl" />
+            </div>
+          )}
+        </div>
+        <div className="flex justify-end gap-4">
+          <Button
+            size="sm"
+            className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
+            type="submit"
+            isLoading={isExecuting}
+          >
+            Siguiente
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
 
