@@ -7,12 +7,12 @@ import { BusinessType, ContactMethodType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FormInput from "../atoms/form-inputs/FormInput";
-import FormPhoneInput from "../atoms/form-inputs/FormPhoneInput";
-import FormSelect from "../atoms/form-inputs/FormSelect";
-import { Button } from "../ui/button";
-import { Form } from "../ui/form";
-import { useStepper } from "../ui/stepper";
+import FormInput from "../../atoms/form-inputs/FormInput";
+import FormPhoneInput from "../../atoms/form-inputs/FormPhoneInput";
+import FormSelect from "../../atoms/form-inputs/FormSelect";
+import { Button } from "../../ui/button";
+import { Form } from "../../ui/form";
+import { useStepper } from "../../ui/stepper";
 
 const businessTypeOptions = [
   { key: BusinessType.BAKERY, value: "Panaderia" },
@@ -78,6 +78,7 @@ const GeneralInfoStep = () => {
                 options={businessTypeOptions}
                 placeholder="Seleccione un tipo de negocio"
               />
+
               <FormSelect
                 control={control}
                 name="contactMethod"
@@ -88,7 +89,7 @@ const GeneralInfoStep = () => {
               <FormPhoneInput
                 control={control}
                 name="phone"
-                label="Telefono"
+                label="Telefono del local"
                 placeholder="Ingresa el telefono"
               />
             </div>

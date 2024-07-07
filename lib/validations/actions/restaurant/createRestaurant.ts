@@ -10,6 +10,11 @@ export const createRestaurantFirstStepSchema = z.object({
   contactMethod: z.nativeEnum(ContactMethodType),
 });
 
+export const createRestaurantImagesStepSchema = z.object({
+  profileImage: z.instanceof(File).nullable().optional(),
+  backgroundImage: z.instanceof(File).nullable().optional(),
+});
+
 export const createRestaurantSecondStepSchema = z.object({
   address: z.string().min(1, "La dirección es obligatoria"),
   restaurantId: z.string(),
@@ -41,6 +46,3 @@ export const createRestaurantThirdStepSchema = z
     message: "El precio regular debe ser mayor que el precio actual",
     path: ["regularPrice"],
   });
-
-// profileImage: z.instanceof(File).nullable().optional(),
-// backgroundImage: z.instanceof(File).nullable().optional(),

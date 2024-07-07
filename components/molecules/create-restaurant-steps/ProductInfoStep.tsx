@@ -7,15 +7,15 @@ import { ProductType, Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FormCounter from "../atoms/form-inputs/FormCounter";
-import FormMoneyInput from "../atoms/form-inputs/FormMoneyInput";
-import FormSelect from "../atoms/form-inputs/FormSelect";
-import FormTextarea from "../atoms/form-inputs/FormTextarea";
-import FormTimeInput from "../atoms/form-inputs/FormTimeInput";
-import { Button } from "../ui/button";
-import { Form } from "../ui/form";
-import { Label } from "../ui/label";
-import { useStepper } from "../ui/stepper";
+import FormCounter from "../../atoms/form-inputs/FormCounter";
+import FormMoneyInput from "../../atoms/form-inputs/FormMoneyInput";
+import FormSelect from "../../atoms/form-inputs/FormSelect";
+import FormTextarea from "../../atoms/form-inputs/FormTextarea";
+import FormTimeInput from "../../atoms/form-inputs/FormTimeInput";
+import { Button } from "../../ui/button";
+import { Form } from "../../ui/form";
+import { Label } from "../../ui/label";
+import { useStepper } from "../../ui/stepper";
 
 const PRODUCT_TYPE_OPTIONS = [
   { key: ProductType.SURPRISE, value: "Bandeja Sorpresa" },

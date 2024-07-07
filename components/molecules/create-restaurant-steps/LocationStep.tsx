@@ -7,11 +7,11 @@ import { Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FormGoogleAddressInput from "../atoms/form-inputs/FormGoogleAddressInput";
-import { Button } from "../ui/button";
-import { Form } from "../ui/form";
-import { Skeleton } from "../ui/skeleton";
-import { useStepper } from "../ui/stepper";
+import FormGoogleAddressInput from "../../atoms/form-inputs/FormGoogleAddressInput";
+import { Button } from "../../ui/button";
+import { Form } from "../../ui/form";
+import { Skeleton } from "../../ui/skeleton";
+import { useStepper } from "../../ui/stepper";
 
 type FormSchema = z.infer<typeof createRestaurantSecondStepSchema>;
 

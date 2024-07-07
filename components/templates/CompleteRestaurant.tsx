@@ -4,12 +4,14 @@ import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
 import { Restaurant } from "@prisma/client";
 import { useJsApiLoader } from "@react-google-maps/api";
-import GeneralInfoStep from "../molecules/GeneralInfoStep";
-import LocationStep from "../molecules/LocationStep";
-import ProductInfoStep from "../molecules/ProductInfoStep";
+import GeneralInfoStep from "../molecules/create-restaurant-steps/GeneralInfoStep";
+import ImagesStep from "../molecules/create-restaurant-steps/ImagesStep";
+import LocationStep from "../molecules/create-restaurant-steps/LocationStep";
+import ProductInfoStep from "../molecules/create-restaurant-steps/ProductInfoStep";
 
 const steps = [
   { label: "Información General" },
+  { label: "Imagenes (opcional)" },
   { label: "Ubicacion" },
   { label: "Productos" },
 ] satisfies StepItem[];
@@ -45,8 +47,9 @@ const CompleteEstablishment = ({ restaurant }: Props) => {
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>
                 {index === 0 && <GeneralInfoStep />}
-                {index === 1 && <LocationStep isLoaded={isLoaded} />}
-                {index === 2 && <ProductInfoStep />}
+                {index === 1 && <ImagesStep />}
+                {index === 2 && <LocationStep isLoaded={isLoaded} />}
+                {index === 3 && <ProductInfoStep />}
               </Step>
             ))}
           </Stepper>

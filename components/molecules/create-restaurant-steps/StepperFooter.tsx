@@ -13,7 +13,6 @@
 
 // interface StepperFooterProps {
 //   form: UseFormReturn<CreateRestaurantType>;
-// }
 
 // // Define the fields for each step
 // const stepFields: Array<Array<keyof CreateRestaurantType>> = [
