@@ -3,6 +3,7 @@
 import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
 import { Restaurant } from "@prisma/client";
+import { useJsApiLoader } from "@react-google-maps/api";
 import GeneralInfoStep from "../molecules/GeneralInfoStep";
 import LocationStep from "../molecules/LocationStep";
 import ProductInfoStep from "../organisms/ProductInfoStep";
@@ -18,6 +19,11 @@ interface Props {
 }
 
 const CompleteEstablishment = ({ restaurant }: Props) => {
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!,
+    libraries: ["places"],
+  });
+
   return (
     <div className="flex flex-col items-center px-4 pb-8 lg:px-0">
       <div className="flex w-full max-w-4xl flex-col gap-8">
@@ -30,12 +36,17 @@ const CompleteEstablishment = ({ restaurant }: Props) => {
           </p>
         </div>
         <div>
-          <Stepper orientation="vertical" initialStep={0} steps={steps}>
+          <Stepper
+            orientation="vertical"
+            initialStep={0}
+            steps={steps}
+            stepData={restaurant}
+          >
             {steps.map((stepProps, index) => (
               <Step key={stepProps.label} {...stepProps}>
-                {index === 0 && <GeneralInfoStep restaurant={restaurant} />}
-                {index === 1 && <LocationStep />}
-                {index === 1 && <ProductInfoStep />}
+                {index === 0 && <GeneralInfoStep />}
+                {index === 1 && <LocationStep isLoaded={isLoaded} />}
+                {index === 2 && <ProductInfoStep />}
               </Step>
             ))}
           </Stepper>

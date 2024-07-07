@@ -1,28 +1,28 @@
 import * as React from "react";
-import type { StepperProps } from "./types";
+import { StepperProps } from "./types";
 
-export interface StepperContextValue<T = any> extends StepperProps {
+export interface StepperContextValue<T = any>
+  extends Omit<StepperProps, "stepData"> {
   clickable?: boolean;
-  isError?: boolean;
-  isLoading?: boolean;
-  isVertical?: boolean;
-  stepCount?: number;
-  expandVerticalSteps?: boolean;
   activeStep: number;
-  initialStep: number;
-  stepData: T | null;
+  stepData?: T;
   nextStep: (data?: T) => void;
   prevStep: () => void;
   resetSteps: () => void;
   setStep: (step: number, data?: T) => void;
   updateStepData: (data: T) => void;
+  isError?: boolean;
+  isLoading?: boolean;
+  isVertical?: boolean;
+  stepCount?: number;
+  expandVerticalSteps?: boolean;
+  initialStep: number;
 }
 
 type StepperContextProviderProps<T> = {
   value: Omit<
     StepperContextValue<T>,
     | "activeStep"
-    | "stepData"
     | "nextStep"
     | "prevStep"
     | "resetSteps"
@@ -32,7 +32,7 @@ type StepperContextProviderProps<T> = {
   children: React.ReactNode;
 };
 
-const StepperContext = React.createContext<StepperContextValue>({
+const StepperContext = React.createContext<StepperContextValue<any>>({
   steps: [],
   activeStep: 0,
   initialStep: 0,
@@ -48,11 +48,10 @@ function StepperProvider<T>({
   value,
   children,
 }: StepperContextProviderProps<T>) {
-  const isError = value.state === "error";
-  const isLoading = value.state === "loading";
-
   const [activeStep, setActiveStep] = React.useState(value.initialStep);
-  const [stepData, setStepData] = React.useState<T | null>(null);
+  const [stepData, setStepData] = React.useState<T | undefined>(
+    value.stepData || undefined,
+  );
 
   const nextStep = (data?: T) => {
     setActiveStep((prev) => prev + 1);
@@ -83,8 +82,6 @@ function StepperProvider<T>({
 
   const contextValue: StepperContextValue<T> = {
     ...value,
-    isError,
-    isLoading,
     activeStep,
     stepData,
     nextStep,

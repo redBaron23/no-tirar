@@ -4,7 +4,6 @@ import { createRestaurantSecondStep } from "@/app/actions/restaurant/createResta
 import { createRestaurantSecondStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Restaurant } from "@prisma/client";
-import { useLoadScript } from "@react-google-maps/api";
 import { useAction } from "next-safe-action/hooks";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,8 +15,12 @@ import { useStepper } from "../ui/stepper";
 
 type FormSchema = z.infer<typeof createRestaurantSecondStepSchema>;
 
-const LocationStep = () => {
-  const { nextStep, stepData } = useStepper<Restaurant>();
+interface Props {
+  isLoaded: boolean;
+}
+
+const LocationStep = ({ isLoaded }: Props) => {
+  const { nextStep, stepData: restaurant } = useStepper<Restaurant>();
 
   const {
     handleSubmit,
@@ -26,26 +29,26 @@ const LocationStep = () => {
   } = useForm<FormSchema>({
     resolver: zodResolver(createRestaurantSecondStepSchema),
     defaultValues: {
-      address: "",
+      address: restaurant?.address || "",
+      restaurantId: restaurant?.id,
     },
   });
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACES_API_KEY!,
-    libraries: ["places"],
-  });
+  console.log(errors);
 
   const { executeAsync, isExecuting } = useAction(createRestaurantSecondStep);
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      const response = await executeAsync({
-        ...data,
-        restaurantId: stepData!.id,
-      });
-      const restaurant = response?.data?.restaurant;
+      const response = await executeAsync(data);
 
-      nextStep(restaurant);
+      if (!response?.data?.success) {
+        return;
+      }
+
+      const updatedRestaurant = response?.data?.restaurant;
+
+      nextStep(updatedRestaurant);
     } catch (e) {
       console.log(e);
     }

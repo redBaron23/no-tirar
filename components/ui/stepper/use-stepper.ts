@@ -38,6 +38,6 @@ export function useStepper<T = any>() {
     isDisabledStep,
     currentStep,
     previousActiveStep,
-    stepData: context.stepData as T | null,
+    stepData: context.stepData as T | undefined,
   };
 }

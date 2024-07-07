@@ -3,7 +3,7 @@
 import { createRestaurantFirstStep } from "@/app/actions/restaurant/createRestaurant";
 import { createRestaurantFirstStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BusinessType, ContactMethodType, Restaurant } from "@prisma/client";
+import { BusinessType, ContactMethodType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,12 +28,8 @@ const contactOptions = [
 
 type FormSchema = z.infer<typeof createRestaurantFirstStepSchema>;
 
-interface Props {
-  restaurant?: Restaurant;
-}
-
-const GeneralInfoStep = ({ restaurant }: Props) => {
-  const { nextStep } = useStepper();
+const GeneralInfoStep = () => {
+  const { nextStep, stepData: restaurant } = useStepper();
   const {
     handleSubmit,
     control,
@@ -52,8 +48,12 @@ const GeneralInfoStep = ({ restaurant }: Props) => {
 
   const onSubmit = async (data: FormSchema) => {
     try {
-      const result = await executeAsync(data);
-      const currentRestaurant = result?.data?.restaurant;
+      const response = await executeAsync(data);
+
+      if (!response?.data?.success) {
+        return;
+      }
+      const currentRestaurant = response?.data?.restaurant;
 
       nextStep(currentRestaurant);
     } catch (e) {
