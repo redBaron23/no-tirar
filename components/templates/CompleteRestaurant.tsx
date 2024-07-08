@@ -18,7 +18,7 @@ const steps = [
 ] satisfies StepItem[];
 
 interface Props {
-  restaurant: Restaurant;
+  restaurant: Restaurant | null;
 }
 
 const CompleteEstablishment = ({ restaurant }: Props) => {

@@ -6,7 +6,7 @@ export default async function Page() {
 
   console.log({ restaurant });
 
-  if (restaurant.isSetupComplete) {
+  if (restaurant?.isSetupComplete) {
     return <div>Show my menu</div>;
   }
 

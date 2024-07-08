@@ -1,4 +1,3 @@
-import { Restaurant } from "@prisma/client";
 import { auth } from "../auth";
 import { prisma } from "../prisma";
 
@@ -10,7 +9,7 @@ const getRestaurant = async () => {
     },
   });
 
-  return restaurant as Restaurant;
+  return restaurant;
 };
 
 export { getRestaurant };
