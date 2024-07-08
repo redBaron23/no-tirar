@@ -1,11 +1,5 @@
 import DaySelect from "@/components/molecules/DaySelect";
 import OrdersSection from "@/components/templates/OrdersSection";
-import ReviewsSection from "@/components/templates/ReviewsSection";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
 
 const reviews = [
   {
