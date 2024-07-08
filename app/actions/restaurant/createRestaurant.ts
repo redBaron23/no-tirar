@@ -71,6 +71,7 @@ export const createRestaurantThirdStep = businessActionClient
         data: {
           startTime: isoStartTime,
           endTime: isoEndTime,
+          isSetupComplete: true,
           products: {
             create: {
               ...productInput,

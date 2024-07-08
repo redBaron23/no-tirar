@@ -58,13 +58,11 @@ const LocationStep = ({ isLoaded }: Props) => {
         >
           {isLoaded ? (
             <div className="grid w-full grid-cols-1 gap-8">
-              <div className="grid gap-6 md:grid-cols-2">
-                <FormGoogleAddressInput
-                  control={control}
-                  name="address"
-                  label="Dirección del Establecimiento"
-                />
-              </div>
+              <FormGoogleAddressInput
+                control={control}
+                name="address"
+                label="Dirección del Establecimiento"
+              />
             </div>
           ) : (
             <div className="flex w-full flex-col gap-3">

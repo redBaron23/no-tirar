@@ -8,9 +8,6 @@ const getRestaurant = async () => {
     where: {
       userId: session?.user.id,
     },
-    include: {
-      products: true,
-    },
   });
 
   return restaurant as Restaurant;

@@ -2,19 +2,22 @@
 
 import { APP_NAME } from "@/constants";
 import { Restaurant } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { Button } from "../../ui/button";
 import { useStepper } from "../../ui/stepper";
 
 const SuccessStep = () => {
-  const {
-    nextStep,
-    hasCompletedAllSteps,
-    stepData: restaurant,
-  } = useStepper<Restaurant>();
+  const router = useRouter();
+  const { hasCompletedAllSteps, stepData: restaurant } =
+    useStepper<Restaurant>();
 
   if (!hasCompletedAllSteps) {
     return;
   }
+
+  const handleFinish = () => {
+    router.refresh();
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -35,7 +38,7 @@ const SuccessStep = () => {
           size="sm"
           className="bg-green-600 px-4 py-2 text-white hover:bg-green-500"
           type="button"
-          onClick={() => nextStep()}
+          onClick={handleFinish}
         >
           Finalizar
         </Button>

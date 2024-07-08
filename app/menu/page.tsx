@@ -6,6 +6,10 @@ export default async function Page() {
 
   console.log({ restaurant });
 
+  if (restaurant.isSetupComplete) {
+    return <div>Show my menu</div>;
+  }
+
   return (
     <div className="p-5">
       <CompleteRestaurant restaurant={restaurant} />
