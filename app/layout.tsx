@@ -24,10 +24,7 @@ const Layout = async ({
         className={`${inter.className} ${merriweather_sans.className} bg-gray-100 text-black dark:bg-stone-900 dark:text-white`}
       >
         <Providers session={session}>
-          <main className="h-[calc(100vh-70px)] overflow-y-auto lg:h-screen">
-            {children}
-          </main>
-          <TabMenu userRole={session?.user.role} />
+          <TabMenu userRole={session?.user.role}>{children}</TabMenu>
         </Providers>
       </body>
     </html>
