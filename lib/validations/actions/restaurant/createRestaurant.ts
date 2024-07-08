@@ -3,9 +3,9 @@ import dayjs from "dayjs";
 import { z } from "zod";
 
 export const createRestaurantFirstStepSchema = z.object({
-  name: z.string().min(1, "El nombre es obligatorio"),
+  name: z.string().min(1, "El nombre es obligatorio."),
   description: z.string().optional(),
-  phone: z.string().min(1, "El teléfono es obligatorio"),
+  phone: z.string().min(1, "El teléfono es obligatorio."),
   type: z.nativeEnum(BusinessType),
   contactMethod: z.nativeEnum(ContactMethodType),
 });
@@ -24,21 +24,23 @@ export const createRestaurantImagesStepSchema = z.object({
 });
 
 export const createRestaurantSecondStepSchema = z.object({
-  address: z.string().min(1, "La dirección es obligatoria"),
+  address: z.string().min(1, "La dirección es obligatoria."),
   restaurantId: z.string(),
 });
 
 export const createRestaurantThirdStepSchema = z
   .object({
     restaurantId: z.string(),
-    name: z.string().min(1, "Un nombre es necesario"),
-    description: z.string().min(1, "Una descripcion es necesaria"),
+    name: z.string().min(1, "El nombre del producto es obligatorio."),
+    description: z
+      .string()
+      .min(1, "La descripción del producto es obligatoria."),
     productType: z.nativeEnum(ProductType),
-    startTime: z.string().min(1, "La hora de inicio es obligatoria"),
-    endTime: z.string().min(1, "La hora de finalización es obligatoria"),
-    quantity: z.number().min(0, "La cantidad es requerida"),
-    regularPrice: z.number().min(1, "El precio debe ser un número mayor que 0"),
-    currentPrice: z.number().min(1, "El precio debe ser un número mayor que 0"),
+    startTime: z.string().min(1, "La hora de inicio es obligatoria."),
+    endTime: z.string().min(1, "La hora de finalización es obligatoria."),
+    quantity: z.number().min(0, "La cantidad es obligatoria."),
+    regularPrice: z.number().min(1, "El precio regular debe ser mayor que 0."),
+    currentPrice: z.number().min(1, "El precio actual debe ser mayor que 0."),
   })
   .refine(
     (data) => {
@@ -47,11 +49,12 @@ export const createRestaurantThirdStepSchema = z
       return start.isBefore(end);
     },
     {
-      message: "La hora de finalización debe ser posterior a la hora de inicio",
+      message:
+        "La hora de finalización debe ser posterior a la hora de inicio.",
       path: ["endTime"],
     },
   )
   .refine((data) => data.regularPrice > data.currentPrice, {
-    message: "El precio regular debe ser mayor que el precio actual",
+    message: "El precio regular debe ser mayor que el precio actual.",
     path: ["regularPrice"],
   });
