@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { PROTECTED_ROUTES, UNPROTECTED_ROUTES } from "@/constants";
+import { IconsType, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from "@/constants";
 import { pages } from "@/constants/pages";
 
 export const isPathOnArray = (
@@ -41,3 +41,9 @@ export function formatCurrency(
     currency: currency,
   }).format(amount);
 }
+
+export const getDefaultPath = (icons: IconsType, pathname: string) => {
+  return (
+    Object.keys(icons).find((key) => icons[key].page === pathname) ?? "home"
+  );
+};
