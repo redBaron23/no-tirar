@@ -1,9 +1,11 @@
 "use client";
 
+import { APP_NAME } from "@/constants";
 import { useNavItems } from "@/hooks/useNavItems";
 import { UserRole } from "@prisma/client";
 import { cx } from "class-variance-authority";
-import { Package2, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
@@ -26,10 +28,16 @@ const Sidebar = ({ userRole = UserRole.CUSTOMER }: Props) => {
       <nav className="flex flex-1 flex-col items-center gap-4 px-2 py-4">
         <Link
           href="#"
-          className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
+          className="flex h-8 w-8 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-base font-semibold text-primary-foreground"
         >
-          <Package2 className="h-4 w-4 transition-all group-hover:scale-110" />
-          <span className="sr-only">Acme Inc</span>
+          <Image
+            src="/images/logo.png"
+            alt="No-tirar Logo"
+            width={80}
+            height={80}
+            className="transition-transform duration-300 hover:scale-105"
+          />{" "}
+          <span className="sr-only">{APP_NAME}</span>
         </Link>
         {Object.keys(navIcons).map((key) => (
           <Tooltip key={key}>
