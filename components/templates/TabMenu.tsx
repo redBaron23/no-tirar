@@ -15,6 +15,7 @@ import {
   RiHome5Fill,
   RiHome5Line,
 } from "react-icons/ri";
+import Sidebar from "../organisms/Sidebar";
 
 interface IconProps {
   filled: React.ReactNode;
@@ -147,6 +148,7 @@ export default function TabMenu({
 
   return (
     <div>
+      <Sidebar />
       <div
         className={cx(
           !shouldHideTabMenu &&
@@ -155,7 +157,7 @@ export default function TabMenu({
       >
         {children}
       </div>
-      <div
+      <aside
         className={cx(
           shouldHideTabMenu && "hidden",
           "fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100 lg:hidden",
@@ -177,7 +179,7 @@ export default function TabMenu({
             </div>
           ))}
         </div>
-      </div>
+      </aside>
     </div>
   );
 }

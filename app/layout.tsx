@@ -1,5 +1,5 @@
 import { Providers } from "@/Providers";
-import TabMenu from "@/components/molecules/TabMenu";
+import TabMenu from "@/components/templates/TabMenu";
 import { auth } from "@/lib/auth";
 import type { Metadata } from "next";
 import { inter, merriweather_sans } from "./fonts";
