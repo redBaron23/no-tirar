@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
+import UserAvatar from "@/components/atoms/profile/UserAvatar";
 import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
@@ -44,9 +45,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { auth } from "@/lib/auth";
 import Link from "next/link";
 
-export function ProductEditor() {
+export async function ProductEditor() {
+  const session = await auth();
+
   return (
     <div className="flex h-full w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
@@ -85,13 +89,7 @@ export function ProductEditor() {
                 size="icon"
                 className="overflow-hidden rounded-full"
               >
-                <Image
-                  src="/placeholder-user.jpg"
-                  width={36}
-                  height={36}
-                  alt="Avatar"
-                  className="overflow-hidden rounded-full"
-                />
+                <UserAvatar />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">

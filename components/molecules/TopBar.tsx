@@ -11,17 +11,9 @@ interface Props {
 
 export default function TopBar({ isLoggedIn, role }: Props) {
   const isBusiness = role === UserRole.BUSINESS;
+
   return (
     <header className="flex h-16 items-center justify-between gap-4 border-b bg-background">
-      {/* <Link href="#" className="text-lg font-bold" prefetch={false}>
-        <Image
-          src="/images/icon-512.png"
-          alt="Restaurant Logo"
-          width={100}
-          height={100}
-          className="rounded-full"
-        />
-      </Link> */}
       <div className="w-full flex-grow">{!isBusiness && <SearchBar />}</div>
       <div className="flex items-center justify-end gap-4">
         {isLoggedIn ? (
