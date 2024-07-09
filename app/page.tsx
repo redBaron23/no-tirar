@@ -1,4 +1,5 @@
 import LoginButton from "@/components/atoms/LoginButton";
+import { APP_NAME } from "@/constants";
 import { pages } from "@/constants/pages";
 import type { Metadata } from "next";
 import Image from "next/image";
@@ -13,9 +14,8 @@ import {
 } from "react-icons/fa";
 
 export const metadata: Metadata = {
-  title: "No-tirar: Rescata comida, ahorra dinero, salva el planeta",
-  description:
-    "Únete a No-tirar y sé parte de la revolución contra el desperdicio de alimentos. Descubre ofertas increíbles en comida que de otro modo se desperdiciaría, ahorra dinero y ayuda al medio ambiente.",
+  title: `${APP_NAME}: Rescata comida, ahorra dinero, salva el planeta`,
+  description: `Únete a ${APP_NAME} y sé parte de la revolución contra el desperdicio de alimentos. Descubre ofertas increíbles en comida que de otro modo se desperdiciaría, ahorra dinero y ayuda al medio ambiente.`,
 };
 
 export default function GetStarted() {
@@ -27,7 +27,7 @@ export default function GetStarted() {
         <nav className="container mx-auto flex items-center justify-between">
           <Image
             src="/images/logo.png"
-            alt="No-tirar Logo"
+            alt={`${APP_NAME} Logo`}
             width={80}
             height={80}
             className="rounded-full transition-transform duration-300 hover:scale-105"
@@ -98,8 +98,8 @@ export default function GetStarted() {
             <div>
               <h3 className="mb-4 text-lg font-semibold">Sobre Nosotros</h3>
               <p className="text-teal-100">
-                No-tirar es una plataforma dedicada a reducir el desperdicio de
-                alimentos y ayudar a las personas a ahorrar dinero.
+                {APP_NAME} es una plataforma dedicada a reducir el desperdicio
+                de alimentos y ayudar a las personas a ahorrar dinero.
               </p>
             </div>
             <div>
@@ -121,7 +121,7 @@ export default function GetStarted() {
             </div>
             <div>
               <h3 className="mb-4 text-lg font-semibold">Contacto</h3>
-              <p className="text-teal-100">Email: info@no-tirar.com</p>
+              <p className="text-teal-100">Email: info@{APP_NAME}.com</p>
               <p className="text-teal-100">Teléfono: +34 123 456 789</p>
             </div>
             <div>
@@ -140,7 +140,9 @@ export default function GetStarted() {
             </div>
           </div>
           <div className="mt-8 border-t border-teal-500 pt-8 text-center">
-            <p>&copy; {currentYear} No-tirar. Todos los derechos reservados.</p>
+            <p>
+              &copy; {currentYear} {APP_NAME}. Todos los derechos reservados.
+            </p>
           </div>
         </div>
       </footer>

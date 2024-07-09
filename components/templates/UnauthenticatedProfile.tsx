@@ -1,9 +1,10 @@
-import Image from "next/image";
-import { CiLogin, CiCircleInfo, CiLock } from "react-icons/ci";
-import { PiHeadset } from "react-icons/pi";
-import { FiArrowLeft } from "react-icons/fi";
-import Link from "next/link";
+import { APP_NAME } from "@/constants";
 import { pages } from "@/constants/pages";
+import Image from "next/image";
+import Link from "next/link";
+import { CiCircleInfo, CiLock } from "react-icons/ci";
+import { FiArrowLeft } from "react-icons/fi";
+import { PiHeadset } from "react-icons/pi";
 import ButtonLink from "../atoms/ButtonLink";
 import { LoginLink } from "../atoms/LoginButton";
 
@@ -19,7 +20,7 @@ export default async function UnauthenticatedProfile() {
         </Link>
         <Image
           src="/images/logo.png"
-          alt="No-tirar Logo"
+          alt={`${APP_NAME} Logo`}
           width={80}
           height={80}
           className="rounded-full transition-transform duration-300 hover:scale-105"

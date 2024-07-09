@@ -1,15 +1,15 @@
 import { Providers } from "@/Providers";
 import BottomTabMenu from "@/components/organisms/BottomTabMenu";
 import Sidebar from "@/components/organisms/Sidebar";
+import { APP_NAME } from "@/constants";
 import { auth } from "@/lib/auth";
 import type { Metadata } from "next";
 import { inter, merriweather_sans } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "No-tirar: Rescata comida, ahorra dinero, salva el planeta",
-  description:
-    "Únete a No-tirar y sé parte de la revolución contra el desperdicio de alimentos. Descubre ofertas increíbles en comida que de otro modo se desperdiciaría, ahorra dinero y ayuda al medio ambiente.",
+  title: `${APP_NAME}: Rescata comida, ahorra dinero, salva el planeta`,
+  description: `Únete a ${APP_NAME} y sé parte de la revolución contra el desperdicio de alimentos. Descubre ofertas increíbles en comida que de otro modo se desperdiciaría, ahorra dinero y ayuda al medio ambiente.`,
 };
 
 const Layout = async ({

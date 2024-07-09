@@ -32,7 +32,7 @@ const Sidebar = ({ userRole = UserRole.CUSTOMER }: Props) => {
         >
           <Image
             src="/images/logo.png"
-            alt="No-tirar Logo"
+            alt={`${APP_NAME} Logo`}
             width={80}
             height={80}
             className="transition-transform duration-300 hover:scale-105"
