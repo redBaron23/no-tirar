@@ -149,15 +149,15 @@ export default function TabMenu({
   return (
     <div>
       <Sidebar />
-      <div
+      <main
         className={cx(
           !shouldHideTabMenu &&
             "h-[calc(100vh-70px)] overflow-y-auto px-4 lg:h-screen",
         )}
       >
         {children}
-      </div>
-      <aside
+      </main>
+      <nav
         className={cx(
           shouldHideTabMenu && "hidden",
           "fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100 lg:hidden",
@@ -179,7 +179,7 @@ export default function TabMenu({
             </div>
           ))}
         </div>
-      </aside>
+      </nav>
     </div>
   );
 }
