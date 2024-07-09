@@ -1,3 +1,9 @@
+"use client";
+
+import { HIDDEN_PATHS } from "@/constants";
+import { pages } from "@/constants/pages";
+import { UserRole } from "@prisma/client";
+import { cx } from "class-variance-authority";
 import {
   Home,
   LineChart,
@@ -8,11 +14,28 @@ import {
   Users2,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
-const Sidebar = () => {
+interface Props {
+  userRole?: UserRole;
+}
+
+const Sidebar = ({ userRole = UserRole.CUSTOMER }: Props) => {
+  const pathname = usePathname();
+
+  const shouldHideSidebar = HIDDEN_PATHS.some(
+    (path) => pathname.startsWith(path) || pathname === pages.index,
+  );
+
   return (
-    <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
+    <aside
+      className={cx(
+        shouldHideSidebar
+          ? "hidden"
+          : "fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex",
+      )}
+    >
       <nav className="flex flex-col items-center gap-4 px-2 py-4">
         <Link
           href="#"

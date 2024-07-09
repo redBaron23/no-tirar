@@ -1,10 +1,11 @@
 "use client";
 
+import { HIDDEN_PATHS } from "@/constants";
 import { pages } from "@/constants/pages";
 import { UserRole } from "@prisma/client";
 import { cx } from "class-variance-authority";
 import { usePathname, useRouter } from "next/navigation";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegUserCircle, FaShoppingBag, FaUserCircle } from "react-icons/fa";
 import { MdMenuBook, MdOutlineShoppingBag } from "react-icons/md";
 import {
@@ -15,7 +16,6 @@ import {
   RiHome5Fill,
   RiHome5Line,
 } from "react-icons/ri";
-import Sidebar from "../organisms/Sidebar";
 
 interface IconProps {
   filled: React.ReactNode;
@@ -109,8 +109,6 @@ const iconsByRole: { [key in UserRole]: IconsType } = {
   ADMIN: adminIcons,
 };
 
-const HIDDEN_PATHS = [pages.restaurant, pages.settings];
-
 const getDefaultPath = (icons: IconsType, pathname: string) => {
   return (
     Object.keys(icons).find((key) => icons[key].page === pathname) ?? "home"
@@ -118,14 +116,10 @@ const getDefaultPath = (icons: IconsType, pathname: string) => {
 };
 
 interface Props {
-  children: ReactNode;
   userRole?: UserRole;
 }
 
-export default function TabMenu({
-  children,
-  userRole = UserRole.CUSTOMER,
-}: Props) {
+export default function BottomTabMenu({ userRole = UserRole.CUSTOMER }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const icons = iconsByRole[userRole];
@@ -142,44 +136,33 @@ export default function TabMenu({
     router.push(icons[key].page);
   };
 
-  const shouldHideTabMenu = HIDDEN_PATHS.some(
+  const shouldHideSidebar = HIDDEN_PATHS.some(
     (path) => pathname.startsWith(path) || pathname === pages.index,
   );
 
   return (
-    <div>
-      <Sidebar />
-      <main
-        className={cx(
-          !shouldHideTabMenu &&
-            "h-[calc(100vh-70px)] overflow-y-auto px-4 lg:h-screen",
-        )}
-      >
-        {children}
-      </main>
-      <nav
-        className={cx(
-          shouldHideTabMenu && "hidden",
-          "fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100 lg:hidden",
-        )}
-      >
-        <div className="flex cursor-pointer items-center justify-around">
-          {Object.keys(icons).map((key) => (
-            <div
-              key={key}
-              className={`flex h-full w-full flex-col items-center gap-1 py-3 ${
-                selected === key
-                  ? "text-green-800 hover:text-green-800"
-                  : "text-gray-700 hover:bg-green-50"
-              }`}
-              onClick={() => handleClick(key)}
-            >
-              {selected === key ? icons[key].filled : icons[key].outlined}
-              <span className="text-xs font-medium">{icons[key].text}</span>
-            </div>
-          ))}
-        </div>
-      </nav>
-    </div>
+    <nav
+      className={cx(
+        "fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100 lg:hidden",
+        shouldHideSidebar && "hidden",
+      )}
+    >
+      <div className="flex cursor-pointer items-center justify-around">
+        {Object.keys(icons).map((key) => (
+          <div
+            key={key}
+            className={`flex h-full w-full flex-col items-center gap-1 py-3 ${
+              selected === key
+                ? "text-green-800 hover:text-green-800"
+                : "text-gray-700 hover:bg-green-50"
+            }`}
+            onClick={() => handleClick(key)}
+          >
+            {selected === key ? icons[key].filled : icons[key].outlined}
+            <span className="text-xs font-medium">{icons[key].text}</span>
+          </div>
+        ))}
+      </div>
+    </nav>
   );
 }

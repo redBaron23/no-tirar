@@ -1,9 +1,18 @@
 import { pages } from "./pages";
 
-export const APP_NAME = "no-tirar";
-export const PROTECTED_ROUTES = [pages.home, pages.restaurant, pages.profile];
+const APP_NAME = "no-tirar";
+const PROTECTED_ROUTES = [pages.home, pages.restaurant, pages.profile];
+const HIDDEN_PATHS = [pages.restaurant, pages.settings];
 
 // Index is an unprotected page
-export const UNPROTECTED_ROUTES = [];
+const UNPROTECTED_ROUTES = [];
 
-export const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "gif", "webp"];
+const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "gif", "webp"];
+
+export {
+  ALLOWED_IMAGE_EXTENSIONS,
+  APP_NAME,
+  HIDDEN_PATHS,
+  PROTECTED_ROUTES,
+  UNPROTECTED_ROUTES,
+};

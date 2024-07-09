@@ -1,5 +1,6 @@
 import { Providers } from "@/Providers";
-import TabMenu from "@/components/templates/TabMenu";
+import BottomTabMenu from "@/components/organisms/BottomTabMenu";
+import Sidebar from "@/components/organisms/Sidebar";
 import { auth } from "@/lib/auth";
 import type { Metadata } from "next";
 import { inter, merriweather_sans } from "./fonts";
@@ -23,9 +24,9 @@ const Layout = async ({
       <body
         className={`${inter.className} ${merriweather_sans.className} bg-gray-100 text-black dark:bg-stone-900 dark:text-white`}
       >
-        <Providers session={session}>
-          <TabMenu userRole={session?.user.role}>{children}</TabMenu>
-        </Providers>
+        <Sidebar userRole={session?.user.role} />
+        <Providers session={session}>{children}</Providers>
+        <BottomTabMenu userRole={session?.user.role} />
       </body>
     </html>
   );

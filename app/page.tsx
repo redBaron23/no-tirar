@@ -5,11 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   FaFacebookF,
+  FaGlobeAmericas,
   FaInstagram,
+  FaPiggyBank,
   FaTwitter,
   FaUtensils,
-  FaPiggyBank,
-  FaGlobeAmericas,
 } from "react-icons/fa";
 
 export const metadata: Metadata = {
