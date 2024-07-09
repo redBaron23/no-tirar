@@ -147,14 +147,14 @@ export default function TabMenu({
 
   return (
     <div>
-      <main
+      <div
         className={cx(
           !shouldHideTabMenu &&
-            "h-[calc(100vh-70px)] overflow-y-auto lg:h-screen",
+            "h-[calc(100vh-70px)] overflow-y-auto px-4 lg:h-screen",
         )}
       >
         {children}
-      </main>
+      </div>
       <div
         className={cx(
           shouldHideTabMenu && "hidden",

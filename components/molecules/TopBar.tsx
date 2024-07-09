@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { UserRole } from "@prisma/client";
 import LoginButton from "../atoms/LoginButton";
 import ProfileButton from "../atoms/ProfileButton";
-import { UserRole } from "@prisma/client";
 import SearchBar from "../atoms/SearchBar";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 export default function TopBar({ isLoggedIn, role }: Props) {
   const isBusiness = role === UserRole.BUSINESS;
   return (
-    <header className="bg-background flex h-16 items-center justify-between gap-4 border-b px-4">
+    <header className="flex h-16 items-center justify-between gap-4 border-b bg-background">
       {/* <Link href="#" className="text-lg font-bold" prefetch={false}>
         <Image
           src="/images/icon-512.png"

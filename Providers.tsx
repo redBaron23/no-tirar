@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 interface Props {
   session: Session | null;
@@ -14,8 +15,10 @@ interface Props {
 export function Providers({ session, children }: Props) {
   return (
     <SessionProvider session={session}>
-      <ToastContainer />
-      {children}
+      <TooltipProvider>
+        <ToastContainer />
+        {children}
+      </TooltipProvider>
     </SessionProvider>
   );
 }

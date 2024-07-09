@@ -14,7 +14,7 @@ export default async function Layout({ business, customer, children }: Props) {
   const isBusiness = session?.user.role === UserRole.BUSINESS;
 
   return (
-    <div className="pb-20 lg:pb-0">
+    <div className="flex flex-col gap-4 pb-20 lg:pb-0">
       <TopBar isLoggedIn={!!session} role={session?.user.role} />
       <section className="flex flex-col">
         {isBusiness ? business : customer}
