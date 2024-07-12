@@ -3,6 +3,7 @@
 import { createProduct } from "@/app/actions/product/createProduct";
 import { createProductSchema } from "@/app/actions/product/schemas";
 import FormCounter from "@/components/atoms/form-inputs/FormCounter";
+import FormImageInput from "@/components/atoms/form-inputs/FormImageInput";
 import FormInput from "@/components/atoms/form-inputs/FormInput";
 import FormMoneyInput from "@/components/atoms/form-inputs/FormMoneyInput";
 import FormSelect from "@/components/atoms/form-inputs/FormSelect";
@@ -18,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductStatus, ProductType } from "@prisma/client";
 import { PlusCircle } from "lucide-react";
@@ -47,8 +49,7 @@ export function CreateProductDialog({
   restaurantId,
 }: CreateProductDialogProps) {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const { executeAsync, result, isExecuting } = useAction(createProduct);
+  const { executeAsync, isExecuting } = useAction(createProduct);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(createProductSchema),
@@ -56,25 +57,40 @@ export function CreateProductDialog({
       type: ProductType.SURPRISE,
       status: ProductStatus.ACTIVE,
       quantity: 0,
+      restaurantId: restaurantId, // Add this line
     },
   });
+  const { toast } = useToast();
 
-  const { control, handleSubmit, reset } = form;
+  const { control, handleSubmit } = form;
 
   const onSubmit = async (data: FormSchema) => {
-    setIsLoading(true);
+    console.log("Form data:", data);
     try {
-      await executeAsync(data);
-      setOpen(false);
-      reset();
-    } finally {
-      setIsLoading(false);
+      const result = await executeAsync(data);
+      if (result?.data?.success) {
+        toast({ title: "Producto creado exitosamente" });
+        setOpen(false);
+        form.reset();
+      } else {
+        console.error("Error creating product:", result?.serverError);
+        toast({
+          variant: "destructive",
+          title: result?.serverError || "Error al crear el producto",
+        });
+      }
+    } catch (error) {
+      console.error("Unexpected error:", error);
+      toast({
+        variant: "destructive",
+        title: error,
+      });
     }
   };
 
   const onCancel = () => {
     setOpen(false);
-    reset();
+    form.reset();
   };
 
   return (
@@ -112,12 +128,11 @@ export function CreateProductDialog({
                     options={productTypeOptions}
                     placeholder="Seleccione el tipo de producto"
                   />
-                  <FormSelect
+                  <FormImageInput
                     control={control}
-                    name="status"
-                    label="Estado del Producto"
-                    options={productStatusOptions}
-                    placeholder="Seleccione el estado del producto"
+                    name="image"
+                    label="Imagen del Producto"
+                    type="profile"
                   />
                   <FormInput
                     control={control}
@@ -145,12 +160,6 @@ export function CreateProductDialog({
                     label="Cantidad"
                     maxQuantity={100}
                   />
-                  <FormInput
-                    control={control}
-                    name="imageUrl"
-                    label="URL de la Imagen"
-                    placeholder="Ingrese la URL de la imagen"
-                  />
                 </div>
               </div>
               <FormTextarea
@@ -164,12 +173,12 @@ export function CreateProductDialog({
                   type="button"
                   variant="ghost"
                   onClick={onCancel}
-                  disabled={isLoading}
+                  disabled={isExecuting}
                 >
                   Cancelar
                 </Button>
-                <Button type="submit" disabled={isLoading}>
-                  {isLoading ? "Creando..." : "Crear Producto"}
+                <Button type="submit" isLoading={isExecuting}>
+                  Crear Producto
                 </Button>
               </DialogFooter>
             </form>

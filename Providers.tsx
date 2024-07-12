@@ -5,8 +5,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "./components/ui/toaster";
 import { HIDDEN_PATHS } from "./constants";
 import { pages } from "./constants/pages";
 
@@ -24,7 +23,7 @@ export function Providers({ session, children }: Props) {
 
   return (
     <SessionProvider session={session}>
-      <ToastContainer />
+      <Toaster />
       <div
         className={cx(
           !shouldHideTabMenu &&
