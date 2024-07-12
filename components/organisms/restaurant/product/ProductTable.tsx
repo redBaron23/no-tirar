@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { deleteProduct } from "@/app/actions/product/deleteProduct";
 import { ConfirmProductRemovalDialog } from "@/components/molecules/restaurant/product/ConfirmProductRemovalDialog";
 import {
   getStatusBadgeVariant,
@@ -29,17 +30,19 @@ import {
   translateStatus,
 } from "@/lib/utils";
 import { Product } from "@prisma/client";
+import { useAction } from "next-safe-action/hooks";
 
 interface ProductTableProps {
   products: Product[];
+  restaurantId: string;
 }
 
-export function ProductTable({ products }: ProductTableProps) {
+export function ProductTable({ products, restaurantId }: ProductTableProps) {
+  const { execute, isExecuting } = useAction(deleteProduct);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
 
   const handleEdit = (productId: string) => {};
   const handleArchive = (productId: string) => {};
-  const handleDelete = (productId: string) => {};
 
   const handleOpenDeleteModal = (product: Product) => {
     setProductToDelete(product);
@@ -51,7 +54,11 @@ export function ProductTable({ products }: ProductTableProps) {
 
   const handleConfirmDelete = () => {
     if (productToDelete) {
-      handleDelete(productToDelete.id);
+      execute({
+        restaurantId,
+        productId: productToDelete.id,
+      });
+
       setProductToDelete(null);
     }
   };
@@ -151,6 +158,7 @@ export function ProductTable({ products }: ProductTableProps) {
           onConfirm={handleConfirmDelete}
           onCancel={handleCloseDeleteModal}
           open={!!productToDelete}
+          isLoading={isExecuting}
         />
       )}
     </>

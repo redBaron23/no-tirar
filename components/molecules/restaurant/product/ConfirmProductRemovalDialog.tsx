@@ -16,6 +16,7 @@ interface Props {
   open: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+  isLoading: boolean;
 }
 
 export function ConfirmProductRemovalDialog({
@@ -23,6 +24,7 @@ export function ConfirmProductRemovalDialog({
   open,
   onConfirm,
   onCancel,
+  isLoading,
 }: Props) {
   return (
     <Dialog open={open} onOpenChange={onCancel}>
@@ -40,7 +42,12 @@ export function ConfirmProductRemovalDialog({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2 pt-4 sm:justify-end">
-          <Button type="button" variant="ghost" onClick={onCancel}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={onCancel}
+            disabled={isLoading}
+          >
             Cancelar
           </Button>
           <Button
@@ -48,6 +55,7 @@ export function ConfirmProductRemovalDialog({
             variant="destructive"
             onClick={onConfirm}
             className="w-full sm:w-auto"
+            isLoading={isLoading}
           >
             Sí, Eliminar
           </Button>

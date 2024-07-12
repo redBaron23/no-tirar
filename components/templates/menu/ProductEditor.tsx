@@ -120,7 +120,10 @@ export async function ProductEditor({ restaurantId }: Props) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ProductTable products={products} />
+                  <ProductTable
+                    products={products}
+                    restaurantId={restaurantId}
+                  />
                 </CardContent>
                 <CardFooter>
                   <div className="text-xs text-muted-foreground">
