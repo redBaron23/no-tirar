@@ -22,7 +22,7 @@ const Layout = async ({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${merriweather_sans.className} bg-gray-100 text-black dark:bg-stone-900 dark:text-white`}
+        className={`${inter.className} ${merriweather_sans.className} h-screen bg-gray-100 text-black dark:bg-stone-900 dark:text-white lg:flex`}
       >
         <Sidebar userRole={session?.user.role} />
         <Providers session={session}>{children}</Providers>

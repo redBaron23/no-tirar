@@ -28,7 +28,7 @@ export function Providers({ session, children }: Props) {
       <div
         className={cx(
           !shouldHideTabMenu &&
-            "h-[calc(100vh-70px)] overflow-y-auto lg:h-screen",
+            "h-[calc(100vh-70px)] flex-1 overflow-y-auto lg:h-screen",
         )}
       >
         {children}

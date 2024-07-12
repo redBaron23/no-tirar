@@ -6,7 +6,7 @@ export default async function Page() {
   const restaurant = await getRestaurant();
 
   return (
-    <div className="p-4">
+    <div className="p-4 lg:p-0">
       {restaurant?.isSetupComplete ? (
         <ProductEditor restaurantId={restaurant.id} />
       ) : (

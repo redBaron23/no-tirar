@@ -22,7 +22,7 @@ const Sidebar = ({ userRole = UserRole.CUSTOMER }: Props) => {
       className={cx(
         shouldHideNav()
           ? "hidden"
-          : "fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background lg:flex",
+          : "z-10 hidden w-14 flex-col border-r bg-background lg:flex",
       )}
     >
       <nav className="flex flex-1 flex-col items-center gap-4 px-2 py-4">
