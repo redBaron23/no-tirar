@@ -83,7 +83,7 @@ export function CreateProductDialog({
       console.error("Unexpected error:", error);
       toast({
         variant: "destructive",
-        title: error ? error : "Error al crear el producto",
+        title: "Error al crear el producto",
       });
     }
   };
