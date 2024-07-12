@@ -38,7 +38,7 @@ export function ConfirmProductRemovalDialog({
           </DialogTitle>
           <DialogDescription className="pt-4 text-sm">
             ¿Estás seguro de que deseas eliminar el producto{" "}
-            <span className="font-semibold">"{productName}"</span>?
+            <span className="font-semibold">{`"${productName}"`}</span>?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="gap-2 pt-4 sm:justify-end">
