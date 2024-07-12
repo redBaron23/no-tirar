@@ -35,7 +35,7 @@ export const createRestaurantThirdStepSchema = z
     description: z
       .string()
       .min(1, "La descripción del producto es obligatoria."),
-    productType: z.nativeEnum(ProductType),
+    type: z.nativeEnum(ProductType),
     startTime: z.string().min(1, "La hora de inicio es obligatoria."),
     endTime: z.string().min(1, "La hora de finalización es obligatoria."),
     quantity: z.number().min(0, "La cantidad es obligatoria."),

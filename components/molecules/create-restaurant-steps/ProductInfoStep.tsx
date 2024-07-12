@@ -31,7 +31,7 @@ const ProductInfoStep = () => {
     resolver: zodResolver(createRestaurantThirdStepSchema),
     defaultValues: {
       restaurantId: restaurant?.id,
-      productType: ProductType.SURPRISE,
+      type: ProductType.SURPRISE,
       quantity: 1,
       startTime: "10:00",
       endTime: "18:00",

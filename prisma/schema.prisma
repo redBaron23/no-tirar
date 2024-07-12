@@ -20,6 +20,12 @@ enum OrderStatus {
   COMPLETED
 }
 
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
 enum ProductType {
   SURPRISE
 }
@@ -77,16 +83,20 @@ model Restaurant {
 }
 
 model Product {
-  id           String      @id @default(cuid())
+  id           String        @id @default(cuid())
   name         String
   description  String?
-  productType  ProductType
+  type         ProductType   @default(SURPRISE)
+  status       ProductStatus @default(ACTIVE)
+  category     String?
   regularPrice Decimal
   currentPrice Decimal
   quantity     Int
+  salesCount   Int           @default(0)
+  imageUrl     String?
   restaurantId String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   orders     Order[]

@@ -8,7 +8,7 @@ export default async function Page() {
   return (
     <div className="p-4">
       {restaurant?.isSetupComplete ? (
-        <ProductEditor />
+        <ProductEditor restaurantId={restaurant.id} />
       ) : (
         <CompleteRestaurant restaurant={restaurant} />
       )}
