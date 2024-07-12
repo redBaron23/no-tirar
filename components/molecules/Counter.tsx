@@ -1,21 +1,29 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useEffect, useState } from "react";
 
 interface CounterProps extends InputHTMLAttributes<HTMLInputElement> {
   maxQuantity?: number;
+  minQuantity?: number;
   onChangeQuantity: (newQuantity: number) => void;
   quantity: number;
-  borderRadius?: string; // New prop for customizable border radius
+  borderRadius?: string;
 }
 
 export default function Counter({
   quantity,
   onChangeQuantity,
   maxQuantity = 100,
-  borderRadius = "rounded-md", // Default border radius
-  ...inputProps // Spread the remaining input props
+  minQuantity = 0,
+  borderRadius = "rounded-md",
+  ...inputProps
 }: CounterProps) {
+  const [inputValue, setInputValue] = useState(quantity.toString());
+
+  useEffect(() => {
+    setInputValue(quantity.toString());
+  }, [quantity]);
+
   const handleIncrement = () => {
     if (quantity < maxQuantity) {
       onChangeQuantity(quantity + 1);
@@ -23,14 +31,37 @@ export default function Counter({
   };
 
   const handleDecrement = () => {
-    if (quantity > 1) {
+    if (quantity > minQuantity) {
       onChangeQuantity(quantity - 1);
     }
   };
 
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = parseInt(e.target.value) || 1;
-    onChangeQuantity(value > maxQuantity ? maxQuantity : value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    const numValue = parseInt(value, 10);
+    if (!isNaN(numValue)) {
+      const clampedValue = Math.min(
+        Math.max(numValue, minQuantity),
+        maxQuantity,
+      );
+      onChangeQuantity(clampedValue);
+    }
+  };
+
+  const handleBlur = () => {
+    const numValue = parseInt(inputValue, 10);
+    if (isNaN(numValue)) {
+      setInputValue(quantity.toString());
+    } else {
+      const clampedValue = Math.min(
+        Math.max(numValue, minQuantity),
+        maxQuantity,
+      );
+      setInputValue(clampedValue.toString());
+      onChangeQuantity(clampedValue);
+    }
   };
 
   return (
@@ -46,20 +77,22 @@ export default function Counter({
         className={cn(
           "size-10 leading-10 text-gray-600 transition hover:opacity-75",
           {
-            "cursor-not-allowed opacity-50": quantity === 1,
+            "cursor-not-allowed opacity-50": quantity <= minQuantity,
           },
         )}
-        disabled={quantity === 1}
+        disabled={quantity <= minQuantity}
       >
         &minus;
       </button>
 
       <input
-        type="number"
-        id="Quantity"
-        value={quantity}
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={inputValue}
         onChange={handleInputChange}
-        className="h-10 w-16 border-transparent text-center [-moz-appearance:_textfield] sm:text-sm [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+        onBlur={handleBlur}
+        className="h-10 w-16 border-transparent text-center sm:text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
         {...inputProps}
       />
 
@@ -69,10 +102,10 @@ export default function Counter({
         className={cn(
           "size-10 leading-10 text-gray-600 transition hover:opacity-75",
           {
-            "cursor-not-allowed opacity-50": quantity === maxQuantity,
+            "cursor-not-allowed opacity-50": quantity >= maxQuantity,
           },
         )}
-        disabled={quantity === maxQuantity}
+        disabled={quantity >= maxQuantity}
       >
         +
       </button>
