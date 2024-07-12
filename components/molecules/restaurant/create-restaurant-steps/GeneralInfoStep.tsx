@@ -1,7 +1,7 @@
 "use client";
 
 import { createRestaurantFirstStep } from "@/app/actions/restaurant/createRestaurant";
-import { createRestaurantFirstStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
+import { createRestaurantFirstStepSchema } from "@/app/actions/restaurant/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BusinessType, ContactMethodType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";

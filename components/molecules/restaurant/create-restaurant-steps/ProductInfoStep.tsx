@@ -1,8 +1,8 @@
 "use client";
 
 import { createRestaurantThirdStep } from "@/app/actions/restaurant/createRestaurant";
+import { createRestaurantThirdStepSchema } from "@/app/actions/restaurant/schemas";
 import FormInput from "@/components/atoms/form-inputs/FormInput";
-import { createRestaurantThirdStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType, Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";

@@ -3,13 +3,13 @@
 import { prisma } from "@/lib/prisma";
 import { businessActionClient } from "@/lib/safe-action";
 import { uploadImage } from "@/lib/supabaseClient";
+import dayjs from "dayjs";
 import {
   createRestaurantFirstStepSchema,
   createRestaurantImagesStepSchema,
   createRestaurantSecondStepSchema,
   createRestaurantThirdStepSchema,
-} from "@/lib/validations/actions/restaurant/createRestaurant";
-import dayjs from "dayjs";
+} from "./schemas";
 
 export const createRestaurantFirstStep = businessActionClient
   .metadata({ actionName: "createRestaurantFirstStep" })
