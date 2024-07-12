@@ -4,13 +4,14 @@ import { prisma } from "@/lib/prisma";
 import { businessActionClient } from "@/lib/safe-action";
 import { uploadImage } from "@/lib/supabaseClient";
 import { ProductStatus, ProductType } from "@prisma/client";
-import { createProductSchema } from "./schemas";
+import { updateProductSchema } from "./schemas";
 
-export const createProduct = businessActionClient
-  .metadata({ actionName: "createProduct" })
-  .schema(createProductSchema)
+export const updateProduct = businessActionClient
+  .metadata({ actionName: "updateProduct" })
+  .schema(updateProductSchema)
   .action(async ({ parsedInput, ctx: { userId } }) => {
     const {
+      id,
       name,
       description,
       type,
@@ -24,20 +25,28 @@ export const createProduct = businessActionClient
       restaurantId,
     } = parsedInput;
 
-    // Verify that the restaurant belongs to the user
-    const restaurant = await prisma.restaurant.findFirst({
-      where: { id: restaurantId, userId },
+    // Verify that the product exists and belongs to a restaurant owned by the user
+    const product = await prisma.product.findFirst({
+      where: {
+        id,
+        restaurant: {
+          userId,
+        },
+      },
+      include: {
+        restaurant: true,
+      },
     });
 
-    if (!restaurant) {
+    if (!product) {
       throw new Error(
-        "Restaurant not found or you don't have permission to add products to it.",
+        "Product not found or you don't have permission to edit it.",
       );
     }
 
     let imageUrl: string | undefined;
 
-    // Handle image upload if an image file is provided
+    // Handle image upload if a new image file is provided
     if (image instanceof File) {
       imageUrl = await uploadImage(
         image,
@@ -45,8 +54,9 @@ export const createProduct = businessActionClient
       );
     }
 
-    // Create the product
-    const product = await prisma.product.create({
+    // Update the product
+    const updatedProduct = await prisma.product.update({
+      where: { id },
       data: {
         name,
         description,
@@ -57,13 +67,12 @@ export const createProduct = businessActionClient
         currentPrice,
         quantity,
         salesCount: salesCount || 0,
-        imageUrl,
-        restaurantId,
+        imageUrl: imageUrl || product.imageUrl, // Keep the old image URL if no new image is provided
       },
     });
 
     return {
       success: true,
-      product,
+      product: updatedProduct,
     };
   });

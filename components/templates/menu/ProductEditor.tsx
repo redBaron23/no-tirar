@@ -104,6 +104,10 @@ export async function ProductEditor({ restaurantId }: Props) {
                     Exportar
                   </span>
                 </Button>
+                {/**
+                 * Need to find a alternative appraoch
+                 */}
+                {/* <EditProductDialog product={prodc}/> */}
                 <CreateProductDialog restaurantId={restaurantId} />
               </div>
             </div>
