@@ -4,11 +4,11 @@ import { Step, StepItem, Stepper } from "@/components/ui/stepper";
 import { APP_NAME } from "@/constants";
 import { Restaurant } from "@prisma/client";
 import { useJsApiLoader } from "@react-google-maps/api";
-import GeneralInfoStep from "../molecules/create-restaurant-steps/GeneralInfoStep";
-import ImagesStep from "../molecules/create-restaurant-steps/ImagesStep";
-import LocationStep from "../molecules/create-restaurant-steps/LocationStep";
-import ProductInfoStep from "../molecules/create-restaurant-steps/ProductInfoStep";
-import SuccessStep from "../molecules/create-restaurant-steps/SuccessStep";
+import GeneralInfoStep from "../molecules/restaurant/create-restaurant-steps/GeneralInfoStep";
+import ImagesStep from "../molecules/restaurant/create-restaurant-steps/ImagesStep";
+import LocationStep from "../molecules/restaurant/create-restaurant-steps/LocationStep";
+import ProductInfoStep from "../molecules/restaurant/create-restaurant-steps/ProductInfoStep";
+import SuccessStep from "../molecules/restaurant/create-restaurant-steps/SuccessStep";
 
 const steps = [
   { label: "Información General" },

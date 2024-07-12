@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 import { IconsType, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from "@/constants";
 import { pages } from "@/constants/pages";
+import { ProductStatus, ProductType } from "@prisma/client";
 
 export const isPathOnArray = (
   currentPath: string,
@@ -46,4 +47,39 @@ export const getDefaultPath = (icons: IconsType, pathname: string) => {
   return (
     Object.keys(icons).find((key) => icons[key].page === pathname) ?? "home"
   );
+};
+
+export const getStatusBadgeVariant = (status: ProductStatus) => {
+  switch (status) {
+    case ProductStatus.ACTIVE:
+      return "default";
+    case ProductStatus.DRAFT:
+      return "secondary";
+    case ProductStatus.ARCHIVED:
+      return "destructive";
+    default:
+      return "outline";
+  }
+};
+
+export const translateStatus = (status: ProductStatus) => {
+  switch (status) {
+    case ProductStatus.ACTIVE:
+      return "Activo";
+    case ProductStatus.DRAFT:
+      return "Borrador";
+    case ProductStatus.ARCHIVED:
+      return "Archivado";
+    default:
+      return status;
+  }
+};
+
+export const translateProductType = (type: ProductType) => {
+  switch (type) {
+    case ProductType.SURPRISE:
+      return "Sorpresa";
+    default:
+      return type;
+  }
 };

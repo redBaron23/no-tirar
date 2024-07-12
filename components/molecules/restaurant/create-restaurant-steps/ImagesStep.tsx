@@ -1,38 +1,34 @@
 "use client";
 
-import { createRestaurantSecondStep } from "@/app/actions/restaurant/createRestaurant";
-import { createRestaurantSecondStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
+import { createRestaurantImagesStep } from "@/app/actions/restaurant/createRestaurant";
+import FormImageInput from "@/components/atoms/form-inputs/FormImageInput";
+import { createRestaurantImagesStepSchema } from "@/lib/validations/actions/restaurant/createRestaurant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FormGoogleAddressInput from "../../atoms/form-inputs/FormGoogleAddressInput";
-import { Button } from "../../ui/button";
-import { Form } from "../../ui/form";
-import { Skeleton } from "../../ui/skeleton";
-import { useStepper } from "../../ui/stepper";
+import { Button } from "../../../ui/button";
+import { Form } from "../../../ui/form";
+import { useStepper } from "../../../ui/stepper";
 
-type FormSchema = z.infer<typeof createRestaurantSecondStepSchema>;
+type FormSchema = z.infer<typeof createRestaurantImagesStepSchema>;
 
-interface Props {
-  isLoaded: boolean;
-}
-
-const LocationStep = ({ isLoaded }: Props) => {
+const ImagesStep = () => {
   const { nextStep, prevStep, stepData: restaurant } = useStepper<Restaurant>();
 
   const form = useForm<FormSchema>({
-    resolver: zodResolver(createRestaurantSecondStepSchema),
+    resolver: zodResolver(createRestaurantImagesStepSchema),
     defaultValues: {
-      address: restaurant?.address || "",
       restaurantId: restaurant?.id,
+      profileImage: restaurant?.profileImageUrl || undefined,
+      backgroundImage: restaurant?.backgroundImageUrl || undefined,
     },
   });
 
   const { control, handleSubmit } = form;
 
-  const { executeAsync, isExecuting } = useAction(createRestaurantSecondStep);
+  const { executeAsync, isExecuting } = useAction(createRestaurantImagesStep);
 
   const onSubmit = async (data: FormSchema) => {
     try {
@@ -50,32 +46,32 @@ const LocationStep = ({ isLoaded }: Props) => {
     }
   };
 
+  console.log(restaurant?.profileImageUrl);
+
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
         <div
           className={`my-4 flex h-full w-full max-w-3xl flex-col items-center justify-center rounded-md border bg-secondary p-4 text-gray-600`}
         >
-          {isLoaded ? (
-            <div className="grid w-full grid-cols-1 gap-8">
-              <FormGoogleAddressInput
+          <div className="grid w-full grid-cols-1 gap-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              <FormImageInput
                 control={control}
-                name="address"
-                label="Dirección del Establecimiento"
+                name="profileImage"
+                label="Logo"
+                type="profile"
+                defaultUrl={restaurant?.profileImageUrl}
+              />
+              <FormImageInput
+                control={control}
+                name="backgroundImage"
+                label="Imagen de fondo (opcional)"
+                type="background"
+                defaultUrl={restaurant?.backgroundImageUrl}
               />
             </div>
-          ) : (
-            <div className="flex w-full flex-col gap-3">
-              <Skeleton className="h-8 w-1/4 rounded-xl" />
-              <Skeleton className="h-8 w-full rounded-xl" />
-              <Skeleton className="h-8 w-1/4 rounded-xl" />
-              <Skeleton className="h-8 w-full rounded-xl" />
-              <Skeleton className="h-8 w-1/4 rounded-xl" />
-              <Skeleton className="h-8 w-full rounded-xl" />
-              <Skeleton className="h-8 w-1/4 rounded-xl" />
-              <Skeleton className="h-8 w-full rounded-xl" />
-            </div>
-          )}
+          </div>
         </div>
         <div className="flex justify-end gap-4">
           <Button
@@ -102,4 +98,4 @@ const LocationStep = ({ isLoaded }: Props) => {
   );
 };
 
-export default LocationStep;
+export default ImagesStep;

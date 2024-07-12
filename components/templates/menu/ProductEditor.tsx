@@ -1,16 +1,7 @@
-import { ProductStatus, ProductType } from "@prisma/client";
-import dayjs from "dayjs";
-import {
-  File,
-  ListFilter,
-  MoreHorizontal,
-  PlusCircle,
-  Search,
-} from "lucide-react";
-import Image from "next/image";
+import { File, ListFilter, PlusCircle, Search } from "lucide-react";
 
 import UserAvatar from "@/components/atoms/profile/UserAvatar";
-import { Badge } from "@/components/ui/badge";
+import { ProductTable } from "@/components/organisms/restaurant/product/ProductTable";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -30,55 +21,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getProducts } from "@/lib/queries/productQueries";
 
 interface Props {
   restaurantId: string;
 }
-
-const getStatusBadgeVariant = (status: ProductStatus) => {
-  switch (status) {
-    case ProductStatus.ACTIVE:
-      return "default";
-    case ProductStatus.DRAFT:
-      return "secondary";
-    case ProductStatus.ARCHIVED:
-      return "destructive";
-    default:
-      return "outline";
-  }
-};
-
-const translateStatus = (status: ProductStatus) => {
-  switch (status) {
-    case ProductStatus.ACTIVE:
-      return "Activo";
-    case ProductStatus.DRAFT:
-      return "Borrador";
-    case ProductStatus.ARCHIVED:
-      return "Archivado";
-    default:
-      return status;
-  }
-};
-
-const translateProductType = (type: ProductType) => {
-  switch (type) {
-    case ProductType.SURPRISE:
-      return "Sorpresa";
-    default:
-      return type;
-  }
-};
 
 export async function ProductEditor({ restaurantId }: Props) {
   const products = await getProducts(restaurantId);
@@ -121,7 +69,6 @@ export async function ProductEditor({ restaurantId }: Props) {
               <TabsList>
                 <TabsTrigger value="all">Todos</TabsTrigger>
                 <TabsTrigger value="active">Activos</TabsTrigger>
-                <TabsTrigger value="draft">Borradores</TabsTrigger>
                 <TabsTrigger value="archived" className="hidden sm:flex">
                   Archivados
                 </TabsTrigger>
@@ -173,102 +120,7 @@ export async function ProductEditor({ restaurantId }: Props) {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="hidden w-[100px] sm:table-cell">
-                          <span className="sr-only">Imagen</span>
-                        </TableHead>
-                        <TableHead>Nombre</TableHead>
-                        <TableHead>Estado</TableHead>
-                        <TableHead>Precio</TableHead>
-                        <TableHead>Cantidad</TableHead>
-                        <TableHead className="hidden md:table-cell">
-                          Tipo
-                        </TableHead>
-                        <TableHead className="hidden md:table-cell">
-                          Categoría
-                        </TableHead>
-                        <TableHead className="hidden lg:table-cell">
-                          Precio Regular
-                        </TableHead>
-                        <TableHead className="hidden lg:table-cell">
-                          Ventas
-                        </TableHead>
-                        <TableHead className="hidden lg:table-cell">
-                          Última Modificación
-                        </TableHead>
-                        <TableHead>
-                          <span className="sr-only">Acciones</span>
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {products.map((product) => (
-                        <TableRow key={product.id}>
-                          <TableCell className="hidden sm:table-cell">
-                            <Image
-                              alt={`Imagen de ${product.name}`}
-                              className="aspect-square rounded-md object-cover"
-                              height="64"
-                              src={product.imageUrl || "/placeholder.svg"}
-                              width="64"
-                            />
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {product.name}
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={getStatusBadgeVariant(product.status)}
-                            >
-                              {translateStatus(product.status)}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            ${product.currentPrice.toFixed(2)}
-                          </TableCell>
-                          <TableCell>{product.quantity}</TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            {translateProductType(product.type)}
-                          </TableCell>
-                          <TableCell className="hidden md:table-cell">
-                            {product.category || "N/A"}
-                          </TableCell>
-                          <TableCell className="hidden lg:table-cell">
-                            ${product.regularPrice.toFixed(2)}
-                          </TableCell>
-                          <TableCell className="hidden lg:table-cell">
-                            {product.salesCount}
-                          </TableCell>
-                          <TableCell className="hidden lg:table-cell">
-                            {dayjs(product.updatedAt).format(
-                              "D MMM, YYYY HH:mm",
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  aria-haspopup="true"
-                                  size="icon"
-                                  variant="ghost"
-                                >
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">Abrir menú</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Acciones</DropdownMenuLabel>
-                                <DropdownMenuItem>Editar</DropdownMenuItem>
-                                <DropdownMenuItem>Eliminar</DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                  <ProductTable products={products} />
                 </CardContent>
                 <CardFooter>
                   <div className="text-xs text-muted-foreground">

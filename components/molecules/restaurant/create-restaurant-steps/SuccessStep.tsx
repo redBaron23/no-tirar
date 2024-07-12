@@ -3,8 +3,8 @@
 import { APP_NAME } from "@/constants";
 import { Restaurant } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { Button } from "../../ui/button";
-import { useStepper } from "../../ui/stepper";
+import { Button } from "../../../ui/button";
+import { useStepper } from "../../../ui/stepper";
 
 const SuccessStep = () => {
   const router = useRouter();
