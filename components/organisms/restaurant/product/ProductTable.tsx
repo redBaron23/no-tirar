@@ -83,7 +83,7 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
             </TableHead>
             <TableHead>Nombre</TableHead>
             <TableHead>Estado</TableHead>
-            <TableHead>Precio</TableHead>
+            <TableHead>Precio Actual</TableHead>
             <TableHead>Cantidad</TableHead>
             <TableHead className="hidden md:table-cell">Tipo</TableHead>
             <TableHead className="hidden md:table-cell">Categoría</TableHead>

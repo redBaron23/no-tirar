@@ -31,6 +31,12 @@ interface Props {
 
 export async function ProductManagementPage({ restaurantId }: Props) {
   const products = await getProducts(restaurantId);
+  const activeProducts = products.filter(
+    (product) => product.status === "ACTIVE",
+  );
+  const archivedProducts = products.filter(
+    (product) => product.status === "ARCHIVED",
+  );
 
   return (
     <div className="flex h-full w-full flex-col bg-muted/40">
@@ -118,6 +124,48 @@ export async function ProductManagementPage({ restaurantId }: Props) {
                 <CardContent>
                   <ProductTable
                     products={products}
+                    restaurantId={restaurantId}
+                  />
+                </CardContent>
+                <CardFooter>
+                  <div className="text-xs text-muted-foreground">
+                    Mostrando <strong>{products.length}</strong> productos
+                  </div>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            <TabsContent value="active">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Productos</CardTitle>
+                  <CardDescription>
+                    Gestiona tus productos y visualiza su rendimiento de ventas.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ProductTable
+                    products={activeProducts}
+                    restaurantId={restaurantId}
+                  />
+                </CardContent>
+                <CardFooter>
+                  <div className="text-xs text-muted-foreground">
+                    Mostrando <strong>{products.length}</strong> productos
+                  </div>
+                </CardFooter>
+              </Card>
+            </TabsContent>
+            <TabsContent value="archived">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Productos</CardTitle>
+                  <CardDescription>
+                    Gestiona tus productos y visualiza su rendimiento de ventas.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ProductTable
+                    products={archivedProducts}
                     restaurantId={restaurantId}
                   />
                 </CardContent>
