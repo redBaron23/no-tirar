@@ -9,10 +9,10 @@ export const deleteProductSchema = z.object({
 
 const productBaseSchema = z.object({
   name: z.string().min(1, "El nombre del producto es requerido"),
-  description: z.string().optional(),
+  description: z.string().nullable(),
   type: z.nativeEnum(ProductType).default(ProductType.SURPRISE),
   status: z.nativeEnum(ProductStatus).default(ProductStatus.ACTIVE),
-  category: z.string().optional(),
+  category: z.string().nullable(),
   regularPrice: z.number().positive("El precio regular debe ser positivo"),
   currentPrice: z.number().positive("El precio actual debe ser positivo"),
   quantity: z
@@ -20,7 +20,7 @@ const productBaseSchema = z.object({
     .int()
     .nonnegative("La cantidad debe ser un número entero no negativo"),
   salesCount: z.number().int().nonnegative().default(0),
-  image: z.union([z.instanceof(File), z.string()]).optional(),
+  image: z.union([z.instanceof(File), z.string()]).nullable(),
   restaurantId: z.string(),
 });
 

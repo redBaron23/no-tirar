@@ -16,15 +16,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductStatus, ProductType } from "@prisma/client";
-import { Edit2 } from "lucide-react";
+import { Product, ProductStatus, ProductType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -39,26 +36,15 @@ const productStatusOptions = [
   { key: ProductStatus.ARCHIVED, value: "Archivado" },
 ];
 
-interface EditProductDialogProps {
-  product: {
-    id: string;
-    name: string;
-    type: ProductType;
-    image: string;
-    category: string;
-    regularPrice: number;
-    currentPrice: number;
-    quantity: number;
-    description: string;
-    status: ProductStatus;
-    restaurantId: string;
-  };
-}
-
 type FormSchema = z.infer<typeof updateProductSchema>;
 
-export function EditProductDialog({ product }: EditProductDialogProps) {
-  const [open, setOpen] = useState(false);
+interface Props {
+  product: Product;
+  open: boolean;
+  onClose: () => void;
+}
+
+export function EditProductDialog({ open, onClose, product }: Props) {
   const { executeAsync, isExecuting } = useAction(updateProduct);
 
   const form = useForm<FormSchema>({
@@ -67,10 +53,10 @@ export function EditProductDialog({ product }: EditProductDialogProps) {
       id: product.id,
       name: product.name,
       type: product.type,
-      image: product.image,
       category: product.category,
-      regularPrice: product.regularPrice,
-      currentPrice: product.currentPrice,
+      regularPrice: product.regularPrice as unknown as number, // @TODO improve typing
+      currentPrice: product.currentPrice as unknown as number,
+      image: product.imageUrl,
       quantity: product.quantity,
       description: product.description,
       status: product.status,
@@ -87,7 +73,7 @@ export function EditProductDialog({ product }: EditProductDialogProps) {
       const result = await executeAsync(data);
       if (result?.data?.success) {
         toast({ title: "Producto actualizado exitosamente" });
-        setOpen(false);
+        onClose();
       } else {
         console.error("Error updating product:", result?.serverError);
         toast({
@@ -105,20 +91,12 @@ export function EditProductDialog({ product }: EditProductDialogProps) {
   };
 
   const onCancel = () => {
-    setOpen(false);
+    onClose();
     form.reset();
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="ghost" className="h-7 gap-1">
-          <Edit2 className="h-3.5 w-3.5" />
-          <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-            Editar Producto
-          </span>
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] lg:max-w-[800px]">
         <DialogHeader className="px-2">
           <DialogTitle>Editar Producto</DialogTitle>
@@ -149,6 +127,7 @@ export function EditProductDialog({ product }: EditProductDialogProps) {
                     name="image"
                     label="Imagen del Producto"
                     type="profile"
+                    defaultUrl={product.imageUrl}
                   />
                   <FormInput
                     control={control}

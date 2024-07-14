@@ -33,12 +33,6 @@ const productTypeOptions = Object.values(ProductType).map((type) => ({
   value: type === ProductType.SURPRISE ? "Sorpresa" : type,
 }));
 
-const productStatusOptions = [
-  { key: ProductStatus.ACTIVE, value: "Activo" },
-  { key: ProductStatus.DRAFT, value: "Borrador" },
-  { key: ProductStatus.ARCHIVED, value: "Archivado" },
-];
-
 interface CreateProductDialogProps {
   restaurantId: string;
 }

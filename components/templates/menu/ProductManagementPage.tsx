@@ -29,7 +29,7 @@ interface Props {
   restaurantId: string;
 }
 
-export async function ProductEditor({ restaurantId }: Props) {
+export async function ProductManagementPage({ restaurantId }: Props) {
   const products = await getProducts(restaurantId);
 
   return (
@@ -104,10 +104,6 @@ export async function ProductEditor({ restaurantId }: Props) {
                     Exportar
                   </span>
                 </Button>
-                {/**
-                 * Need to find a alternative appraoch
-                 */}
-                {/* <EditProductDialog product={prodc}/> */}
                 <CreateProductDialog restaurantId={restaurantId} />
               </div>
             </div>

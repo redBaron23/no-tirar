@@ -24,6 +24,7 @@ import {
 
 import { deleteProduct } from "@/app/actions/product/deleteProduct";
 import { ConfirmProductRemovalDialog } from "@/components/molecules/restaurant/product/ConfirmProductRemovalDialog";
+import { EditProductDialog } from "@/components/molecules/restaurant/product/EditProductDialog";
 import {
   getStatusBadgeVariant,
   translateProductType,
@@ -40,8 +41,12 @@ interface ProductTableProps {
 export function ProductTable({ products, restaurantId }: ProductTableProps) {
   const { execute, isExecuting } = useAction(deleteProduct);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [productToEdit, setProductToEdit] = useState<Product | null>(null);
 
-  const handleEdit = (productId: string) => {};
+  const handleEdit = (product: Product) => {
+    setProductToEdit(product);
+  };
+
   const handleArchive = (productId: string) => {};
 
   const handleOpenDeleteModal = (product: Product) => {
@@ -61,6 +66,11 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
 
       setProductToDelete(null);
     }
+  };
+
+  const handleCloseEditModal = () => {
+    console.log("Close");
+    setProductToEdit(null);
   };
 
   return (
@@ -133,7 +143,7 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleEdit(product.id)}>
+                    <DropdownMenuItem onClick={() => handleEdit(product)}>
                       Editar
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleArchive(product.id)}>
@@ -151,6 +161,14 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
           ))}
         </TableBody>
       </Table>
+
+      {productToEdit && (
+        <EditProductDialog
+          product={productToEdit}
+          open={!!productToEdit}
+          onClose={handleCloseEditModal}
+        />
+      )}
 
       {productToDelete && (
         <ConfirmProductRemovalDialog

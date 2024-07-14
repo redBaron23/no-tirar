@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { serializeData } from "@/lib/queries/queriesUtils";
 import { businessActionClient } from "@/lib/safe-action";
 import { uploadImage } from "@/lib/supabaseClient";
 import { ProductStatus, ProductType } from "@prisma/client";
@@ -35,15 +36,10 @@ export const createProduct = businessActionClient
       );
     }
 
-    let imageUrl: string | undefined;
-
-    // Handle image upload if an image file is provided
-    if (image instanceof File) {
-      imageUrl = await uploadImage(
-        image,
-        `product-${restaurantId}-${Date.now()}`,
-      );
-    }
+    const imageUrl = await uploadImage(
+      image,
+      `product-${restaurantId}-${Date.now()}`,
+    );
 
     // Create the product
     const product = await prisma.product.create({
@@ -106,15 +102,11 @@ export const updateProduct = businessActionClient
       );
     }
 
-    let imageUrl: string | undefined;
-
     // Handle image upload if a new image file is provided
-    if (image instanceof File) {
-      imageUrl = await uploadImage(
-        image,
-        `product-${restaurantId}-${Date.now()}`,
-      );
-    }
+    const imageUrl =
+      typeof image === "string"
+        ? image
+        : await uploadImage(image, `product-${restaurantId}-${Date.now()}`);
 
     // Update the product
     const updatedProduct = await prisma.product.update({
@@ -129,12 +121,12 @@ export const updateProduct = businessActionClient
         currentPrice,
         quantity,
         salesCount: salesCount || 0,
-        imageUrl: imageUrl || product.imageUrl, // Keep the old image URL if no new image is provided
+        imageUrl: imageUrl || product.imageUrl,
       },
     });
 
     return {
       success: true,
-      product: updatedProduct,
+      product: serializeData(updatedProduct),
     };
   });

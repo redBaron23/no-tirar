@@ -1,5 +1,5 @@
 import CompleteRestaurant from "@/components/templates/CompleteRestaurant";
-import { ProductEditor } from "@/components/templates/menu/ProductEditor";
+import { ProductManagementPage } from "@/components/templates/menu/ProductManagementPage";
 import { getRestaurant } from "@/lib/queries/restaurantQueries";
 
 export default async function Page() {
@@ -8,7 +8,7 @@ export default async function Page() {
   return (
     <div className="p-4 lg:p-0">
       {restaurant?.isSetupComplete ? (
-        <ProductEditor restaurantId={restaurant.id} />
+        <ProductManagementPage restaurantId={restaurant.id} />
       ) : (
         <CompleteRestaurant restaurant={restaurant} />
       )}
