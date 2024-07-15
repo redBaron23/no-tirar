@@ -19,18 +19,13 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { productStatusOptions } from "@/constants";
+import { productStatusOptions, productTypeOptions } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product, ProductType } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
-const productTypeOptions = Object.values(ProductType).map((type) => ({
-  key: type,
-  value: type === ProductType.SURPRISE ? "Sorpresa" : type,
-}));
 
 type FormSchema = z.infer<typeof updateProductSchema>;
 
@@ -38,9 +33,15 @@ interface Props {
   product: Product;
   open: boolean;
   onClose: () => void;
+  isSurpriseAvailable: boolean;
 }
 
-export function EditProductDialog({ open, onClose, product }: Props) {
+export function EditProductDialog({
+  open,
+  onClose,
+  product,
+  isSurpriseAvailable,
+}: Props) {
   const router = useRouter();
   const { execute, isExecuting } = useAction(updateProduct, {
     onSuccess: () => {
@@ -87,6 +88,8 @@ export function EditProductDialog({ open, onClose, product }: Props) {
     form.reset();
   };
 
+  const isTypeDisabled = product.type === "CLASSIC" && !isSurpriseAvailable;
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] lg:max-w-[800px]">
@@ -112,6 +115,7 @@ export function EditProductDialog({ open, onClose, product }: Props) {
                     name="type"
                     label="Tipo de Producto"
                     options={productTypeOptions}
+                    disabled={isTypeDisabled}
                     placeholder="Seleccione el tipo de producto"
                   />
                   <FormInput
@@ -171,7 +175,7 @@ export function EditProductDialog({ open, onClose, product }: Props) {
                   Cancelar
                 </Button>
                 <Button type="submit" isLoading={isExecuting}>
-                  Crear Producto
+                  Actualizar Producto
                 </Button>
               </DialogFooter>
             </form>

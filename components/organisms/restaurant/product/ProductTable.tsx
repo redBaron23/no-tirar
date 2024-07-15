@@ -38,9 +38,14 @@ import { useRouter } from "next/navigation";
 interface ProductTableProps {
   products: Product[];
   restaurantId: string;
+  isSurpriseAvailable: boolean;
 }
 
-export function ProductTable({ products, restaurantId }: ProductTableProps) {
+export function ProductTable({
+  products,
+  restaurantId,
+  isSurpriseAvailable,
+}: ProductTableProps) {
   const router = useRouter();
   const { executeAsync: executeDeleteAsync, isExecuting: isExecutingDelete } =
     useAction(deleteProduct);
@@ -99,7 +104,6 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
   };
 
   const handleCloseEditModal = () => {
-    console.log("Close");
     setProductToEdit(null);
   };
 
@@ -197,6 +201,7 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
           product={productToEdit}
           open={!!productToEdit}
           onClose={handleCloseEditModal}
+          isSurpriseAvailable={isSurpriseAvailable}
         />
       )}
 

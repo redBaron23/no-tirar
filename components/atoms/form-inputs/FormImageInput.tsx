@@ -25,8 +25,6 @@ const getImageData = async (event: ChangeEvent<HTMLInputElement>) => {
     return null;
   }
 
-  console.log({ file, compressedImage });
-
   const displayUrl = URL.createObjectURL(compressedImage);
   return { file: compressedImage, displayUrl };
 };

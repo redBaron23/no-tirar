@@ -21,13 +21,13 @@ enum OrderStatus {
 }
 
 enum ProductStatus {
-  DRAFT
   ACTIVE
   ARCHIVED
 }
 
 enum ProductType {
   SURPRISE
+  CLASSIC
 }
 
 enum BusinessType {

@@ -38,6 +38,10 @@ export async function ProductManagementPage({ restaurantId }: Props) {
     (product) => product.status === "ARCHIVED",
   );
 
+  const hasSurpriseProduct = products.some(
+    (product) => product.type === "SURPRISE",
+  );
+
   return (
     <div className="flex h-full w-full flex-col bg-muted/40">
       <div className="flex flex-col sm:gap-4 sm:px-4 sm:py-4">
@@ -110,7 +114,10 @@ export async function ProductManagementPage({ restaurantId }: Props) {
                     Exportar
                   </span>
                 </Button>
-                <CreateProductDialog restaurantId={restaurantId} />
+                <CreateProductDialog
+                  restaurantId={restaurantId}
+                  isSurpriseAvailable={!hasSurpriseProduct}
+                />
               </div>
             </div>
             <TabsContent value="all">
@@ -125,6 +132,7 @@ export async function ProductManagementPage({ restaurantId }: Props) {
                   <ProductTable
                     products={products}
                     restaurantId={restaurantId}
+                    isSurpriseAvailable={!hasSurpriseProduct}
                   />
                 </CardContent>
                 <CardFooter>
@@ -146,6 +154,7 @@ export async function ProductManagementPage({ restaurantId }: Props) {
                   <ProductTable
                     products={activeProducts}
                     restaurantId={restaurantId}
+                    isSurpriseAvailable={!hasSurpriseProduct}
                   />
                 </CardContent>
                 <CardFooter>
@@ -167,6 +176,7 @@ export async function ProductManagementPage({ restaurantId }: Props) {
                   <ProductTable
                     products={archivedProducts}
                     restaurantId={restaurantId}
+                    isSurpriseAvailable={!hasSurpriseProduct}
                   />
                 </CardContent>
                 <CardFooter>

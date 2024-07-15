@@ -2,7 +2,13 @@ import imageCompression from "browser-image-compression";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { IconsType, PROTECTED_ROUTES, UNPROTECTED_ROUTES } from "@/constants";
+import {
+  IconsType,
+  productStatusOptions,
+  productTypeOptions,
+  PROTECTED_ROUTES,
+  UNPROTECTED_ROUTES,
+} from "@/constants";
 import { pages } from "@/constants/pages";
 import { ProductStatus, ProductType } from "@prisma/client";
 
@@ -62,29 +68,14 @@ export const getStatusBadgeVariant = (status: ProductStatus) => {
 };
 
 export const translateStatus = (status: ProductStatus) => {
-  switch (status) {
-    case ProductStatus.ACTIVE:
-      return "Activo";
-    case ProductStatus.ARCHIVED:
-      return "Archivado";
-    default:
-      return status;
-  }
+  return productStatusOptions.find((option) => option.key === status)?.value;
 };
 
 export const translateProductType = (type: ProductType) => {
-  switch (type) {
-    case ProductType.SURPRISE:
-      return "Sorpresa";
-    default:
-      return type;
-  }
+  return productTypeOptions.find((option) => option.key === type)?.value;
 };
 
 export const compressImage = async (imageFile: File) => {
-  console.log("originalFile instanceof Blob", imageFile instanceof Blob); // true
-  console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
-
   const options = {
     maxSizeMB: 1,
     maxWidthOrHeight: 1920,
@@ -92,11 +83,6 @@ export const compressImage = async (imageFile: File) => {
   };
   try {
     const compressedFile = await imageCompression(imageFile, options);
-    console.log(
-      "compressedFile instanceof Blob",
-      compressedFile instanceof Blob,
-    ); // true
-    console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
 
     return new File([compressedFile], imageFile.name);
   } catch (error) {

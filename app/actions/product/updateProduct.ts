@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import { serializeData } from "@/lib/queries/queriesUtils";
 import { businessActionClient } from "@/lib/safe-action";
 import { uploadImage } from "@/lib/supabaseClient";
-import { ProductStatus, ProductType } from "@prisma/client";
 import { updateProductSchema, updateProductStatusSchema } from "./schemas";
 
 export const updateProduct = businessActionClient
@@ -21,7 +20,6 @@ export const updateProduct = businessActionClient
       regularPrice,
       currentPrice,
       quantity,
-      salesCount,
       image,
       restaurantId,
     } = parsedInput;
@@ -57,13 +55,13 @@ export const updateProduct = businessActionClient
       data: {
         name,
         description,
-        type: type || ProductType.SURPRISE,
-        status: status || ProductStatus.ACTIVE,
+        type,
+        status,
         category,
         regularPrice,
         currentPrice,
         quantity,
-        salesCount: salesCount || 0,
+        salesCount: 0,
         imageUrl: imageUrl || product.imageUrl,
       },
     });

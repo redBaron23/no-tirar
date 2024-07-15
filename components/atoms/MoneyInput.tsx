@@ -4,13 +4,11 @@ import { Input } from "../ui/input"; // Shadcn UI Input
 
 type Props = {
   name: string;
-  label: string;
   placeholder: string;
   value: number;
   onChange: (newValue: number) => void;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-// Argentine currency config
 const moneyFormatter = Intl.NumberFormat("es-AR", {
   currency: "ARS",
   currencyDisplay: "symbol",
@@ -22,7 +20,6 @@ const moneyFormatter = Intl.NumberFormat("es-AR", {
 
 export default function MoneyInput({
   name,
-  label,
   placeholder,
   value,
   onChange,

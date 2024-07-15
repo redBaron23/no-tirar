@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { productStatusOptions } from "@/constants";
+import { productStatusOptions, productTypeOptions } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductStatus, ProductType } from "@prisma/client";
 import { PlusCircle } from "lucide-react";
@@ -30,28 +30,25 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const productTypeOptions = Object.values(ProductType).map((type) => ({
-  key: type,
-  value: type === ProductType.SURPRISE ? "Sorpresa" : type,
-}));
-
-interface CreateProductDialogProps {
+interface Props {
   restaurantId: string;
+  isSurpriseAvailable: boolean;
 }
 
 type FormSchema = z.infer<typeof createProductSchema>;
 
 export function CreateProductDialog({
   restaurantId,
-}: CreateProductDialogProps) {
+  isSurpriseAvailable,
+}: Props) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const { executeAsync, isExecuting } = useAction(createProduct);
+  const { executeAsync, isExecuting, result } = useAction(createProduct);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(createProductSchema),
     defaultValues: {
-      type: ProductType.SURPRISE,
+      type: isSurpriseAvailable ? ProductType.SURPRISE : ProductType.CLASSIC,
       status: ProductStatus.ACTIVE,
       quantity: 0,
       restaurantId: restaurantId,
@@ -62,7 +59,6 @@ export function CreateProductDialog({
   const { control, handleSubmit } = form;
 
   const onSubmit = async (data: FormSchema) => {
-    console.log("Form data:", data);
     try {
       const result = await executeAsync(data);
       if (result?.data?.success) {
@@ -126,6 +122,7 @@ export function CreateProductDialog({
                     label="Tipo de Producto"
                     options={productTypeOptions}
                     placeholder="Seleccione el tipo de producto"
+                    disabled={!isSurpriseAvailable}
                   />
                   <FormInput
                     control={control}
