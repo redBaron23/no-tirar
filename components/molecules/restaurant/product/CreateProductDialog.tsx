@@ -26,7 +26,7 @@ import { ProductStatus, ProductType } from "@prisma/client";
 import { PlusCircle } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -43,7 +43,7 @@ export function CreateProductDialog({
 }: Props) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const { executeAsync, isExecuting, result } = useAction(createProduct);
+  const { executeAsync, isExecuting } = useAction(createProduct);
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(createProductSchema),
@@ -54,9 +54,15 @@ export function CreateProductDialog({
       restaurantId: restaurantId,
     },
   });
-  const { toast } = useToast();
 
-  const { control, handleSubmit } = form;
+  const { toast } = useToast();
+  const { control, handleSubmit, setValue } = form;
+
+  useEffect(() => {
+    if (!isSurpriseAvailable) {
+      setValue("type", ProductType.CLASSIC);
+    }
+  }, [isSurpriseAvailable, setValue]);
 
   const onSubmit = async (data: FormSchema) => {
     try {
@@ -88,8 +94,17 @@ export function CreateProductDialog({
     form.reset();
   };
 
+  const handleToggleOpen = (newState: boolean) => {
+    // if we close the form
+    if (newState === false) {
+      form.reset();
+    }
+
+    setOpen(newState);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleToggleOpen}>
       <DialogTrigger asChild>
         <Button size="sm" className="h-7 gap-1">
           <PlusCircle className="h-3.5 w-3.5" />
