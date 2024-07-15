@@ -22,8 +22,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { updateProductStatus } from "@/app/actions/product/createProduct";
 import { deleteProduct } from "@/app/actions/product/deleteProduct";
+import { updateProductStatus } from "@/app/actions/product/updateProduct";
 import { ConfirmProductRemovalDialog } from "@/components/molecules/restaurant/product/ConfirmProductRemovalDialog";
 import { EditProductDialog } from "@/components/molecules/restaurant/product/EditProductDialog";
 import {

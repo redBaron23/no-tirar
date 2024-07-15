@@ -1,7 +1,7 @@
 "use client";
 
-import { updateProduct } from "@/app/actions/product/createProduct";
 import { updateProductSchema } from "@/app/actions/product/schemas";
+import { updateProduct } from "@/app/actions/product/updateProduct";
 import FormCounter from "@/components/atoms/form-inputs/FormCounter";
 import FormImageInput from "@/components/atoms/form-inputs/FormImageInput";
 import FormInput from "@/components/atoms/form-inputs/FormInput";
