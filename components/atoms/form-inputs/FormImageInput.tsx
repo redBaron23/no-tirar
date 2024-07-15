@@ -1,6 +1,7 @@
 "use client";
 
-import { ImageIcon, LayoutIcon } from "lucide-react"; // Import icons
+import { compressImage } from "@/lib/utils";
+import { ImageIcon, LayoutIcon } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import { Control } from "react-hook-form";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
@@ -12,7 +13,25 @@ import {
   FormMessage,
 } from "../../ui/form";
 
-interface ImageInputProps {
+const getImageData = async (event: ChangeEvent<HTMLInputElement>) => {
+  if (!event.target.files || !event.target.files[0]) {
+    return null;
+  }
+
+  const file = event.target.files[0];
+  const compressedImage = await compressImage(file);
+
+  if (!compressedImage) {
+    return null;
+  }
+
+  console.log({ file, compressedImage });
+
+  const displayUrl = URL.createObjectURL(compressedImage);
+  return { file: compressedImage, displayUrl };
+};
+
+interface Props {
   control: Control<any>;
   name: string;
   label: string;
@@ -20,22 +39,7 @@ interface ImageInputProps {
   defaultUrl?: string | null;
 }
 
-function getImageData(event: ChangeEvent<HTMLInputElement>) {
-  if (event.target.files && event.target.files[0]) {
-    const file = event.target.files[0];
-    const displayUrl = URL.createObjectURL(file);
-    return { file, displayUrl };
-  }
-  return null;
-}
-
-const ImageInput = ({
-  control,
-  name,
-  label,
-  type,
-  defaultUrl,
-}: ImageInputProps) => {
+const FormImageInput = ({ control, name, label, type, defaultUrl }: Props) => {
   const [preview, setPreview] = useState<string | null | undefined>(defaultUrl);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -74,8 +78,8 @@ const ImageInput = ({
                 type="file"
                 ref={fileInputRef}
                 className="hidden"
-                onChange={(event) => {
-                  const result = getImageData(event);
+                onChange={async (event) => {
+                  const result = await getImageData(event);
                   if (result) {
                     const { file, displayUrl } = result;
                     setPreview(displayUrl);
@@ -93,4 +97,4 @@ const ImageInput = ({
   );
 };
 
-export default ImageInput;
+export default FormImageInput;

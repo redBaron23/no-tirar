@@ -22,6 +22,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Product, ProductStatus, ProductType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -45,7 +46,22 @@ interface Props {
 }
 
 export function EditProductDialog({ open, onClose, product }: Props) {
-  const { executeAsync, isExecuting } = useAction(updateProduct);
+  const router = useRouter();
+  const { execute, isExecuting } = useAction(updateProduct, {
+    onSuccess: () => {
+      toast({ title: "Producto actualizado exitosamente" });
+      onClose();
+
+      router.refresh();
+    },
+    onError: (error) => {
+      console.error("Error updating product:", error);
+      toast({
+        variant: "destructive",
+        title: "Error al actualizar el producto",
+      });
+    },
+  });
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(updateProductSchema),
@@ -67,27 +83,8 @@ export function EditProductDialog({ open, onClose, product }: Props) {
 
   const { control, handleSubmit } = form;
 
-  const onSubmit = async (data: FormSchema) => {
-    console.log("Form data:", data);
-    try {
-      const result = await executeAsync(data);
-      if (result?.data?.success) {
-        toast({ title: "Producto actualizado exitosamente" });
-        onClose();
-      } else {
-        console.error("Error updating product:", result?.serverError);
-        toast({
-          variant: "destructive",
-          title: "Error al actualizar el producto",
-        });
-      }
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      toast({
-        variant: "destructive",
-        title: "Error al actualizar el producto",
-      });
-    }
+  const onSubmit = (data: FormSchema) => {
+    execute(data);
   };
 
   const onCancel = () => {

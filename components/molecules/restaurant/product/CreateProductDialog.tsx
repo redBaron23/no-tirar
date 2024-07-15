@@ -24,6 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductStatus, ProductType } from "@prisma/client";
 import { PlusCircle } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -42,6 +43,7 @@ type FormSchema = z.infer<typeof createProductSchema>;
 export function CreateProductDialog({
   restaurantId,
 }: CreateProductDialogProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const { executeAsync, isExecuting } = useAction(createProduct);
 
@@ -51,7 +53,7 @@ export function CreateProductDialog({
       type: ProductType.SURPRISE,
       status: ProductStatus.ACTIVE,
       quantity: 0,
-      restaurantId: restaurantId, // Add this line
+      restaurantId: restaurantId,
     },
   });
   const { toast } = useToast();
@@ -65,6 +67,8 @@ export function CreateProductDialog({
       if (result?.data?.success) {
         toast({ title: "Producto creado exitosamente" });
         setOpen(false);
+
+        router.refresh();
         form.reset();
       } else {
         console.error("Error creating product:", result?.serverError);

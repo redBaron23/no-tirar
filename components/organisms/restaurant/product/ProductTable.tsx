@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { updateProductStatus } from "@/app/actions/product/createProduct";
 import { deleteProduct } from "@/app/actions/product/deleteProduct";
 import { ConfirmProductRemovalDialog } from "@/components/molecules/restaurant/product/ConfirmProductRemovalDialog";
 import { EditProductDialog } from "@/components/molecules/restaurant/product/EditProductDialog";
@@ -32,6 +33,7 @@ import {
 } from "@/lib/utils";
 import { Product } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
+import { useRouter } from "next/navigation";
 
 interface ProductTableProps {
   products: Product[];
@@ -39,15 +41,16 @@ interface ProductTableProps {
 }
 
 export function ProductTable({ products, restaurantId }: ProductTableProps) {
-  const { execute, isExecuting } = useAction(deleteProduct);
+  const router = useRouter();
+  const { executeAsync: executeDeleteAsync, isExecuting: isExecutingDelete } =
+    useAction(deleteProduct);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const [productToEdit, setProductToEdit] = useState<Product | null>(null);
+  const { executeAsync: executeUpdateAsync } = useAction(updateProductStatus);
 
   const handleEdit = (product: Product) => {
     setProductToEdit(product);
   };
-
-  const handleArchive = (productId: string) => {};
 
   const handleOpenDeleteModal = (product: Product) => {
     setProductToDelete(product);
@@ -57,14 +60,41 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
     setProductToDelete(null);
   };
 
-  const handleConfirmDelete = () => {
-    if (productToDelete) {
-      execute({
+  const handleConfirmDelete = async () => {
+    if (!productToDelete) {
+      return;
+    }
+
+    try {
+      const result = await executeDeleteAsync({
         restaurantId,
         productId: productToDelete.id,
       });
 
-      setProductToDelete(null);
+      if (result?.data?.deleted) {
+        router.refresh();
+
+        setProductToDelete(null);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleArchive = async (product: Product) => {
+    const newStatus = product.status === "ACTIVE" ? "ARCHIVED" : "ACTIVE";
+
+    try {
+      const result = await executeUpdateAsync({
+        id: product.id,
+        status: newStatus,
+      });
+
+      if (result?.data?.success) {
+        router.refresh();
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -146,8 +176,8 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
                     <DropdownMenuItem onClick={() => handleEdit(product)}>
                       Editar
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleArchive(product.id)}>
-                      Archivar
+                    <DropdownMenuItem onClick={() => handleArchive(product)}>
+                      {product.status === "ACTIVE" ? "Archivar" : "Activar"}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleOpenDeleteModal(product)}
@@ -176,7 +206,7 @@ export function ProductTable({ products, restaurantId }: ProductTableProps) {
           onConfirm={handleConfirmDelete}
           onCancel={handleCloseDeleteModal}
           open={!!productToDelete}
-          isLoading={isExecuting}
+          isLoading={isExecutingDelete}
         />
       )}
     </>
