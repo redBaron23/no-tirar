@@ -54,8 +54,6 @@ export const getStatusBadgeVariant = (status: ProductStatus) => {
   switch (status) {
     case ProductStatus.ACTIVE:
       return "default";
-    case ProductStatus.DRAFT:
-      return "secondary";
     case ProductStatus.ARCHIVED:
       return "destructive";
     default:
@@ -67,8 +65,6 @@ export const translateStatus = (status: ProductStatus) => {
   switch (status) {
     case ProductStatus.ACTIVE:
       return "Activo";
-    case ProductStatus.DRAFT:
-      return "Borrador";
     case ProductStatus.ARCHIVED:
       return "Archivado";
     default:

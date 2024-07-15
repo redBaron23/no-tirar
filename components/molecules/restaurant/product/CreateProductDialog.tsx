@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { productStatusOptions } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductStatus, ProductType } from "@prisma/client";
 import { PlusCircle } from "lucide-react";
@@ -126,17 +127,17 @@ export function CreateProductDialog({
                     options={productTypeOptions}
                     placeholder="Seleccione el tipo de producto"
                   />
-                  <FormImageInput
-                    control={control}
-                    name="image"
-                    label="Imagen del Producto"
-                    type="profile"
-                  />
                   <FormInput
                     control={control}
                     name="category"
                     label="Categoría"
                     placeholder="Ingrese la categoría del producto"
+                  />
+                  <FormImageInput
+                    control={control}
+                    name="image"
+                    label="Imagen del Producto"
+                    type="profile"
                   />
                 </div>
                 <div className="space-y-4">
@@ -151,6 +152,13 @@ export function CreateProductDialog({
                     name="currentPrice"
                     label="Precio Actual"
                     placeholder="Ingrese el precio con descuento"
+                  />
+                  <FormSelect
+                    control={control}
+                    name="status"
+                    label="Estado del Producto"
+                    options={productStatusOptions}
+                    placeholder="Seleccione el estado del producto"
                   />
                   <FormCounter
                     control={control}

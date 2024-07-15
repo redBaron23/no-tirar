@@ -1,6 +1,7 @@
 "use client";
 
 import { APP_NAME } from "@/constants";
+import { pages } from "@/constants/pages";
 import { useNavItems } from "@/hooks/useNavItems";
 import { UserRole } from "@prisma/client";
 import { cx } from "class-variance-authority";
@@ -66,7 +67,7 @@ const Sidebar = ({ userRole = UserRole.CUSTOMER }: Props) => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Link
-              href="/settings"
+              href={pages.settings}
               className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
             >
               <Settings className="h-5 w-5" />

@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { ProductStatus, UserRole } from "@prisma/client";
 import { FaRegUserCircle, FaShoppingBag, FaUserCircle } from "react-icons/fa";
 import { MdMenuBook, MdOutlineShoppingBag } from "react-icons/md";
 import {
@@ -112,11 +112,17 @@ const ICONS_BY_ROLE: { [key in UserRole]: IconsType } = {
   ADMIN: adminIcons,
 };
 
+const productStatusOptions = [
+  { key: ProductStatus.ACTIVE, value: "Activo" },
+  { key: ProductStatus.ARCHIVED, value: "Archivado" },
+];
+
 export {
   ALLOWED_IMAGE_EXTENSIONS,
   APP_NAME,
   HIDDEN_PATHS,
   ICONS_BY_ROLE,
+  productStatusOptions,
   PROTECTED_ROUTES,
   UNPROTECTED_ROUTES,
 };

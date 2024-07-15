@@ -19,8 +19,9 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { productStatusOptions } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Product, ProductStatus, ProductType } from "@prisma/client";
+import { Product, ProductType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -30,12 +31,6 @@ const productTypeOptions = Object.values(ProductType).map((type) => ({
   key: type,
   value: type === ProductType.SURPRISE ? "Sorpresa" : type,
 }));
-
-const productStatusOptions = [
-  { key: ProductStatus.ACTIVE, value: "Activo" },
-  { key: ProductStatus.DRAFT, value: "Borrador" },
-  { key: ProductStatus.ARCHIVED, value: "Archivado" },
-];
 
 type FormSchema = z.infer<typeof updateProductSchema>;
 
@@ -119,18 +114,17 @@ export function EditProductDialog({ open, onClose, product }: Props) {
                     options={productTypeOptions}
                     placeholder="Seleccione el tipo de producto"
                   />
-                  <FormImageInput
-                    control={control}
-                    name="image"
-                    label="Imagen del Producto"
-                    type="profile"
-                    defaultUrl={product.imageUrl}
-                  />
                   <FormInput
                     control={control}
                     name="category"
                     label="Categoría"
                     placeholder="Ingrese la categoría del producto"
+                  />
+                  <FormImageInput
+                    control={control}
+                    name="image"
+                    label="Imagen del Producto"
+                    type="profile"
                   />
                 </div>
                 <div className="space-y-4">
@@ -146,18 +140,18 @@ export function EditProductDialog({ open, onClose, product }: Props) {
                     label="Precio Actual"
                     placeholder="Ingrese el precio con descuento"
                   />
-                  <FormCounter
-                    control={control}
-                    name="quantity"
-                    label="Cantidad"
-                    maxQuantity={100}
-                  />
                   <FormSelect
                     control={control}
                     name="status"
                     label="Estado del Producto"
                     options={productStatusOptions}
                     placeholder="Seleccione el estado del producto"
+                  />
+                  <FormCounter
+                    control={control}
+                    name="quantity"
+                    label="Cantidad"
+                    maxQuantity={100}
                   />
                 </div>
               </div>
@@ -177,7 +171,7 @@ export function EditProductDialog({ open, onClose, product }: Props) {
                   Cancelar
                 </Button>
                 <Button type="submit" isLoading={isExecuting}>
-                  Actualizar Producto
+                  Crear Producto
                 </Button>
               </DialogFooter>
             </form>
