@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { Button } from "../ui/button";
-import { cx } from "class-variance-authority";
 
 interface Props {
   children: ReactNode;
@@ -9,18 +8,14 @@ interface Props {
   className?: string;
 }
 
-const ButtonLink = ({ children, onClick, icon, className }: Props) => {
+const ButtonLink = ({ icon, children, className, ...props }: Props) => {
   return (
     <Button
-      variant="link"
-      onClick={onClick}
-      className={cx(
-        "m-0 flex items-center justify-start gap-2 p-0 text-sm md:text-base",
-        className,
-      )}
+      className={`flex items-center rounded-lg p-3 ${className}`}
+      {...props}
     >
       {icon}
-      {children}
+      <span className="ml-3">{children}</span>
     </Button>
   );
 };

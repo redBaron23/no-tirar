@@ -1,38 +1,50 @@
 import { APP_NAME } from "@/constants";
-import { pages } from "@/constants/pages";
+import { FileText, HelpCircle, Lock } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { CiCircleInfo, CiLock } from "react-icons/ci";
-import { FiArrowLeft } from "react-icons/fi";
-import { PiHeadset } from "react-icons/pi";
 import ButtonLink from "../atoms/ButtonLink";
-import { LoginLink } from "../atoms/LoginButton";
+import LoginButton from "../atoms/LoginButton";
 
-export default async function UnauthenticatedProfile() {
+export default function UnauthenticatedProfile() {
   return (
-    <div className="flex flex-col gap-20 p-4">
-      <div className="flex flex-col items-center">
-        <Link
-          href={pages.home}
-          className="hidden self-start rounded-full bg-white p-1 transition-transform duration-200 hover:scale-110 lg:block"
-        >
-          <FiArrowLeft className="h-6 w-6 text-gray-500" />
-        </Link>
-        <Image
-          src="/images/logo.png"
-          alt={`${APP_NAME} Logo`}
-          width={80}
-          height={80}
-          className="rounded-full transition-transform duration-300 hover:scale-105"
-        />
-        <h1 className="text-2xl">Te damos la bienvenida</h1>
-      </div>
-      <div className="flex flex-col gap-8 text-sm md:text-base">
-        <LoginLink />
-        <ButtonLink icon={<PiHeadset />}>Ayuda en linea</ButtonLink>
-        <ButtonLink icon={<CiCircleInfo />}>Terminos y condiciones</ButtonLink>
-        <ButtonLink icon={<CiLock />}>Politicas de privacidad</ButtonLink>
-      </div>
+    <div className="flex min-h-screen flex-col bg-emerald-50 p-6">
+      <main className="ml-16 flex flex-col items-center">
+        <div className="mb-8 mt-12 flex flex-col items-center">
+          <Image
+            src="/images/logo.png"
+            alt={`${APP_NAME} Logo`}
+            width={80}
+            height={80}
+            className="rounded-full shadow-lg"
+          />
+          <h1 className="mt-4 text-2xl font-bold text-emerald-600">
+            Te damos la bienvenida
+          </h1>
+        </div>
+
+        <div className="w-full max-w-md space-y-4">
+          <LoginButton className="w-full justify-start bg-white text-emerald-600 hover:bg-emerald-100" />
+          <ButtonLink
+            icon={<HelpCircle className="h-5 w-5" />}
+            className="w-full justify-start bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+          >
+            Ayuda en línea
+          </ButtonLink>
+
+          <ButtonLink
+            icon={<FileText className="h-5 w-5" />}
+            className="w-full justify-start bg-amber-100 text-amber-700 hover:bg-amber-200"
+          >
+            Términos y condiciones
+          </ButtonLink>
+
+          <ButtonLink
+            icon={<Lock className="h-5 w-5" />}
+            className="w-full justify-start bg-blue-100 text-blue-700 hover:bg-blue-200"
+          >
+            Políticas de privacidad
+          </ButtonLink>
+        </div>
+      </main>
     </div>
   );
 }
