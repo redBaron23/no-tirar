@@ -43,15 +43,10 @@ export const updateProduct = businessActionClient
       );
     }
 
-    let imageUrl;
-
-    // Handle image upload if a new image file is provided
-    if (image) {
-      imageUrl =
-        typeof image === "string"
-          ? image
-          : await uploadImage(image, `product-${restaurantId}-${Date.now()}`);
-    }
+    const imageUrl = await uploadImage(
+      image,
+      `product-${restaurantId}-${Date.now()}`,
+    );
 
     // Update the product
     const updatedProduct = await prisma.product.update({

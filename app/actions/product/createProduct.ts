@@ -34,9 +34,10 @@ export const createProduct = businessActionClient
       );
     }
 
-    const imageUrl = image
-      ? await uploadImage(image, `product-${restaurantId}-${Date.now()}`)
-      : undefined;
+    const imageUrl = await uploadImage(
+      image,
+      `product-${restaurantId}-${Date.now()}`,
+    );
 
     // Create the product
     const product = await prisma.product.create({

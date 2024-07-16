@@ -9,7 +9,15 @@ const serviceRoleKey = process.env.SERVICE_ROLE_KEY as string;
 
 const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-export const uploadImage = async (file: File, path: string) => {
+export const uploadImage = async (
+  file: File | string | null | undefined,
+  path: string,
+) => {
+  // is already uploaded
+  if (typeof file === "string" || !file) {
+    return file;
+  }
+
   const fileExtension = file.name.split(".").pop() || "";
 
   if (!ALLOWED_IMAGE_EXTENSIONS.includes(fileExtension.toLowerCase())) {

@@ -1,5 +1,5 @@
 import { pages } from "@/constants/pages";
-import { Product, Restaurant } from "@prisma/client";
+import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import dayjs from "dayjs";
 import {
   ArrowLeft,
@@ -18,7 +18,7 @@ import StarRating from "../atoms/StarRating";
 import ReserveButton from "./ReserveButton";
 
 interface Props {
-  restaurant: Restaurant & { products: Product[] };
+  restaurant: RestaurantWithPartialProduct;
 }
 
 export default function ExpandedRestaurantCard({ restaurant }: Props) {
@@ -143,7 +143,7 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
           </p>
         </div>
 
-        <ReserveButton restaurant={restaurant} product={surpriseProduct} />
+        <ReserveButton restaurant={restaurant} />
 
         <div className="mt-4 text-center">
           <Link href="#" className="text-sm text-green-600 hover:underline">
