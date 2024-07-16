@@ -24,6 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getProducts } from "@/lib/queries/productQueries";
+import { Product } from "@prisma/client";
 
 interface Props {
   restaurantId: string;
@@ -32,14 +33,14 @@ interface Props {
 export async function ProductManagementPage({ restaurantId }: Props) {
   const products = await getProducts(restaurantId);
   const activeProducts = products.filter(
-    (product) => product.status === "ACTIVE",
+    (product: Product) => product.status === "ACTIVE",
   );
   const archivedProducts = products.filter(
-    (product) => product.status === "ARCHIVED",
+    (product: Product) => product.status === "ARCHIVED",
   );
 
   const hasSurpriseProduct = products.some(
-    (product) => product.type === "SURPRISE",
+    (product: Product) => product.type === "SURPRISE",
   );
 
   return (
