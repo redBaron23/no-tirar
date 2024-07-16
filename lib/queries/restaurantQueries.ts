@@ -25,6 +25,30 @@ const getRestaurant = async () => {
   return restaurant;
 };
 
+const getRestaurantWithSurprise = async (restaurantId: string) => {
+  const restaurant = await prisma.restaurant.findFirst({
+    where: {
+      id: restaurantId,
+    },
+    include: {
+      products: {
+        where: {
+          type: "SURPRISE",
+        },
+        select: {
+          id: true,
+          quantity: true,
+          currentPrice: true,
+          regularPrice: true,
+        },
+        take: 1,
+      },
+    },
+  });
+
+  return serializeData(restaurant);
+};
+
 const getRestaurantsWithSurprise = async () => {
   const restaurants = await prisma.restaurant.findMany({
     include: {
@@ -46,4 +70,4 @@ const getRestaurantsWithSurprise = async () => {
   return serializeData(restaurants);
 };
 
-export { getRestaurant, getRestaurantsWithSurprise };
+export { getRestaurant, getRestaurantsWithSurprise, getRestaurantWithSurprise };

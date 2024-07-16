@@ -1,19 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DialogContent, Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { RadioGroupItem, RadioGroup } from "@/components/ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import Image from "next/image";
-import { RestaurantType } from "@/lib/validations/RestaurantValidation";
-import Counter from "./molecules/Counter";
 import { useState } from "react";
+import Counter from "./molecules/Counter";
 
 interface Props {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  restaurant: RestaurantType;
+  restaurant: RestaurantWithPartialProduct;
 }
 
 const phoneNumber = "542216790804";
@@ -24,7 +24,9 @@ export function ReserveModal({
   restaurant,
   ...props
 }: Props) {
-  const [price, setPrice] = useState(restaurant.price.toString());
+  const { currentPrice } = restaurant.products[0];
+
+  const [price, setPrice] = useState(currentPrice);
   const [quantity, setQuantity] = useState(1);
 
   const message = `Hola, me gustaría pedir ${quantity} de ${restaurant.bagName} a ${price}`;

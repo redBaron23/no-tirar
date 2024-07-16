@@ -1,14 +1,20 @@
 import ExpandedRestaurantCard from "@/components/organisms/ExpandedRestaurantCard";
-import generateRestaurants from "@/constants/mockData";
+import { getRestaurantWithSurprise } from "@/lib/queries/restaurantQueries";
 
 interface Props {
   params: { restaurantId: string };
 }
 
-export default function Page({ params }: Props) {
+export default async function Page({ params: { restaurantId } }: Props) {
+  const restaurantWithSurprise = await getRestaurantWithSurprise(restaurantId);
+
+  if (!restaurantWithSurprise) {
+    return "No restaurant fund";
+  }
+
   return (
     <main className="h-screen">
-      <ExpandedRestaurantCard restaurant={generateRestaurants(1)[0]} />
+      <ExpandedRestaurantCard restaurant={restaurantWithSurprise} />
     </main>
   );
 }
