@@ -1,17 +1,7 @@
 import { pages } from "@/constants/pages";
 import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import dayjs from "dayjs";
-import {
-  ArrowLeft,
-  Clock,
-  Heart,
-  Mail,
-  MapPin,
-  MessageSquare,
-  Phone,
-  Share,
-  Utensils,
-} from "lucide-react";
+import { ArrowLeft, Clock, Heart, MapPin, Share, Utensils } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import StarRating from "../atoms/StarRating";
@@ -23,12 +13,6 @@ interface Props {
 
 export default function ExpandedRestaurantCard({ restaurant }: Props) {
   const { regularPrice, currentPrice } = restaurant.products[0];
-
-  const contactIcon = {
-    PHONE: <Phone className="h-4 w-4" />,
-    EMAIL: <Mail className="h-4 w-4" />,
-    WHATSAPP: <MessageSquare className="h-4 w-4" />,
-  };
 
   const formattedStartTime = dayjs(restaurant.startTime).format("HH:mm");
   const formattedEndTime = dayjs(restaurant.endTime).format("HH:mm");
@@ -117,12 +101,6 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
         {restaurant.description && (
           <p className="text-sm text-gray-700">{restaurant.description}</p>
         )}
-
-        <div className="flex items-center space-x-2 text-gray-700">
-          <span className="font-medium">Contacto preferido:</span>
-          {contactIcon[restaurant.contactMethod]}
-          <span>{restaurant.phone}</span>
-        </div>
 
         <div className="text-gray-700">
           <p className="font-medium">Horario:</p>
