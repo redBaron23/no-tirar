@@ -1,13 +1,13 @@
 "use client";
 
+import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import { useState } from "react";
 import { ReserveModal } from "../reserve-modal";
-import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 
 const makePayment = () => {};
 
 interface Props {
-  restaurant: RestaurantType;
+  restaurant: RestaurantWithPartialProduct;
 }
 
 const ReserveButton = ({ restaurant }: Props) => {

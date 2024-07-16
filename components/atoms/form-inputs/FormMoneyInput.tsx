@@ -32,7 +32,7 @@ const FormMoneyInput = ({
         <FormItem>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <MoneyInput {...field} label={label} placeholder={placeholder} />
+            <MoneyInput {...field} placeholder={placeholder} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

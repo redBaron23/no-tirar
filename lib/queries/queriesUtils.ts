@@ -1,6 +1,6 @@
 import { Decimal } from "@prisma/client/runtime/library";
 
-export function serializeData<T>(data: T): T {
+export function serializeData<T>(data: T): any {
   if (data instanceof Decimal) {
     return data.toNumber() as unknown as T;
   } else if (data instanceof Date) {

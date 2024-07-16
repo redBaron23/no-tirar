@@ -33,7 +33,7 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
   const formattedEndTime = dayjs(restaurant.endTime).format("HH:mm");
 
   return (
-    <div className="flex flex-col bg-white text-sm">
+    <div className="flex h-full flex-col bg-white text-sm">
       <div className="relative h-48 bg-gray-200 sm:h-64 md:h-80 lg:h-96">
         <Image
           src={restaurant.backgroundImageUrl || ""}
@@ -72,7 +72,7 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Image
-              src={restaurant.profileImageUrl || restaurant.logo}
+              src={restaurant.profileImageUrl || ""}
               alt="Logo del Restaurante"
               width={64}
               height={64}
