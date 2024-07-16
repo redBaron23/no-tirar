@@ -51,7 +51,7 @@ export function ReserveModal({
           <div className="flex items-center gap-4">
             <div className="relative h-12 w-12">
               <Image
-                src={restaurant.profileImageUrl}
+                src={restaurant.profileImageUrl || ""}
                 alt="Restaurant Logo"
                 layout="fill"
                 objectFit="cover"
