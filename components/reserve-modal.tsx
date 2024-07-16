@@ -1,5 +1,6 @@
 "use client";
 
+import { createOrder } from "@/app/actions/order/createOrder";
 import { createOrderSchema } from "@/app/actions/order/schemas";
 import { createProductSchema } from "@/app/actions/product/schemas";
 import { Button } from "@/components/ui/button";
@@ -8,12 +9,14 @@ import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PaymentMethodType } from "@prisma/client";
 import { BanknoteIcon, CreditCardIcon, WalletIcon } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import FormCounter from "./atoms/form-inputs/FormCounter";
 import FormRadioGroup from "./atoms/form-inputs/FormRadioGroup";
 import { Form } from "./ui/form";
+import { useToast } from "./ui/use-toast";
 
 const paymentOptions = [
   { value: PaymentMethodType.CASH, label: "Efectivo", icon: BanknoteIcon },
@@ -36,7 +39,24 @@ export function ReserveModal({
   restaurant,
   ...props
 }: Props) {
-  const { currentPrice } = restaurant.products[0];
+  const { currentPrice, id } = restaurant.products[0];
+  const { toast } = useToast();
+
+  const boundCreateOrder = createOrder.bind(null, id);
+
+  const { execute, isExecuting } = useAction(boundCreateOrder, {
+    onSuccess: () => {
+      toast({ title: "Producto actualizado exitosamente" });
+      onSuccess();
+    },
+    onError: (error) => {
+      console.error("Error updating product:", error);
+      toast({
+        variant: "destructive",
+        title: "Error al actualizar el producto",
+      });
+    },
+  });
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(createProductSchema),
@@ -51,7 +71,10 @@ export function ReserveModal({
   const quantity = getValues("quantity");
   const displayedPrice = quantity * currentPrice;
 
-  const onSubmit = (data: FormSchema) => {};
+  const onSubmit = (data: FormSchema) => {
+    console.log("EXECUTE");
+    execute(data);
+  };
 
   return (
     <Dialog {...props}>
@@ -111,6 +134,7 @@ export function ReserveModal({
                 className="w-full bg-green-500 font-semibold text-white hover:bg-green-600"
                 disabled={quantity === 0}
                 type="submit"
+                isLoading={isExecuting}
               >
                 Reservar
               </Button>
