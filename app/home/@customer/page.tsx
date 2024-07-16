@@ -1,8 +1,8 @@
 import RestaurantCardList from "@/components/organisms/RestaurantCardList";
-import generateRestaurants from "@/constants/mockData";
+import { getRestaurantsWithSurprise } from "@/lib/queries/restaurantQueries";
 
-const restaurants = generateRestaurants(15);
+export default async function Page() {
+  const restaurants = await getRestaurantsWithSurprise();
 
-export default function Page() {
   return <RestaurantCardList restaurants={restaurants} />;
 }

@@ -1,7 +1,5 @@
-import React from "react";
-
 interface Props {
-  itemsLeft: number;
+  itemsLeft?: number;
 }
 
 const ItemsLeftBadge = ({ itemsLeft }: Props) => {

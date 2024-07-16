@@ -3,6 +3,7 @@
 import { createRestaurantThirdStep } from "@/app/actions/restaurant/createRestaurant";
 import { createRestaurantThirdStepSchema } from "@/app/actions/restaurant/schemas";
 import FormInput from "@/components/atoms/form-inputs/FormInput";
+import { productTypeOptions } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType, Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
@@ -17,10 +18,6 @@ import { Button } from "../../../ui/button";
 import { Form } from "../../../ui/form";
 import { Label } from "../../../ui/label";
 import { useStepper } from "../../../ui/stepper";
-
-const PRODUCT_TYPE_OPTIONS = [
-  { key: ProductType.SURPRISE, value: "Bandeja Sorpresa" },
-];
 
 type FormSchema = z.infer<typeof createRestaurantThirdStepSchema>;
 
@@ -83,9 +80,9 @@ const ProductInfoStep = () => {
               />
               <FormSelect
                 control={control}
-                name="productType"
+                name="type"
                 label="Tipo de Producto"
-                options={PRODUCT_TYPE_OPTIONS}
+                options={productTypeOptions}
                 placeholder="Seleccione un tipo de producto"
                 disabled
               />

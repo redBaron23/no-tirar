@@ -1,9 +1,8 @@
-import React from "react";
+import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import RestaurantCard from "./RestaurantCard";
-import { RestaurantType } from "@/lib/validations/RestaurantValidation";
 
 interface RestaurantCardListProps {
-  restaurants: RestaurantType[];
+  restaurants: RestaurantWithPartialProduct[];
 }
 
 const RestaurantCardList = ({ restaurants }: RestaurantCardListProps) => {

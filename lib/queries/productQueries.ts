@@ -11,4 +11,15 @@ const getProducts = async (restaurantId: string) => {
   return serializeData(products);
 };
 
-export { getProducts };
+const getSurpriseProduct = async (restaurantId: string) => {
+  const product = await prisma.product.findFirst({
+    where: {
+      restaurantId,
+      type: "SURPRISE",
+    },
+  });
+
+  return serializeData(product);
+};
+
+export { getProducts, getSurpriseProduct };

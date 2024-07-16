@@ -1,29 +1,41 @@
-import { RestaurantType } from "@/lib/validations/RestaurantValidation";
-import { pages } from "../../constants/pages";
+import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
+import { translateProductType } from "@/lib/utils";
+import { faker } from "@faker-js/faker";
+import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { pages } from "../../constants/pages";
 import ItemsLeftBadge from "../atoms/ItemsLeftBadge";
 
+const rating = parseFloat(
+  faker.number.float({ min: 4, max: 5, precision: 0.1 }).toFixed(1),
+);
+
+const distance = parseFloat(
+  faker.number.float({ min: 1, max: 3, precision: 0.1 }).toFixed(1),
+);
+
 interface Props {
-  restaurant: RestaurantType;
+  restaurant: RestaurantWithPartialProduct;
 }
 
-const RestaurantCard = ({
+const RestaurantCard = async ({
   restaurant: {
     id,
-    imageUrl,
+    profileImageUrl,
     name,
-    logo,
-    bagName,
-    rating,
-    pickupTime,
-    distance,
-    price,
-    originalPrice,
-    itemsLeft,
+    backgroundImageUrl,
+    products,
+    startTime,
+    endTime,
   },
 }: Props) => {
+  const { regularPrice, currentPrice, quantity } = products[0];
+
+  const formattedStartTime = dayjs(startTime).format("HH:mm");
+  const formattedEndTime = dayjs(endTime).format("HH:mm");
+
   return (
     <Link
       href={`${pages.restaurant}/${id}`}
@@ -31,20 +43,20 @@ const RestaurantCard = ({
     >
       <div className="relative h-48 overflow-hidden rounded-t-lg">
         <Image
-          src={imageUrl}
-          alt="Restaurant Image"
+          src={backgroundImageUrl || ""}
+          alt="Imagen del Restaurante"
           width={25}
           height={25}
           className="h-full w-full object-cover object-center"
         />
         <div className="absolute left-2 top-2 w-full">
-          <ItemsLeftBadge itemsLeft={itemsLeft} />
+          <ItemsLeftBadge itemsLeft={quantity} />
         </div>
         <div className="absolute bottom-2 left-0 flex items-center gap-2 bg-transparent p-2">
           <div className="flex items-center gap-2">
             <Image
-              src={logo}
-              alt="Restaurant Logo"
+              src={profileImageUrl || ""}
+              alt="Logo del Restaurante"
               width={25}
               height={25}
               className="h-8 w-8 rounded-full"
@@ -55,16 +67,18 @@ const RestaurantCard = ({
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-base font-semibold">{bagName}</h4>
+          <h4 className="text-base font-semibold">
+            {translateProductType("SURPRISE")}
+          </h4>
         </div>
         <p className="text-sm text-gray-500 dark:text-gray-400">
-          Pickup between {pickupTime}
+          Retiro entre {formattedStartTime} - {formattedEndTime}
         </p>
       </div>
       <div className="flex items-center justify-between gap-2 p-4">
         <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
-            <StarIcon className="fill-primary w-3" />
+            <StarIcon className="w-3 fill-primary" />
             <span>{rating}</span>
           </div>
           <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
@@ -73,9 +87,9 @@ const RestaurantCard = ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-base font-semibold">${price}</span>
+          <span className="text-base font-semibold">${regularPrice}</span>
           <span className="text-sm text-gray-500 line-through dark:text-gray-400">
-            ${originalPrice}
+            ${currentPrice}
           </span>
         </div>
       </div>
