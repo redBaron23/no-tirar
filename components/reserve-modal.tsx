@@ -2,7 +2,6 @@
 
 import { createOrder } from "@/app/actions/order/createOrder";
 import { createOrderSchema } from "@/app/actions/order/schemas";
-import { createProductSchema } from "@/app/actions/product/schemas";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
@@ -46,33 +45,37 @@ export function ReserveModal({
 
   const { execute, isExecuting } = useAction(boundCreateOrder, {
     onSuccess: () => {
-      toast({ title: "Producto actualizado exitosamente" });
+      toast({
+        title: "Orden creada exitosamente",
+        description: "Tu bolsa sorpresa ha sido reservada.",
+      });
       onSuccess();
     },
     onError: (error) => {
-      console.error("Error updating product:", error);
+      console.error("Error al crear la orden:", error);
       toast({
         variant: "destructive",
-        title: "Error al actualizar el producto",
+        title: "Error al crear la orden",
+        description:
+          "No se pudo reservar la bolsa sorpresa. Por favor, intenta de nuevo.",
       });
     },
   });
 
   const form = useForm<FormSchema>({
-    resolver: zodResolver(createProductSchema),
+    resolver: zodResolver(createOrderSchema),
     defaultValues: {
       quantity: 1,
       paymentMethod: PaymentMethodType.CASH,
     },
   });
 
-  const { control, handleSubmit, getValues } = form;
+  const { control, handleSubmit, watch } = form;
 
-  const quantity = getValues("quantity");
+  const quantity = watch("quantity");
   const displayedPrice = quantity * currentPrice;
 
   const onSubmit = (data: FormSchema) => {
-    console.log("EXECUTE");
     execute(data);
   };
 

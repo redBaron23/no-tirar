@@ -1,17 +1,24 @@
 "use client";
 
+import { pages } from "@/constants/pages";
 import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ReserveModal } from "../reserve-modal";
-
-const makePayment = () => {};
 
 interface Props {
   restaurant: RestaurantWithPartialProduct;
 }
 
 const ReserveButton = ({ restaurant }: Props) => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSuccess = () => {
+    setIsModalOpen(false);
+
+    router.push(pages.home);
+  };
 
   return (
     <>
@@ -24,7 +31,7 @@ const ReserveButton = ({ restaurant }: Props) => {
       <ReserveModal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSuccess={makePayment}
+        onSuccess={handleSuccess}
         restaurant={restaurant}
       />
     </>
