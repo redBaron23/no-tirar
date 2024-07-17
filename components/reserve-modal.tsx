@@ -80,7 +80,7 @@ export function ReserveModal({
   };
 
   return (
-    <Dialog {...props}>
+    <Dialog {...props} onOpenChange={(isOpen) => !isOpen && onClose()}>
       <DialogContent className="sm:max-w-[450px]">
         <DialogTitle className="text-lg font-semibold">
           Reservar Bolsa Sorpresa
@@ -145,6 +145,7 @@ export function ReserveModal({
                 onClick={onClose}
                 variant="outline"
                 className="w-full font-semibold"
+                type="button"
               >
                 Cancelar
               </Button>
