@@ -58,7 +58,7 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Image
-              src={restaurant.profileImageUrl || "/default-restaurant-logo.png"}
+              src={restaurant.profileImageUrl || ""}
               alt="Logo del Restaurante"
               width={72}
               height={72}
