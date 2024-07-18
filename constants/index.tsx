@@ -4,17 +4,20 @@ import {
   ProductType,
   UserRole,
 } from "@prisma/client";
-import { BanknoteIcon, CreditCardIcon, WalletIcon } from "lucide-react";
-import { FaRegUserCircle, FaShoppingBag, FaUserCircle } from "react-icons/fa";
-import { MdMenuBook, MdOutlineShoppingBag } from "react-icons/md";
 import {
-  RiDashboardFill,
-  RiDashboardLine,
-  RiHeartFill,
-  RiHeartLine,
-  RiHome5Fill,
-  RiHome5Line,
-} from "react-icons/ri";
+  BanknoteIcon,
+  CreditCardIcon,
+  HeartIcon,
+  HomeIcon,
+  LayoutDashboardIcon,
+  MapIcon,
+  MenuIcon,
+  SettingsIcon,
+  ShoppingBagIcon,
+  UserIcon,
+  UsersIcon,
+  WalletIcon,
+} from "lucide-react";
 import { pages } from "./pages";
 
 const APP_NAME = "no-tirar";
@@ -39,26 +42,28 @@ export interface IconsType {
 
 const customerIcons: IconsType = {
   home: {
-    filled: <RiHome5Fill className="h-6 w-6 text-green-800" />,
-    outlined: <RiHome5Line className="h-6 w-6 text-gray-700" />,
+    filled: <HomeIcon className="h-6 w-6 text-green-800" fill="currentColor" />,
+    outlined: <HomeIcon className="h-6 w-6 text-gray-700" />,
     page: pages.home,
     text: "Inicio",
   },
-  explore: {
-    filled: <FaShoppingBag className="h-6 w-6 text-green-800" />,
-    outlined: <MdOutlineShoppingBag className="h-6 w-6 text-gray-700" />,
-    page: pages.home,
-    text: "Explorar",
+  map: {
+    filled: <MapIcon className="h-6 w-6 text-green-800" fill="currentColor" />,
+    outlined: <MapIcon className="h-6 w-6 text-gray-700" />,
+    page: pages.map,
+    text: "Mapa",
   },
   favorites: {
-    filled: <RiHeartFill className="h-6 w-6 text-green-800" />,
-    outlined: <RiHeartLine className="h-6 w-6 text-gray-700" />,
+    filled: (
+      <HeartIcon className="h-6 w-6 text-green-800" fill="currentColor" />
+    ),
+    outlined: <HeartIcon className="h-6 w-6 text-gray-700" />,
     page: pages.home,
     text: "Favoritos",
   },
   profile: {
-    filled: <FaUserCircle className="h-6 w-6 text-green-800" />,
-    outlined: <FaRegUserCircle className="h-6 w-6 text-gray-700" />,
+    filled: <UserIcon className="h-6 w-6 text-green-800" fill="currentColor" />,
+    outlined: <UserIcon className="h-6 w-6 text-gray-700" />,
     page: pages.profile,
     text: "Perfil",
   },
@@ -66,26 +71,33 @@ const customerIcons: IconsType = {
 
 const businessIcons: IconsType = {
   orders: {
-    filled: <FaShoppingBag className="h-6 w-6 text-green-800" />,
-    outlined: <MdOutlineShoppingBag className="h-6 w-6 text-gray-700" />,
+    filled: (
+      <ShoppingBagIcon className="h-6 w-6 text-green-800" fill="currentColor" />
+    ),
+    outlined: <ShoppingBagIcon className="h-6 w-6 text-gray-700" />,
     page: pages.home,
     text: "Pedidos",
   },
   board: {
-    filled: <RiDashboardFill className="h-6 w-6 text-green-800" />,
-    outlined: <RiDashboardLine className="h-6 w-6 text-gray-700" />,
+    filled: (
+      <LayoutDashboardIcon
+        className="h-6 w-6 text-green-800"
+        fill="currentColor"
+      />
+    ),
+    outlined: <LayoutDashboardIcon className="h-6 w-6 text-gray-700" />,
     page: pages.board,
     text: "Tablero",
   },
   menu: {
-    filled: <MdMenuBook className="h-6 w-6 text-green-800" />,
-    outlined: <MdMenuBook className="h-6 w-6 text-gray-700" />,
+    filled: <MenuIcon className="h-6 w-6 text-green-800" fill="currentColor" />,
+    outlined: <MenuIcon className="h-6 w-6 text-gray-700" />,
     page: pages.menu,
     text: "Menu",
   },
   profile: {
-    filled: <FaUserCircle className="h-6 w-6 text-green-800" />,
-    outlined: <FaRegUserCircle className="h-6 w-6 text-gray-700" />,
+    filled: <UserIcon className="h-6 w-6 text-green-800" fill="currentColor" />,
+    outlined: <UserIcon className="h-6 w-6 text-gray-700" />,
     page: pages.profile,
     text: "Perfil",
   },
@@ -93,20 +105,29 @@ const businessIcons: IconsType = {
 
 const adminIcons: IconsType = {
   dashboard: {
-    filled: <RiHome5Fill className="h-6 w-6 text-green-800" />,
-    outlined: <RiHome5Line className="h-6 w-6 text-gray-700" />,
+    filled: (
+      <LayoutDashboardIcon
+        className="h-6 w-6 text-green-800"
+        fill="currentColor"
+      />
+    ),
+    outlined: <LayoutDashboardIcon className="h-6 w-6 text-gray-700" />,
     page: pages.dashboard,
     text: "Panel",
   },
   users: {
-    filled: <FaUserCircle className="h-6 w-6 text-green-800" />,
-    outlined: <FaRegUserCircle className="h-6 w-6 text-gray-700" />,
+    filled: (
+      <UsersIcon className="h-6 w-6 text-green-800" fill="currentColor" />
+    ),
+    outlined: <UsersIcon className="h-6 w-6 text-gray-700" />,
     page: pages.users,
     text: "Usuarios",
   },
   settings: {
-    filled: <RiHeartFill className="h-6 w-6 text-green-800" />,
-    outlined: <RiHeartLine className="h-6 w-6 text-gray-700" />,
+    filled: (
+      <SettingsIcon className="h-6 w-6 text-green-800" fill="currentColor" />
+    ),
+    outlined: <SettingsIcon className="h-6 w-6 text-gray-700" />,
     page: pages.settings,
     text: "Configuración",
   },

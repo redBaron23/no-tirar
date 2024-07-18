@@ -14,6 +14,11 @@ const nextConfig = {
       use: ["@svgr/webpack"],
     });
 
+    // config.module.rules.push({
+    //   test: /\.(png|jpg|gif)$/i,
+    //   type: "asset/resource",
+    // });
+
     return config;
   },
   experimental: {

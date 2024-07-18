@@ -3,6 +3,7 @@ import BottomTabMenu from "@/components/organisms/BottomTabMenu";
 import Sidebar from "@/components/organisms/Sidebar";
 import { APP_NAME } from "@/constants";
 import { auth } from "@/lib/auth";
+import "leaflet/dist/leaflet.css";
 import type { Metadata } from "next";
 import { inter, merriweather_sans } from "./fonts";
 import "./globals.css";
