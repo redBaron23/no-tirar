@@ -9,15 +9,12 @@ const POINTS = [
 ];
 
 const RestaurantsMap = () => {
-  const RestaurantsMap = dynamic(
-    () => import("@/components/molecules/ClientMap"),
-    {
-      loading: () => <p>A map is loading</p>,
-      ssr: false,
-    },
-  );
+  const ClientMap = dynamic(() => import("@/components/molecules/ClientMap"), {
+    loading: () => <p>A map is loading</p>,
+    ssr: false,
+  });
 
-  return <RestaurantsMap />;
+  return <ClientMap />;
 };
 
 export default RestaurantsMap;
