@@ -3,7 +3,7 @@
 import { createRestaurantThirdStep } from "@/app/actions/restaurant/createRestaurant";
 import { createRestaurantThirdStepSchema } from "@/app/actions/restaurant/schemas";
 import FormInput from "@/components/atoms/form-inputs/FormInput";
-import { productTypeOptions } from "@/constants";
+import { PRODUCT_TYPE_OPTIONS } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductType, Restaurant } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
@@ -82,7 +82,7 @@ const ProductInfoStep = () => {
                 control={control}
                 name="type"
                 label="Tipo de Producto"
-                options={productTypeOptions}
+                options={PRODUCT_TYPE_OPTIONS}
                 placeholder="Seleccione un tipo de producto"
                 disabled
               />

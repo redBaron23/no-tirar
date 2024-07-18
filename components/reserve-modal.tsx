@@ -4,10 +4,10 @@ import { createOrder } from "@/app/actions/order/createOrder";
 import { createOrderSchema } from "@/app/actions/order/schemas";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { PAYMENT_OPTIONS } from "@/constants";
 import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PaymentMethodType } from "@prisma/client";
-import { BanknoteIcon, CreditCardIcon, WalletIcon } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -16,12 +16,6 @@ import FormCounter from "./atoms/form-inputs/FormCounter";
 import FormRadioGroup from "./atoms/form-inputs/FormRadioGroup";
 import { Form } from "./ui/form";
 import { useToast } from "./ui/use-toast";
-
-const paymentOptions = [
-  { value: PaymentMethodType.CASH, label: "Efectivo", icon: BanknoteIcon },
-  { value: PaymentMethodType.CARD, label: "Tarjeta", icon: CreditCardIcon },
-  { value: PaymentMethodType.MP, label: "MercadoPago", icon: WalletIcon },
-];
 
 interface Props {
   open: boolean;
@@ -109,7 +103,7 @@ export function ReserveModal({
                 control={control}
                 name="paymentMethod"
                 label="Método de Pago"
-                options={paymentOptions}
+                options={PAYMENT_OPTIONS}
                 description="Selecciona tu método de pago preferido"
               />
             </div>

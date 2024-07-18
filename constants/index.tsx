@@ -1,4 +1,10 @@
-import { ProductStatus, ProductType, UserRole } from "@prisma/client";
+import {
+  PaymentMethodType,
+  ProductStatus,
+  ProductType,
+  UserRole,
+} from "@prisma/client";
+import { BanknoteIcon, CreditCardIcon, WalletIcon } from "lucide-react";
 import { FaRegUserCircle, FaShoppingBag, FaUserCircle } from "react-icons/fa";
 import { MdMenuBook, MdOutlineShoppingBag } from "react-icons/md";
 import {
@@ -112,14 +118,20 @@ const ICONS_BY_ROLE: { [key in UserRole]: IconsType } = {
   ADMIN: adminIcons,
 };
 
-const productTypeOptions = [
+const PRODUCT_TYPE_OPTIONS = [
   { key: ProductType.SURPRISE, value: "Sorpresa" },
   { key: ProductType.CLASSIC, value: "Clasico" },
 ];
 
-const productStatusOptions = [
+const PRODUCT_STATUS_OPTIONS = [
   { key: ProductStatus.ACTIVE, value: "Activo" },
   { key: ProductStatus.ARCHIVED, value: "Archivado" },
+];
+
+const PAYMENT_OPTIONS = [
+  { key: PaymentMethodType.CASH, value: "Efectivo", icon: BanknoteIcon },
+  { key: PaymentMethodType.CARD, value: "Tarjeta", icon: CreditCardIcon },
+  { key: PaymentMethodType.MP, value: "MercadoPago", icon: WalletIcon },
 ];
 
 export {
@@ -127,8 +139,9 @@ export {
   APP_NAME,
   HIDDEN_PATHS,
   ICONS_BY_ROLE,
-  productStatusOptions,
-  productTypeOptions,
+  PAYMENT_OPTIONS,
+  PRODUCT_STATUS_OPTIONS,
+  PRODUCT_TYPE_OPTIONS,
   PROTECTED_ROUTES,
   UNPROTECTED_ROUTES,
 };

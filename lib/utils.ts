@@ -4,13 +4,14 @@ import { twMerge } from "tailwind-merge";
 
 import {
   IconsType,
-  productStatusOptions,
-  productTypeOptions,
+  PAYMENT_OPTIONS,
+  PRODUCT_STATUS_OPTIONS,
+  PRODUCT_TYPE_OPTIONS,
   PROTECTED_ROUTES,
   UNPROTECTED_ROUTES,
 } from "@/constants";
 import { pages } from "@/constants/pages";
-import { ProductStatus, ProductType } from "@prisma/client";
+import { PaymentMethodType, ProductStatus, ProductType } from "@prisma/client";
 
 export const isPathOnArray = (
   currentPath: string,
@@ -68,11 +69,15 @@ export const getStatusBadgeVariant = (status: ProductStatus) => {
 };
 
 export const translateStatus = (status: ProductStatus) => {
-  return productStatusOptions.find((option) => option.key === status)?.value;
+  return PRODUCT_STATUS_OPTIONS.find((option) => option.key === status)?.value;
 };
 
 export const translateProductType = (type: ProductType) => {
-  return productTypeOptions.find((option) => option.key === type)?.value;
+  return PRODUCT_TYPE_OPTIONS.find((option) => option.key === type)?.value;
+};
+
+export const translatePaymentMethod = (paymentMethod: PaymentMethodType) => {
+  return PAYMENT_OPTIONS.find((option) => option.key === paymentMethod)?.value;
 };
 
 export const compressImage = async (imageFile: File) => {

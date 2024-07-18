@@ -1,5 +1,4 @@
 import { LucideIcon } from "lucide-react";
-import React from "react";
 import { Control, FieldValues, Path } from "react-hook-form";
 import {
   FormControl,
@@ -13,8 +12,8 @@ import { Label } from "../../ui/label";
 import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
 
 type Option = {
+  key: string;
   value: string;
-  label: string;
   icon: LucideIcon;
 };
 
@@ -46,19 +45,19 @@ const FormRadioGroup = <T extends FieldValues>({
               defaultValue={field.value}
               className="grid grid-cols-3 gap-4"
             >
-              {options.map(({ value, label, icon: Icon }) => (
+              {options.map(({ key, value, icon: Icon }) => (
                 <Label
-                  key={value}
-                  htmlFor={value}
+                  key={key}
+                  htmlFor={key}
                   className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                 >
                   <RadioGroupItem
                     className="peer sr-only"
-                    value={value}
-                    id={value}
+                    value={key}
+                    id={key}
                   />
                   <Icon className="mb-2 h-6 w-6" />
-                  {label}
+                  {value}
                 </Label>
               ))}
             </RadioGroup>

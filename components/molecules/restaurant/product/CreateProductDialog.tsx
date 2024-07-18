@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { productStatusOptions, productTypeOptions } from "@/constants";
+import { PRODUCT_STATUS_OPTIONS, PRODUCT_TYPE_OPTIONS } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductStatus, ProductType } from "@prisma/client";
 import { PlusCircle } from "lucide-react";
@@ -135,7 +135,7 @@ export function CreateProductDialog({
                     control={control}
                     name="type"
                     label="Tipo de Producto"
-                    options={productTypeOptions}
+                    options={PRODUCT_TYPE_OPTIONS}
                     placeholder="Seleccione el tipo de producto"
                     disabled={!isSurpriseAvailable}
                   />
@@ -169,7 +169,7 @@ export function CreateProductDialog({
                     control={control}
                     name="status"
                     label="Estado del Producto"
-                    options={productStatusOptions}
+                    options={PRODUCT_STATUS_OPTIONS}
                     placeholder="Seleccione el estado del producto"
                   />
                   <FormCounter
