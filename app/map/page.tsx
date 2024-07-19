@@ -1,4 +1,4 @@
-import RestaurantsMap from "@/components/organisms/RestaurantsMap";
+import RestaurantsMap from "@/components/templates/RestaurantsMap";
 
 export default function Page() {
   return (

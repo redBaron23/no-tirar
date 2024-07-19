@@ -8,12 +8,12 @@ const POINTS = [
   { id: 4, name: "Diner D", lat: 40.7589, lng: -73.9851 },
 ];
 
-const RestaurantsMap = () => {
-  const ClientMap = dynamic(() => import("@/components/molecules/ClientMap"), {
-    loading: () => <p>A map is loading</p>,
-    ssr: false,
-  });
+const ClientMap = dynamic(() => import("@/components/organisms/ClientMap"), {
+  loading: () => <p>A map is loading</p>,
+  ssr: false,
+});
 
+const RestaurantsMap = () => {
   return <ClientMap />;
 };
 

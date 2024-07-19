@@ -6,16 +6,20 @@ import {
 } from "@prisma/client";
 import {
   BanknoteIcon,
+  Cake,
+  Coffee,
   CreditCardIcon,
   HeartIcon,
   HomeIcon,
   LayoutDashboardIcon,
+  LucideIcon,
   MapIcon,
   MenuIcon,
   SettingsIcon,
   ShoppingBagIcon,
   UserIcon,
   UsersIcon,
+  UtensilsCrossed,
   WalletIcon,
 } from "lucide-react";
 import { pages } from "./pages";
@@ -155,11 +159,27 @@ const PAYMENT_OPTIONS = [
   { key: PaymentMethodType.MP, value: "MercadoPago", icon: WalletIcon },
 ];
 
+export type PointType = "cafe" | "restaurant" | "bakery";
+
+const MAP_ICON_COMPONENTS: Record<PointType, LucideIcon> = {
+  cafe: Coffee,
+  restaurant: UtensilsCrossed,
+  bakery: Cake,
+};
+
+const MAP_ICON_COLORS: Record<PointType, string> = {
+  cafe: "#4A90E2",
+  restaurant: "#50E3C2",
+  bakery: "#F5A623",
+};
+
 export {
   ALLOWED_IMAGE_EXTENSIONS,
   APP_NAME,
   HIDDEN_PATHS,
   ICONS_BY_ROLE,
+  MAP_ICON_COLORS,
+  MAP_ICON_COMPONENTS,
   PAYMENT_OPTIONS,
   PRODUCT_STATUS_OPTIONS,
   PRODUCT_TYPE_OPTIONS,
