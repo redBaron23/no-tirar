@@ -54,6 +54,8 @@ model User {
   email         String?      @unique
   emailVerified DateTime?
   address       String[]
+  latitude      Float?
+  longitude     Float?
   image         String?
   role          UserRole     @default(CUSTOMER)
   createdAt     DateTime     @default(now()) @map(name: "created_at")
@@ -74,6 +76,8 @@ model Restaurant {
   contactMethod      ContactMethodType
   description        String?
   address            String?
+  latitude           Float?
+  longitude          Float?
   profileImageUrl    String?
   backgroundImageUrl String?
   startTime          DateTime?

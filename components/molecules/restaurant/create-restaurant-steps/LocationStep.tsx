@@ -27,10 +27,12 @@ const LocationStep = ({ isLoaded }: Props) => {
     defaultValues: {
       address: restaurant?.address || "",
       restaurantId: restaurant?.id,
+      latitude: 0,
+      longitude: 0,
     },
   });
 
-  const { control, handleSubmit } = form;
+  const { control, handleSubmit, setValue } = form;
 
   const { executeAsync, isExecuting } = useAction(createRestaurantSecondStep);
 
@@ -50,6 +52,11 @@ const LocationStep = ({ isLoaded }: Props) => {
     }
   };
 
+  const handleLatitudeChange = (lat: number, lng: number) => {
+    setValue("latitude", lat);
+    setValue("longitude", lng);
+  };
+
   return (
     <Form {...form}>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -60,8 +67,9 @@ const LocationStep = ({ isLoaded }: Props) => {
             <div className="grid w-full grid-cols-1 gap-8">
               <FormGoogleAddressInput
                 control={control}
-                name="address"
+                addressName="address"
                 label="Dirección del Establecimiento"
+                onLatitudeChange={handleLatitudeChange}
               />
             </div>
           ) : (

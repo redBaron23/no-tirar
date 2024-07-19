@@ -25,6 +25,12 @@ const getRestaurant = async () => {
   return restaurant;
 };
 
+const getRestaurants = async () => {
+  const restaurants = await prisma.restaurant.findMany();
+
+  return restaurants;
+};
+
 const getRestaurantWithSurprise = async (restaurantId: string) => {
   const restaurant = await prisma.restaurant.findFirst({
     where: {
@@ -70,4 +76,9 @@ const getRestaurantsWithSurprise = async () => {
   return serializeData(restaurants);
 };
 
-export { getRestaurant, getRestaurantsWithSurprise, getRestaurantWithSurprise };
+export {
+  getRestaurant,
+  getRestaurants,
+  getRestaurantsWithSurprise,
+  getRestaurantWithSurprise,
+};

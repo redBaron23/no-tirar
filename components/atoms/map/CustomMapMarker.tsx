@@ -1,15 +1,16 @@
-import { MAP_ICON_COLORS, MAP_ICON_COMPONENTS, Point } from "@/constants";
+import { MAP_ICON_COLORS, MAP_ICON_COMPONENTS } from "@/constants";
+import { Restaurant } from "@prisma/client";
 import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
 import { Marker, Popup } from "react-leaflet";
 
 interface Props {
-  point: Point;
+  restaurant: Restaurant;
 }
 
-const CustomMapMarker = ({ point }: Props) => {
-  const IconComponent = MAP_ICON_COMPONENTS[point.type];
-  const iconColor = MAP_ICON_COLORS[point.type];
+const CustomMapMarker = ({ restaurant }: Props) => {
+  const IconComponent = MAP_ICON_COMPONENTS[restaurant.type];
+  const iconColor = MAP_ICON_COLORS[restaurant.type];
 
   const customIcon = L.divIcon({
     html: ReactDOMServer.renderToString(
@@ -33,8 +34,11 @@ const CustomMapMarker = ({ point }: Props) => {
   });
 
   return (
-    <Marker position={[point.lat, point.lng]} icon={customIcon}>
-      <Popup>{point.name}</Popup>
+    <Marker
+      position={[restaurant.latitude!, restaurant.longitude!]}
+      icon={customIcon}
+    >
+      <Popup>{restaurant.name}</Popup>
     </Marker>
   );
 };

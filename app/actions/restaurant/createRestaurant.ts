@@ -40,11 +40,16 @@ export const createRestaurantSecondStep = businessActionClient
   .metadata({ actionName: "createRestaurantSecondStep" })
   .schema(createRestaurantSecondStepSchema)
   .action(
-    async ({ parsedInput: { address, restaurantId }, ctx: { userId } }) => {
+    async ({
+      parsedInput: { address, restaurantId, latitude, longitude },
+      ctx: { userId },
+    }) => {
       const restaurant = await prisma.restaurant.update({
         where: { id: restaurantId, userId },
         data: {
           address,
+          latitude,
+          longitude,
         },
       });
 

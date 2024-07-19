@@ -26,6 +26,8 @@ export const createRestaurantImagesStepSchema = z.object({
 export const createRestaurantSecondStepSchema = z.object({
   address: z.string().min(1, "La dirección es obligatoria."),
   restaurantId: z.string(),
+  latitude: z.number(),
+  longitude: z.number(),
 });
 
 export const createRestaurantThirdStepSchema = z

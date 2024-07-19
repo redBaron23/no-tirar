@@ -3,12 +3,12 @@
 import { Autocomplete, GoogleMap, Marker } from "@react-google-maps/api";
 import { useRef, useState } from "react";
 import { IoMdLocate } from "react-icons/io";
-import { Button } from "../ui/button"; // Assuming you have a Button component
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 interface GoogleAddressInputProps {
   value?: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, lat?: number, lng?: number) => void;
 }
 
 const GoogleAddressInput = ({ value, onChange }: GoogleAddressInputProps) => {
@@ -35,7 +35,7 @@ const GoogleAddressInput = ({ value, onChange }: GoogleAddressInputProps) => {
             location: { lat: latitude, lng: longitude },
           });
           const currentAddress = response.results[0].formatted_address;
-          onChange(currentAddress);
+          onChange(currentAddress, latitude, longitude);
           setShowMap(true);
         },
         () => {
@@ -53,9 +53,9 @@ const GoogleAddressInput = ({ value, onChange }: GoogleAddressInputProps) => {
         const lng = place.geometry.location.lng();
         setMapCenter({ lat, lng });
         setMarkerPosition({ lat, lng });
-      }
-      if (place.formatted_address) {
-        onChange(place.formatted_address);
+        if (place.formatted_address) {
+          onChange(place.formatted_address, lat, lng);
+        }
       }
       setShowMap(true);
     }

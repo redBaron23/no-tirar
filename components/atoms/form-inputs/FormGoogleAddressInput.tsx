@@ -1,4 +1,3 @@
-import { Control } from "react-hook-form";
 import {
   FormControl,
   FormField,
@@ -9,26 +8,43 @@ import {
 import GoogleAddressInput from "../GoogleAddressInput";
 
 type Props = {
-  control: Control<any>;
-  name: string;
+  control: any;
+  addressName: string;
   label: string;
+  onLatitudeChange: (lat: number, lng: number) => void;
 };
 
-const FormGoogleAddressInput = ({ control, name, label }: Props) => {
+const FormGoogleAddressInput = ({
+  control,
+  addressName,
+  label,
+  onLatitudeChange,
+}: Props) => {
   return (
-    <FormField
-      control={control}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>
-            <GoogleAddressInput {...field} />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+    <>
+      <FormField
+        control={control}
+        name={addressName}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>{label}</FormLabel>
+            <FormControl>
+              <GoogleAddressInput
+                value={field.value}
+                onChange={(value, lat, lng) => {
+                  field.onChange(value);
+                  console.log({ lat, lng });
+                  if (lat !== undefined && lng !== undefined) {
+                    onLatitudeChange(lat, lng);
+                  }
+                }}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
   );
 };
 
