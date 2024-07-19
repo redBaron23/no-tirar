@@ -75,6 +75,39 @@
   }
 }
 
+/*
+  @todo move this styles to separate file
+*/
+
 .leaflet-control-attribution.leaflet-control {
   display: none;
+}
+
+.custom-map .leaflet-tile-pane {
+  filter: grayscale(100%) brightness(105%) contrast(90%) opacity(60%);
+}
+
+.custom-map .leaflet-tile-pane img {
+  filter: blur(0.5px);
+}
+
+/* Enhance visibility of main roads */
+.custom-map .leaflet-tile-pane img[src*="highway"] {
+  filter: brightness(120%) contrast(110%);
+}
+
+/* Hide most POIs and labels */
+.custom-map .leaflet-tile-pane img[src*="amenity"],
+.custom-map .leaflet-tile-pane img[src*="poi"],
+.custom-map .leaflet-tile-pane img[src*="place"] {
+  display: none;
+}
+
+/* Custom marker styles */
+.custom-marker {
+  transition: transform 0.3s ease;
+}
+
+.custom-marker:hover {
+  transform: scale(1.1);
 }

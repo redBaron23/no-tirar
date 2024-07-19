@@ -173,6 +173,46 @@ const MAP_ICON_COLORS: Record<PointType, string> = {
   bakery: "#F5A623",
 };
 
+export interface Point {
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
+  type: PointType;
+}
+
+export const POINTS: Point[] = [
+  { id: 1, name: "Plaza Moreno", lat: -34.9205, lng: -57.9536, type: "cafe" },
+  {
+    id: 2,
+    name: "Catedral de La Plata",
+    lat: -34.9211,
+    lng: -57.9544,
+    type: "restaurant",
+  },
+  {
+    id: 3,
+    name: "Museo de La Plata",
+    lat: -34.9098,
+    lng: -57.9376,
+    type: "bakery",
+  },
+  {
+    id: 4,
+    name: "Estadio Ciudad de La Plata",
+    lat: -34.9131,
+    lng: -57.9894,
+    type: "cafe",
+  },
+  {
+    id: 5,
+    name: "Parque Saavedra",
+    lat: -34.9119,
+    lng: -57.9461,
+    type: "restaurant",
+  },
+];
+
 export {
   ALLOWED_IMAGE_EXTENSIONS,
   APP_NAME,
