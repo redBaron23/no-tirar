@@ -11,7 +11,6 @@ import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import CustomMapMarker from "../atoms/map/CustomMapMarker";
 import UserLocationMarker from "../atoms/map/UserLocationMarker";
 import MapButton from "../atoms/MapButton";
-import MapLegend from "../molecules/MapLegend";
 
 const DEFAULT_ZOOM = 16;
 const DEFAULT_LAT_LNG = new LatLng(-34.92145, -57.95453); // La Plata
@@ -63,7 +62,6 @@ const MapContent = () => {
         label="Filtrar Mapa"
         className="absolute bottom-5 right-20 z-[1000]"
       />
-      <MapLegend />
     </>
   );
 };
