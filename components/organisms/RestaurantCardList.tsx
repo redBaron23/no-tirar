@@ -6,7 +6,7 @@ interface RestaurantCardListProps {
 }
 
 const RestaurantCardList = ({ restaurants }: RestaurantCardListProps) => {
-  if (restaurants.length) {
+  if (!restaurants.length) {
     return "No hay restaurants carga2";
   }
 
