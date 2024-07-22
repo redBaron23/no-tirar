@@ -33,7 +33,6 @@ const FormGoogleAddressInput = ({
                 value={field.value}
                 onChange={(value, lat, lng) => {
                   field.onChange(value);
-                  console.log({ lat, lng });
                   if (lat !== undefined && lng !== undefined) {
                     onLatitudeChange(lat, lng);
                   }

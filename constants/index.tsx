@@ -66,6 +66,14 @@ const customerIcons: IconsType = {
     page: pages.home,
     text: "Favoritos",
   },
+  orders: {
+    filled: (
+      <HeartIcon className="h-6 w-6 text-green-800" fill="currentColor" />
+    ),
+    outlined: <HeartIcon className="h-6 w-6 text-gray-700" />,
+    page: pages.home,
+    text: "Ordenes",
+  },
   profile: {
     filled: <UserIcon className="h-6 w-6 text-green-800" fill="currentColor" />,
     outlined: <UserIcon className="h-6 w-6 text-gray-700" />,
