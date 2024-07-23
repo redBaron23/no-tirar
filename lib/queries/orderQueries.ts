@@ -12,7 +12,7 @@ export type OrderWithUserAndProduct = Order & {
 const getOrders = async (): Promise<OrderWithUserAndProduct[]> => {
   const restaurant = await getRestaurant();
   if (!restaurant) {
-    return []
+    return [];
   }
 
   const orders = await prisma.order.findMany({

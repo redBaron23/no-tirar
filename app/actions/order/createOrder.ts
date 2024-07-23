@@ -34,6 +34,7 @@ export const createOrder = authActionClient
           paymentMethod,
           productQuantity: quantity,
           totalAmount,
+          status: "PENDING",
         },
       });
 

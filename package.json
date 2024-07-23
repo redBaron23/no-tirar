@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run config && docker compose up -d && next dev",
+    "dev": "npm run config && docker compose up -d && npx prisma migrate dev && next dev",
     "build": "npm run config && npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint",

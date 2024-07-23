@@ -15,7 +15,9 @@ enum UserRole {
 }
 
 enum OrderStatus {
+  PENDING
   IN_PROGRESS
+  REJECTED
   CANCELED
   COMPLETED
 }
@@ -116,7 +118,7 @@ model Order {
   id              String            @id @default(cuid())
   productQuantity Int
   totalAmount     Decimal
-  status          OrderStatus       @default(IN_PROGRESS)
+  status          OrderStatus       @default(PENDING)
   paymentMethod   PaymentMethodType @default(CASH)
   userId          String
   restaurantId    String
