@@ -18,7 +18,7 @@ const DaySelect = () => {
   };
 
   return (
-    <div className="flex gap-2 overflow-x-auto whitespace-nowrap py-2">
+    <div className="flex gap-2 overflow-x-auto whitespace-nowrap py-2 hide-scrollbar ">
       {OPTIONS.map((option, index) => (
         <Chip
           key={`${index}/${option.label}`}
