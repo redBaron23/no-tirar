@@ -1,5 +1,6 @@
 "use client";
 
+import { TAB_MENU_HEIGHT } from "@/constants/style";
 import { useNavItems } from "@/hooks/useNavItems";
 import { UserRole } from "@prisma/client";
 import { cx } from "class-variance-authority";
@@ -15,11 +16,11 @@ export default function BottomTabMenu({ userRole = UserRole.CUSTOMER }: Props) {
   return (
     <nav
       className={cx(
-        "fixed bottom-0 left-0 right-0 z-10 border-t bg-gray-100 lg:hidden",
+        `fixed bottom-0 left-0 right-0 z-10 flex h-[${TAB_MENU_HEIGHT}] w-full items-center justify-between border-t bg-gray-100 lg:hidden`,
         shouldHideNav() && "hidden",
       )}
     >
-      <div className="flex cursor-pointer items-center justify-around">
+      <div className="flex w-full cursor-pointer items-center justify-around">
         {Object.keys(navIcons).map((key) => (
           <div
             key={key}

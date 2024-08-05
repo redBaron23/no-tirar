@@ -4,6 +4,7 @@ import CustomMapMarker from "@/components/atoms/map/CustomMapMarker";
 import UserLocationMarker from "@/components/atoms/map/UserLocationMarker";
 import MapButton from "@/components/atoms/MapButton";
 import { Restaurant } from "@prisma/client";
+import { cx } from "class-variance-authority";
 import { LatLng } from "leaflet";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
@@ -41,7 +42,7 @@ const MapContent = ({ restaurants }: Props) => {
   };
 
   return (
-    <div className="relative h-full">
+    <>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -51,17 +52,17 @@ const MapContent = ({ restaurants }: Props) => {
           <CustomMapMarker key={restaurant.id} restaurant={restaurant} />
         ))}
       {position && <UserLocationMarker position={position} />}
-      <div className="absolute bottom-4 right-4 z-[1000] flex flex-col space-y-2">
+      <div className="absolute z-[1000] flex h-[calc(100vh-80px)] w-full flex-col items-end justify-end gap-2 pb-5 pr-5">
         <MapButton
           onClick={handleLocateMe}
           icon={Crosshair}
           label="Ubicarme"
-          className={`${isLocating ? "animate-spin" : ""}`}
+          className={cx(isLocating && "animate-spin")}
           disabled={isLocating}
         />
         <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" />
       </div>
-    </div>
+    </>
   );
 };
 
