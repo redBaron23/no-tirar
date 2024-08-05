@@ -2,6 +2,7 @@
 
 import { Restaurant } from "@prisma/client";
 import { LatLng } from "leaflet";
+import "leaflet/dist/leaflet.css";
 import { MapContainer } from "react-leaflet";
 import MapContent from "../molecules/map/MapContent";
 

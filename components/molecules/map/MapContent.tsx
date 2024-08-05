@@ -41,7 +41,7 @@ const MapContent = ({ restaurants }: Props) => {
   };
 
   return (
-    <>
+    <div className="relative h-full">
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -51,20 +51,17 @@ const MapContent = ({ restaurants }: Props) => {
           <CustomMapMarker key={restaurant.id} restaurant={restaurant} />
         ))}
       {position && <UserLocationMarker position={position} />}
-      <MapButton
-        onClick={handleLocateMe}
-        icon={Crosshair}
-        label="Ubicarme"
-        className={`absolute bottom-5 right-5 z-[1000] ${isLocating ? "animate-spin" : ""}`}
-        disabled={isLocating}
-      />
-      <MapButton
-        onClick={handleFilter}
-        icon={Filter}
-        label="Filtrar Mapa"
-        className="absolute bottom-5 right-20 z-[1000]"
-      />
-    </>
+      <div className="absolute bottom-4 right-4 z-[1000] flex flex-col space-y-2">
+        <MapButton
+          onClick={handleLocateMe}
+          icon={Crosshair}
+          label="Ubicarme"
+          className={`${isLocating ? "animate-spin" : ""}`}
+          disabled={isLocating}
+        />
+        <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" />
+      </div>
+    </div>
   );
 };
 
