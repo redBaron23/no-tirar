@@ -39,7 +39,7 @@ const CustomMapMarker = ({ restaurant }: Props) => {
         </div>
       ),
     ),
-    className: "custom-icon",
+    className: "",
     iconSize: [32, 32],
     iconAnchor: [16, 32],
   });
@@ -49,7 +49,7 @@ const CustomMapMarker = ({ restaurant }: Props) => {
       position={[restaurant.latitude!, restaurant.longitude!]}
       icon={customIcon}
     >
-      <Popup>{restaurant.name}</Popup>
+      <Popup>caca{restaurant.name}</Popup>
     </Marker>
   );
 };

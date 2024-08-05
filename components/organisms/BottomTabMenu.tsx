@@ -16,7 +16,7 @@ export default function BottomTabMenu({ userRole = UserRole.CUSTOMER }: Props) {
   return (
     <nav
       className={cx(
-        `fixed bottom-0 left-0 right-0 z-10 flex h-[${TAB_MENU_HEIGHT}] w-full items-center justify-between border-t bg-gray-100 lg:hidden`,
+        `fixed bottom-0 left-0 right-0 z-10 flex h-[${TAB_MENU_HEIGHT}px] w-full items-center justify-between border-t bg-gray-100 lg:hidden`,
         shouldHideNav() && "hidden",
       )}
     >

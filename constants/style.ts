@@ -1,1 +1,1 @@
-export const TAB_MENU_HEIGHT = "80px";
+export const TAB_MENU_HEIGHT = 80;
