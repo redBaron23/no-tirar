@@ -1,6 +1,5 @@
 "use client";
 
-import { TAB_MENU_HEIGHT } from "@/constants/style";
 import { Restaurant } from "@prisma/client";
 import { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -25,7 +24,7 @@ const ClientMap = ({
     <MapContainer
       center={ipBasedLocation}
       zoom={zoom}
-      className={`custom-map h-[calc(100vh-${TAB_MENU_HEIGHT})] w-full lg:h-screen`}
+      className={`custom-map h-[calc(100vh-80px)] w-full lg:h-screen`}
     >
       <MapContent restaurants={restaurants} />
     </MapContainer>
