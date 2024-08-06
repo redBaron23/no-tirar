@@ -3,8 +3,6 @@
 import CustomMapMarker from "@/components/atoms/map/CustomMapMarker";
 import UserLocationMarker from "@/components/atoms/map/UserLocationMarker";
 import MapButton from "@/components/atoms/MapButton";
-import { TAB_MENU_HEIGHT } from "@/constants/style";
-import { useDimensions } from "@/hooks/useDimensions";
 import { Restaurant } from "@prisma/client";
 import { cx } from "class-variance-authority";
 import { LatLng } from "leaflet";
@@ -22,7 +20,6 @@ interface Props {
 const MapContent = ({ restaurants }: Props) => {
   const [position, setPosition] = useState<LatLng>();
   const [isLocating, setIsLocating] = useState(false);
-  const { browserSearchBarHeight } = useDimensions();
 
   const map = useMapEvents({
     locationerror(e) {
@@ -44,8 +41,6 @@ const MapContent = ({ restaurants }: Props) => {
     console.log("Botón de filtro clickeado");
   };
 
-  const buttonsOffset = TAB_MENU_HEIGHT + browserSearchBarHeight;
-
   return (
     <>
       <TileLayer
@@ -58,7 +53,7 @@ const MapContent = ({ restaurants }: Props) => {
         ))}
       {position && <UserLocationMarker position={position} />}
       <div
-        className={`absolute bottom-5 right-5 z-[1000] flex flex-col justify-end gap-2 pb-[${browserSearchBarHeight}] md:pb-0`}
+        className={`absolute bottom-5 right-5 z-[1000] flex flex-col justify-end gap-2 bg-red-200 pb-[80px] md:pb-0`}
       >
         <MapButton
           onClick={handleLocateMe}
