@@ -24,7 +24,7 @@ const ClientMap = ({
     <MapContainer
       center={ipBasedLocation}
       zoom={zoom}
-      className={`custom-map h-[calc(100vh-80px)] w-full lg:h-screen`}
+      className={`custom-map h-[calc(100vh-70px)] w-full lg:h-screen`}
     >
       <MapContent restaurants={restaurants} />
     </MapContainer>
