@@ -49,7 +49,7 @@ const CustomMapMarker = ({ restaurant }: Props) => {
       position={[restaurant.latitude!, restaurant.longitude!]}
       icon={customIcon}
     >
-      <Popup>caca{restaurant.name}</Popup>
+      <Popup>{restaurant.name}</Popup>
     </Marker>
   );
 };
