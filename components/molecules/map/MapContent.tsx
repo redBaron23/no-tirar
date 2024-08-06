@@ -57,18 +57,15 @@ const MapContent = ({ restaurants }: Props) => {
           <CustomMapMarker key={restaurant.id} restaurant={restaurant} />
         ))}
       {position && <UserLocationMarker position={position} />}
-      <div
-        className={`absolute z-[1000] flex h-[calc(100vh-${buttonsOffset}px)] w-full flex-col items-end justify-end gap-2 pb-5 pr-5`}
-      >
-        <MapButton
-          onClick={handleLocateMe}
-          icon={Crosshair}
-          label="Ubicarme"
-          className={cx(isLocating && "animate-spin")}
-          disabled={isLocating}
-        />
-        <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" />
-      </div>
+
+      <MapButton
+        onClick={handleLocateMe}
+        icon={Crosshair}
+        label="Ubicarme"
+        className={cx(isLocating && "animate-spin")}
+        disabled={isLocating}
+      />
+      <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" />
     </>
   );
 };
