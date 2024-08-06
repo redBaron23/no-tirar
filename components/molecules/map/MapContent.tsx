@@ -58,7 +58,7 @@ const MapContent = ({ restaurants }: Props) => {
         ))}
       {position && <UserLocationMarker position={position} />}
       <div
-        className={`absolute right-5 bottom-[${TAB_MENU_HEIGHT + browserSearchBarHeight}] z-[1000] flex flex-col gap-2 md:bottom-5`}
+        className={`absolute bottom-5 right-5 z-[1000] flex flex-col justify-end gap-2 pb-[${browserSearchBarHeight}]`}
       >
         <MapButton
           onClick={handleLocateMe}
