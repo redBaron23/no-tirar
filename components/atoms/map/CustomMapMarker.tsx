@@ -7,7 +7,7 @@ import { Marker } from "react-leaflet";
 
 interface Props {
   restaurant: Restaurant;
-  onClick: (restaurant: Restaurant) => void;
+  onClick: () => void;
 }
 
 const CustomMapMarker = ({ restaurant, onClick }: Props) => {
@@ -50,7 +50,7 @@ const CustomMapMarker = ({ restaurant, onClick }: Props) => {
       position={[restaurant.latitude!, restaurant.longitude!]}
       icon={customIcon}
       eventHandlers={{
-        click: () => onClick(restaurant),
+        click: onClick,
       }}
     >
       {/* <Popup>{restaurant.name}</Popup> */}

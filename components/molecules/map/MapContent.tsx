@@ -5,6 +5,7 @@ import UserLocationMarker from "@/components/atoms/map/UserLocationMarker";
 import MapButton from "@/components/atoms/MapButton";
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
@@ -26,9 +27,8 @@ interface Props {
 const MapContent = ({ restaurants }: Props) => {
   const [position, setPosition] = useState<LatLng>();
   const [isLocating, setIsLocating] = useState(false);
-  const [selectedRestaurant, setSelectedRestaurant] = useState(
-    restaurants?.at(0),
-  );
+  const [selectedRestaurant, setSelectedRestaurant] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
 
   const map = useMapEvents({
     locationerror(e) {
@@ -86,11 +86,11 @@ const MapContent = ({ restaurants }: Props) => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
       {restaurants &&
-        restaurants.map((restaurant) => (
+        restaurants.map((restaurant, index) => (
           <CustomMapMarker
             key={restaurant.id}
             restaurant={restaurant}
-            onClick={setSelectedRestaurant}
+            onClick={() => api?.scrollTo(index)}
           />
         ))}
       {position && <UserLocationMarker position={position} />}
@@ -113,7 +113,7 @@ const MapContent = ({ restaurants }: Props) => {
           onTouchStart={handleCarouselTouchStart}
           onTouchEnd={handleCarouselTouchEnd}
         >
-          <Carousel>
+          <Carousel setApi={setApi}>
             <CarouselContent>
               {restaurants &&
                 [...restaurants, ...restaurants].map(
