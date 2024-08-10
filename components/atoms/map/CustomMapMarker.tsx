@@ -3,13 +3,14 @@ import { Restaurant } from "@prisma/client";
 import L from "leaflet";
 import Image from "next/image";
 import ReactDOMServer from "react-dom/server";
-import { Marker, Popup } from "react-leaflet";
+import { Marker } from "react-leaflet";
 
 interface Props {
   restaurant: Restaurant;
+  onClick: (restaurant: Restaurant) => void;
 }
 
-const CustomMapMarker = ({ restaurant }: Props) => {
+const CustomMapMarker = ({ restaurant, onClick }: Props) => {
   const IconComponent = MAP_ICON_COMPONENTS[restaurant.type];
   const iconColor = MAP_ICON_COLORS[restaurant.type];
 
@@ -48,8 +49,11 @@ const CustomMapMarker = ({ restaurant }: Props) => {
     <Marker
       position={[restaurant.latitude!, restaurant.longitude!]}
       icon={customIcon}
+      eventHandlers={{
+        click: () => onClick(restaurant),
+      }}
     >
-      <Popup>{restaurant.name}</Popup>
+      {/* <Popup>{restaurant.name}</Popup> */}
     </Marker>
   );
 };

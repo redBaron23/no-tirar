@@ -16,6 +16,7 @@ import {
   LucideIcon,
   MapIcon,
   MenuIcon,
+  ReceiptTextIcon,
   SettingsIcon,
   ShoppingBagIcon,
   UserIcon,
@@ -68,9 +69,9 @@ const customerIcons: IconsType = {
   },
   orders: {
     filled: (
-      <HeartIcon className="h-6 w-6 text-green-800" fill="currentColor" />
+      <ReceiptTextIcon className="h-6 w-6 text-green-800" fill="currentColor" />
     ),
-    outlined: <HeartIcon className="h-6 w-6 text-gray-700" />,
+    outlined: <ReceiptTextIcon className="h-6 w-6 text-gray-700" />,
     page: pages.home,
     text: "Ordenes",
   },

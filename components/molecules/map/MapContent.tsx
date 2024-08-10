@@ -74,7 +74,11 @@ const MapContent = ({ restaurants }: Props) => {
       />
       {restaurants &&
         restaurants.map((restaurant) => (
-          <CustomMapMarker key={restaurant.id} restaurant={restaurant} />
+          <CustomMapMarker
+            key={restaurant.id}
+            restaurant={restaurant}
+            onClick={setSelectedRestaurant}
+          />
         ))}
       {position && <UserLocationMarker position={position} />}
       <div className="absolute inset-x-0 bottom-0 z-[1000] grid grid-rows-[auto_1fr] gap-4 p-4">
