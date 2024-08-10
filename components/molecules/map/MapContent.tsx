@@ -108,7 +108,7 @@ const MapContent = ({ restaurants }: Props) => {
           {/* <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" /> */}
         </div>
       </div>
-      <div className="absolute bottom-5 z-[1000] grid grid-rows-[auto_1fr] gap-4 p-4">
+      <div className="absolute bottom-5 z-[1000] grid grid-rows-[auto_1fr] gap-4 px-2 py-4">
         <div
           onTouchStart={handleCarouselTouchStart}
           onTouchEnd={handleCarouselTouchEnd}
@@ -118,10 +118,7 @@ const MapContent = ({ restaurants }: Props) => {
               {restaurants &&
                 [...restaurants, ...restaurants].map(
                   (restaurant: Restaurant, index: number) => (
-                    <CarouselItem
-                      key={index}
-                      className="basis-full sm:basis-1/3"
-                    >
+                    <CarouselItem key={index} className="max-w-xs sm:basis-1/3">
                       <RestaurantInfoCard
                         restaurant={restaurant}
                         distance={500}
