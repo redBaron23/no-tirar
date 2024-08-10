@@ -15,7 +15,7 @@ const RestaurantInfoCard = ({
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${restaurant.latitude},${restaurant.longitude}`;
 
   return (
-    <div className="flex w-full max-w-sm items-center justify-between rounded-lg bg-white p-3 shadow-md">
+    <div className="flex items-center justify-between rounded-lg bg-white p-3 shadow-md">
       <div className="relative mr-3 h-14 w-14 flex-shrink-0">
         <Image
           src={restaurant.profileImageUrl || "/placeholder-image.jpg"}
