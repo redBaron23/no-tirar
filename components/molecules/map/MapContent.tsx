@@ -81,7 +81,9 @@ const MapContent = ({ restaurants }: Props) => {
           />
         ))}
       {position && <UserLocationMarker position={position} />}
-      <div className="absolute inset-x-0 bottom-0 z-[1000] grid grid-rows-[auto_1fr] gap-4 p-4">
+      <div className="absolute inset-x-0 bottom-5 z-[1000] grid grid-rows-[auto_1fr] gap-4 p-4">
+        {/* className={`absolute bottom-5 right-5 z-[1000] flex flex-col justify-end gap-2 pb-[80px] md:pb-0`} */}
+
         <div className="flex justify-end gap-2">
           <MapButton
             onClick={handleLocateMe}
