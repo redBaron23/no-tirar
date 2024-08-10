@@ -114,16 +114,15 @@
 
 .hide-scrollbar {
   -ms-overflow-style: none;
-  scrollbar-width: none; 
+  scrollbar-width: none;
 }
 
 .hide-scrollbar:hover {
   -ms-overflow-style: auto;
-  scrollbar-width: auto; 
+  scrollbar-width: auto;
 }
 
-
 .hide-scrollbar:active {
-  -ms-overflow-style: auto; 
+  -ms-overflow-style: auto;
   scrollbar-width: auto;
 }

@@ -3,6 +3,11 @@
 import CustomMapMarker from "@/components/atoms/map/CustomMapMarker";
 import UserLocationMarker from "@/components/atoms/map/UserLocationMarker";
 import MapButton from "@/components/atoms/MapButton";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { Restaurant } from "@prisma/client";
 import { cx } from "class-variance-authority";
 import { LatLng } from "leaflet";
@@ -66,6 +71,14 @@ const MapContent = ({ restaurants }: Props) => {
     return R * c;
   };
 
+  const handleCarouselTouchEnd = () => {
+    map.dragging.enable();
+  };
+
+  const handleCarouselTouchStart = () => {
+    map.dragging.disable();
+  };
+
   return (
     <>
       <TileLayer
@@ -94,20 +107,29 @@ const MapContent = ({ restaurants }: Props) => {
           />
           {/* <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" /> */}
         </div>
-        {selectedRestaurant && (
-          <div className="flex w-full justify-center">
-            <RestaurantInfoCard
-              restaurant={selectedRestaurant}
-              distance={500}
-              // distance={calculateDistance(
-              //   position.lat,
-              //   position.lng,
-              //   selectedRestaurant.latitude,
-              //   selectedRestaurant.longitude
-              // )}
-            />
-          </div>
-        )}
+        <div
+          onTouchStart={handleCarouselTouchStart}
+          onTouchEnd={handleCarouselTouchEnd}
+        >
+          <Carousel opts={{ loop: true, align: "start" }}>
+            <CarouselContent>
+              {restaurants &&
+                [...restaurants, ...restaurants].map(
+                  (restaurant: Restaurant, index: number) => (
+                    <CarouselItem
+                      key={index}
+                      className="basis-full sm:basis-1/3"
+                    >
+                      <RestaurantInfoCard
+                        restaurant={restaurant}
+                        distance={500}
+                      />
+                    </CarouselItem>
+                  ),
+                )}
+            </CarouselContent>
+          </Carousel>
+        </div>
       </div>
     </>
   );
