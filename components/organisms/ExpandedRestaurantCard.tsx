@@ -1,14 +1,17 @@
+import { BUSINESS_TYPE_DISPLAY_TEXT } from "@/constants";
 import { pages } from "@/constants/pages";
-import { RestaurantWithPartialProduct } from "@/lib/queries/restaurantQueries";
+import { RestaurantWithIsFavoriteAndPartialProduct } from "@/lib/queries/restaurantQueries";
 import dayjs from "dayjs";
-import { ArrowLeft, Clock, Heart, MapPin, Share, Utensils } from "lucide-react";
+import { ArrowLeft, Clock, MapPin, Utensils } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import FavoriteButton from "../atoms/buttons/FavoriteButton";
+import ShareButton from "../atoms/buttons/ShareButton";
 import StarRating from "../atoms/StarRating";
 import ReserveButton from "./ReserveButton";
 
 interface Props {
-  restaurant: RestaurantWithPartialProduct;
+  restaurant: RestaurantWithIsFavoriteAndPartialProduct;
 }
 
 export default function ExpandedRestaurantCard({ restaurant }: Props) {
@@ -38,18 +41,8 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
             <ArrowLeft className="h-5 w-5 text-gray-700" />
           </Link>
           <div className="flex space-x-2">
-            <button
-              className="rounded-full bg-white/80 p-2 backdrop-blur-sm transition-colors hover:bg-white"
-              aria-label="Favorito"
-            >
-              <Heart className="h-5 w-5 text-red-500" />
-            </button>
-            <button
-              className="rounded-full bg-white/80 p-2 backdrop-blur-sm transition-colors hover:bg-white"
-              aria-label="Compartir"
-            >
-              <Share className="h-5 w-5 text-gray-700" />
-            </button>
+            <FavoriteButton isFavorite={restaurant.isFavorite} />
+            <ShareButton restaurantName={restaurant.name} />
           </div>
         </div>
       </div>
@@ -69,7 +62,7 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
                 {restaurant.name}
               </h1>
               <p className="text-sm font-medium text-gray-600">
-                {restaurant.type}
+                {BUSINESS_TYPE_DISPLAY_TEXT[restaurant.type]}
               </p>
             </div>
           </div>

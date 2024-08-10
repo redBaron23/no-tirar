@@ -14,6 +14,14 @@ export type RestaurantWithPartialProduct = Omit<Restaurant, "products"> & {
   products: ProductSelection[];
 };
 
+export type RestaurantWithIsFavoriteAndPartialProduct = Omit<
+  Restaurant,
+  "products"
+> & {
+  products: ProductSelection[];
+  isFavorite: boolean;
+};
+
 const getRestaurant = async () => {
   const session = await auth();
   const restaurant = await prisma.restaurant.findFirst({
@@ -31,7 +39,12 @@ const getRestaurants = async () => {
   return restaurants;
 };
 
-const getRestaurantWithSurprise = async (restaurantId: string) => {
+const getRestaurantWithSurprise = async (
+  restaurantId: string,
+): Promise<RestaurantWithIsFavoriteAndPartialProduct | null> => {
+  const session = await auth();
+  const userId = session?.user?.id;
+
   const restaurant = await prisma.restaurant.findFirst({
     where: {
       id: restaurantId,
@@ -49,10 +62,29 @@ const getRestaurantWithSurprise = async (restaurantId: string) => {
         },
         take: 1,
       },
+      ...(userId
+        ? {
+            favoritedBy: {
+              where: {
+                userId: userId,
+              },
+              select: {
+                id: true,
+              },
+            },
+          }
+        : {}),
     },
   });
 
-  return serializeData(restaurant);
+  if (!restaurant) {
+    return null;
+  }
+
+  return serializeData({
+    ...restaurant,
+    isFavorite: restaurant.favoritedBy.length > 0,
+  });
 };
 
 const getRestaurantsWithSurprise = async () => {

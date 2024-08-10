@@ -2,6 +2,7 @@
 
 import { createRestaurantFirstStep } from "@/app/actions/restaurant/createRestaurant";
 import { createRestaurantFirstStepSchema } from "@/app/actions/restaurant/schemas";
+import { businessTypeOptions, contactOptions } from "@/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BusinessType, ContactMethodType } from "@prisma/client";
 import { useAction } from "next-safe-action/hooks";
@@ -13,18 +14,6 @@ import FormSelect from "../../../atoms/form-inputs/FormSelect";
 import { Button } from "../../../ui/button";
 import { Form } from "../../../ui/form";
 import { useStepper } from "../../../ui/stepper";
-
-const businessTypeOptions = [
-  { key: BusinessType.BAKERY, value: "Panaderia" },
-  { key: BusinessType.RESTAURANT_AND_CAFE, value: "Restaurant y Cafe" },
-  { key: BusinessType.OTHER, value: "Others" },
-];
-
-const contactOptions = [
-  { key: ContactMethodType.PHONE, value: "Telefono" },
-  { key: ContactMethodType.WHATSAPP, value: "Whatsapp" },
-  { key: ContactMethodType.EMAIL, value: "Email" },
-];
 
 type FormSchema = z.infer<typeof createRestaurantFirstStepSchema>;
 

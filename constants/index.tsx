@@ -1,5 +1,6 @@
 import {
   BusinessType,
+  ContactMethodType,
   PaymentMethodType,
   ProductStatus,
   ProductType,
@@ -169,6 +170,33 @@ const PAYMENT_OPTIONS = [
   { key: PaymentMethodType.MP, value: "MercadoPago", icon: WalletIcon },
 ];
 
+const BUSINESS_TYPE_DISPLAY_TEXT = {
+  [BusinessType.BAKERY]: "Panaderia",
+  [BusinessType.RESTAURANT_AND_CAFE]: "Restaurant y Cafe",
+  [BusinessType.OTHER]: "Otros",
+};
+
+const businessTypeOptions = [
+  {
+    key: BusinessType.BAKERY,
+    value: BUSINESS_TYPE_DISPLAY_TEXT[BusinessType.BAKERY],
+  },
+  {
+    key: BusinessType.RESTAURANT_AND_CAFE,
+    value: BUSINESS_TYPE_DISPLAY_TEXT[BusinessType.RESTAURANT_AND_CAFE],
+  },
+  {
+    key: BusinessType.OTHER,
+    value: BUSINESS_TYPE_DISPLAY_TEXT[BusinessType.OTHER],
+  },
+];
+
+const contactOptions = [
+  { key: ContactMethodType.PHONE, value: "Telefono" },
+  { key: ContactMethodType.WHATSAPP, value: "Whatsapp" },
+  { key: ContactMethodType.EMAIL, value: "Email" },
+];
+
 const MAP_ICON_COMPONENTS: Record<BusinessType, LucideIcon> = {
   OTHER: Coffee,
   RESTAURANT_AND_CAFE: UtensilsCrossed,
@@ -184,6 +212,9 @@ const MAP_ICON_COLORS: Record<BusinessType, string> = {
 export {
   ALLOWED_IMAGE_EXTENSIONS,
   APP_NAME,
+  BUSINESS_TYPE_DISPLAY_TEXT,
+  businessTypeOptions,
+  contactOptions,
   HIDDEN_PATHS,
   ICONS_BY_ROLE,
   MAP_ICON_COLORS,
