@@ -113,7 +113,12 @@ const MapContent = ({ restaurants }: Props) => {
           onTouchStart={handleCarouselTouchStart}
           onTouchEnd={handleCarouselTouchEnd}
         >
-          <Carousel setApi={setApi}>
+          <Carousel
+            setApi={setApi}
+            opts={{
+              loop: true,
+            }}
+          >
             <CarouselContent>
               {restaurants &&
                 [...restaurants, ...restaurants].map(

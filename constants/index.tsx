@@ -72,7 +72,7 @@ const customerIcons: IconsType = {
       <ReceiptTextIcon className="h-6 w-6 text-green-800" fill="currentColor" />
     ),
     outlined: <ReceiptTextIcon className="h-6 w-6 text-gray-700" />,
-    page: pages.home,
+    page: pages.order,
     text: "Ordenes",
   },
   profile: {

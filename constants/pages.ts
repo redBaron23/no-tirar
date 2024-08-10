@@ -9,6 +9,7 @@ const pages = {
   dashboard: "/dashboard",
   menu: "/menu",
   map: "/map",
+  order: "/order",
 };
 
 export { pages };
