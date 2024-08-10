@@ -1,3 +1,4 @@
+import { pages } from "@/constants/pages";
 import { Restaurant } from "@prisma/client";
 import { Navigation2 } from "lucide-react";
 import Image from "next/image";
@@ -16,7 +17,10 @@ const RestaurantInfoCard = ({
 
   return (
     <div className="flex w-full items-center justify-between rounded-lg bg-white p-3 shadow-md">
-      <div className="relative mr-3 h-14 w-14 flex-shrink-0">
+      <Link
+        href={`${pages.restaurant}/${restaurant.id}`}
+        className="relative mr-3 h-14 w-14 flex-shrink-0"
+      >
         <Image
           src={restaurant.profileImageUrl || "/placeholder-image.jpg"}
           alt={restaurant.name}
@@ -24,10 +28,13 @@ const RestaurantInfoCard = ({
           objectFit="cover"
           className="rounded-md"
         />
-      </div>
+      </Link>
 
-      <div className="mr-2 flex-grow">
-        <h2 className="mb-1 truncate text-lg font-semibold">
+      <Link
+        href={`${pages.restaurant}/${restaurant.id}`}
+        className="mr-2 flex-grow"
+      >
+        <h2 className="mb-1 truncate text-lg font-semibold text-black">
           {restaurant.name}
         </h2>
         <div className="flex flex-col text-sm text-gray-600">
@@ -45,7 +52,7 @@ const RestaurantInfoCard = ({
             })}
           </p>
         </div>
-      </div>
+      </Link>
 
       <Link
         href={googleMapsUrl}
