@@ -5,7 +5,7 @@ import Link from "next/link";
 
 interface RestaurantInfoCardProps {
   restaurant: Restaurant;
-  distance: number;
+  distance: number | null;
 }
 
 const RestaurantInfoCard = ({
@@ -31,7 +31,7 @@ const RestaurantInfoCard = ({
           {restaurant.name}
         </h2>
         <div className="flex flex-col text-sm text-gray-600">
-          <p>Distance: {distance.toFixed(0)} m</p>
+          {distance && <p>Distance: {distance.toFixed(0)} m</p>}
           <p>
             Open:{" "}
             {restaurant.startTime?.toLocaleTimeString([], {

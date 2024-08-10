@@ -16,7 +16,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet/dist/leaflet.css";
 import { Crosshair } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TileLayer, useMapEvents } from "react-leaflet";
 import RestaurantInfoCard from "./RestaurantInfoCard";
 
@@ -25,10 +25,9 @@ interface Props {
 }
 
 const MapContent = ({ restaurants }: Props) => {
+  const [api, setApi] = useState<CarouselApi>();
   const [position, setPosition] = useState<LatLng>();
   const [isLocating, setIsLocating] = useState(false);
-  const [selectedRestaurant, setSelectedRestaurant] = useState(0);
-  const [api, setApi] = useState<CarouselApi>();
 
   const map = useMapEvents({
     locationerror(e) {
@@ -46,17 +45,24 @@ const MapContent = ({ restaurants }: Props) => {
     map.locate();
   };
 
-  const handleFilter = () => {
-    console.log("Botón de filtro clickeado");
-  };
+  useEffect(() => {
+    handleLocateMe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // const handleFilter = () => {
+  //   console.log("Botón de filtro clickeado");
+  // };
 
   // Calculate distance between two points
-  const calculateDistance = (
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number,
-  ) => {
+  const calculateDistance = (lat1: number, lon1: number) => {
+    const lat2 = position?.lat;
+    const lon2 = position?.lng;
+
+    if (!lat2 || !lon2) {
+      return null;
+    }
+
     const R = 6371e3; // Earth's radius in meters
     const φ1 = (lat1 * Math.PI) / 180;
     const φ2 = (lat2 * Math.PI) / 180;
@@ -108,32 +114,36 @@ const MapContent = ({ restaurants }: Props) => {
           {/* <MapButton onClick={handleFilter} icon={Filter} label="Filtrar Mapa" /> */}
         </div>
       </div>
-      <div className="absolute bottom-5 z-[1000] grid grid-rows-[auto_1fr] gap-4 px-2 py-4">
-        <div
-          onTouchStart={handleCarouselTouchStart}
-          onTouchEnd={handleCarouselTouchEnd}
+      <div
+        className="absolute bottom-10 z-[1000] grid grid-rows-[auto_1fr] gap-4 px-2 py-4"
+        onTouchStart={handleCarouselTouchStart}
+        onTouchEnd={handleCarouselTouchEnd}
+        onMouseUp={handleCarouselTouchStart}
+        onMouseDown={handleCarouselTouchEnd}
+      >
+        <Carousel
+          setApi={setApi}
+          opts={{
+            loop: true,
+          }}
         >
-          <Carousel
-            setApi={setApi}
-            opts={{
-              loop: true,
-            }}
-          >
-            <CarouselContent>
-              {restaurants &&
-                [...restaurants, ...restaurants].map(
-                  (restaurant: Restaurant, index: number) => (
-                    <CarouselItem key={index} className="max-w-xs sm:basis-1/3">
-                      <RestaurantInfoCard
-                        restaurant={restaurant}
-                        distance={500}
-                      />
-                    </CarouselItem>
-                  ),
-                )}
-            </CarouselContent>
-          </Carousel>
-        </div>
+          <CarouselContent>
+            {restaurants &&
+              [...restaurants, ...restaurants].map(
+                (restaurant: Restaurant, index: number) => (
+                  <CarouselItem key={index} className="max-w-xs sm:basis-1/3">
+                    <RestaurantInfoCard
+                      restaurant={restaurant}
+                      distance={calculateDistance(
+                        restaurant.latitude as number,
+                        restaurant.longitude as number,
+                      )}
+                    />
+                  </CarouselItem>
+                ),
+              )}
+          </CarouselContent>
+        </Carousel>
       </div>
     </>
   );

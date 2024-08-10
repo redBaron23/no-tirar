@@ -10,6 +10,7 @@ const pages = {
   menu: "/menu",
   map: "/map",
   order: "/order",
+  favorite: "/favorite",
 };
 
 export { pages };
