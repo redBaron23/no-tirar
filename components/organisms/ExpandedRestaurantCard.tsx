@@ -41,7 +41,10 @@ export default function ExpandedRestaurantCard({ restaurant }: Props) {
             <ArrowLeft className="h-5 w-5 text-gray-700" />
           </Link>
           <div className="flex space-x-2">
-            <FavoriteButton isFavorite={restaurant.isFavorite} />
+            <FavoriteButton
+              isFavorite={restaurant.isFavorite}
+              restaurantId={restaurant.id}
+            />
             <ShareButton restaurantName={restaurant.name} />
           </div>
         </div>

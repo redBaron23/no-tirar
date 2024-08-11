@@ -24,7 +24,7 @@ export const toggleFavoriteRestaurant = authActionClient
           id: existingFavorite.id,
         },
       });
-      return { favorited: false };
+      return { isFavorite: false };
     } else {
       // If the restaurant is not a favorite, add it
       await prisma.favoriteRestaurant.create({
@@ -33,6 +33,6 @@ export const toggleFavoriteRestaurant = authActionClient
           restaurantId,
         },
       });
-      return { favorited: true };
+      return { isFavorite: true };
     }
   });

@@ -34,7 +34,11 @@ const getFavoriteRestaurants = async () => {
     },
   });
 
-  return serializeData(favoriteRestaurants);
+  const restaurants = favoriteRestaurants.map(
+    (favoriteRestaurants) => favoriteRestaurants.restaurant,
+  );
+
+  return serializeData(restaurants);
 };
 
 export { getFavoriteRestaurants };
