@@ -53,7 +53,8 @@ export function formatCurrency(
 
 export const getDefaultPath = (icons: IconsType, pathname: string) => {
   return (
-    Object.keys(icons).find((key) => icons[key].page === pathname) ?? "home"
+    Object.keys(icons).find((key) => pathname.includes(icons[key].page)) ??
+    "home"
   );
 };
 

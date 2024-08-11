@@ -29,7 +29,7 @@ import { pages } from "./pages";
 
 const APP_NAME = "no-tirar";
 const PROTECTED_ROUTES = [pages.home, pages.restaurant, pages.profile];
-const HIDDEN_PATHS = [pages.restaurant, pages.settings];
+const HIDDEN_PATHS = [pages.restaurant, pages.settings, `${pages.order}/`];
 
 // Index is an unprotected page
 const UNPROTECTED_ROUTES: string[] = [];
