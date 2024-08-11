@@ -115,11 +115,12 @@ const MapContent = ({ restaurants }: Props) => {
         </div>
       </div>
       <div
-        className="absolute bottom-10 z-[1000] grid grid-rows-[auto_1fr] gap-4 px-2 py-4"
+        className="absolute bottom-10 z-[1000] grid w-full grid-rows-[auto_1fr] gap-4 px-2 py-4"
         onTouchStart={handleCarouselTouchStart}
         onTouchEnd={handleCarouselTouchEnd}
         onMouseUp={handleCarouselTouchStart}
         onMouseDown={handleCarouselTouchEnd}
+        onBlur={handleCarouselTouchEnd}
       >
         <Carousel
           setApi={setApi}

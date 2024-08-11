@@ -83,7 +83,7 @@ const getRestaurantWithSurprise = async (
 
   return serializeData({
     ...restaurant,
-    isFavorite: restaurant.favoritedBy.length > 0,
+    isFavorite: restaurant?.favoritedBy?.length > 0,
   });
 };
 
