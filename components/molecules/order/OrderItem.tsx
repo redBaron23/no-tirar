@@ -1,51 +1,54 @@
-// molecules/OrderItem.tsx
-import OrderStatusChip from "@/components/atoms/OrderStatusChip";
-import PaymentMethod from "@/components/atoms/PaymentMethod";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { OrderStatus, PaymentMethodType } from "@prisma/client";
+"use client";
 
-type OrderItemProps = {
-  id: string;
-  productName: string;
-  quantity: number;
-  totalAmount: number;
-  status: OrderStatus;
-  paymentMethod: PaymentMethodType;
-  createdAt: string | Date;
+import OrderStatusChip from "@/components/atoms/OrderStatusChip";
+import { OrderWithRestaurantAndProduct } from "@/lib/queries/orderQueries";
+import { formatCurrency } from "@/lib/utils";
+import { ChevronRight } from "lucide-react";
+import Image from "next/image";
+
+type OrderItemCompactProps = {
+  order: OrderWithRestaurantAndProduct;
+  onClick: () => void;
 };
 
-export function OrderItem({
-  id,
-  productName,
-  quantity,
-  totalAmount,
-  status,
-  paymentMethod,
-  createdAt,
-}: OrderItemProps) {
-  const formattedDate = new Date(createdAt).toLocaleDateString();
+const OrderItemCompact = ({ order, onClick }: OrderItemCompactProps) => {
+  const { status, createdAt, restaurant, totalAmount, productQuantity } = order;
+  const formattedDate = new Date(createdAt).toLocaleDateString("es-AR", {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <span>Order #{id.slice(0, 8)}</span>
-          <OrderStatusChip status={status} />
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-2 flex items-center justify-between">
-          <span className="font-semibold">{productName}</span>
-          <span>Quantity: {quantity}</span>
+    <div
+      onClick={onClick}
+      className="flex cursor-pointer items-center justify-between border-b border-gray-200 bg-white p-4 hover:bg-gray-50"
+    >
+      <div className="flex items-center space-x-4">
+        <div className="relative h-12 w-12 overflow-hidden rounded-full">
+          <Image
+            src={restaurant.profileImageUrl || "/default-restaurant.png"}
+            alt={restaurant.name}
+            layout="fill"
+            objectFit="cover"
+          />
         </div>
-        <div className="mb-2 flex items-center justify-between">
-          <span>Total: ${totalAmount.toFixed(2)}</span>
-          <PaymentMethod method={paymentMethod} />
+        <div>
+          <h3 className="font-semibold">{restaurant.name}</h3>
+          <p className="text-sm text-gray-500">
+            {formattedDate} • {productQuantity} producto
+            {productQuantity > 1 ? "s" : ""}
+          </p>
         </div>
-        <div className="text-right">
-          <span className="text-sm text-gray-500">{formattedDate}</span>;
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+      <div className="flex items-center space-x-4">
+        <OrderStatusChip status={status} />
+        <p className="font-semibold">{formatCurrency(totalAmount)}</p>
+        <ChevronRight className="text-gray-400" />
+      </div>
+    </div>
   );
-}
+};
+
+export default OrderItemCompact;

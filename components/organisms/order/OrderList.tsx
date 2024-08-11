@@ -1,4 +1,4 @@
-import { OrderItem } from "@/components/molecules/order/OrderItem";
+import OrderItemCompact from "@/components/molecules/order/OrderItem";
 import { APP_NAME } from "@/constants";
 import { OrderWithRestaurantAndProduct } from "@/lib/queries/orderQueries";
 import { ShoppingBag } from "lucide-react";
@@ -22,18 +22,11 @@ export function OrderList({ orders }: Props) {
           </p>
         </div>
       ) : (
-        orders.map((order) => (
-          <OrderItem
-            key={order.id}
-            id={order.id}
-            productName={order.product.name}
-            quantity={order.productQuantity}
-            totalAmount={order.totalAmount as any}
-            status={order.status}
-            paymentMethod={order.paymentMethod}
-            createdAt={order.createdAt}
-          />
-        ))
+        <div className="flex flex-col gap-4">
+          {orders.map((order) => (
+            <OrderItemCompact key={order.id} order={order} />
+          ))}
+        </div>
       )}
     </div>
   );
