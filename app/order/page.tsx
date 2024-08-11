@@ -1,4 +1,5 @@
 import LoginButton from "@/components/atoms/LoginButton";
+import { OrderList } from "@/components/organisms/order/OrderList";
 import { APP_NAME } from "@/constants";
 import { auth } from "@/lib/auth";
 import { getCurrentUserOrders } from "@/lib/queries/orderQueries";
@@ -56,29 +57,5 @@ export default async function Page() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-4 lg:p-8">
-      <h1 className="mb-6 text-2xl font-bold text-gray-800">Mis Pedidos</h1>
-      {orders.length ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {orders.map((order) => (
-            <div key={order.id} className="rounded-lg bg-white p-4 shadow-md">
-              {/* Order details here */}
-              <p>Detalles del pedido {order.id}</p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="rounded-lg bg-white p-6 text-center shadow-md">
-          <ShoppingBag className="mx-auto h-12 w-12 text-teal-500" />
-          <h2 className="mt-4 text-xl font-semibold text-gray-800">
-            Aún no tienes pedidos
-          </h2>
-          <p className="mt-2 text-gray-600">
-            ¡Comienza a usar {APP_NAME} para ver tus pedidos aquí!
-          </p>
-        </div>
-      )}
-    </div>
-  );
+  return <OrderList orders={orders} />;
 }

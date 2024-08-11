@@ -68,6 +68,10 @@ export const getStatusBadgeVariant = (status: ProductStatus) => {
   }
 };
 
+export const getPaymentMethod = (paymentMethod: PaymentMethodType) => {
+  return PAYMENT_OPTIONS.find((option) => option.key === paymentMethod);
+};
+
 export const translateStatus = (status: ProductStatus) => {
   return PRODUCT_STATUS_OPTIONS.find((option) => option.key === status)?.value;
 };
@@ -77,7 +81,7 @@ export const translateProductType = (type: ProductType) => {
 };
 
 export const translatePaymentMethod = (paymentMethod: PaymentMethodType) => {
-  return PAYMENT_OPTIONS.find((option) => option.key === paymentMethod)?.value;
+  return getPaymentMethod(paymentMethod)?.value;
 };
 
 export const compressImage = async (imageFile: File) => {

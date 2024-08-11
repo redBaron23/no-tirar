@@ -1,6 +1,6 @@
 import L, { LatLng } from "leaflet";
 import ReactDOMServer from "react-dom/server";
-import { Marker, Popup } from "react-leaflet";
+import { Marker } from "react-leaflet";
 
 interface Props {
   position: LatLng;
@@ -19,11 +19,7 @@ const UserLocationMarker = ({ position }: Props) => {
     iconAnchor: [8, 8],
   });
 
-  return (
-    <Marker position={position} icon={userIcon}>
-      <Popup>Tu ubicación actual</Popup>
-    </Marker>
-  );
+  return <Marker position={position} icon={userIcon}></Marker>;
 };
 
 export default UserLocationMarker;
