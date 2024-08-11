@@ -1,4 +1,4 @@
-import OrderItemCompact from "@/components/molecules/order/OrderItem";
+import OrderItemCompact from "@/components/molecules/order/OrderItemCompact";
 import { APP_NAME } from "@/constants";
 import { OrderWithRestaurantAndProduct } from "@/lib/queries/orderQueries";
 import { ShoppingBag } from "lucide-react";

@@ -15,7 +15,7 @@ export type OrderWithRestaurantAndProduct = Order & {
 };
 
 // @todo optimize and select just necessary attributes
-const getCurrentRestaurantOrders = async (): Promise<
+const getOrdersForCurrentRestaurant = async (): Promise<
   OrderWithUserAndProduct[]
 > => {
   const restaurant = await getRestaurant();
@@ -40,7 +40,7 @@ const getCurrentRestaurantOrders = async (): Promise<
   return serializeData(orders);
 };
 
-const getCurrentUserOrders = async (): Promise<
+const getOrdersForCurrentUser = async (): Promise<
   OrderWithRestaurantAndProduct[]
 > => {
   const session = await auth();
@@ -66,4 +66,35 @@ const getCurrentUserOrders = async (): Promise<
   return serializeData(orders);
 };
 
-export { getCurrentRestaurantOrders, getCurrentUserOrders };
+const getOrderForCurrentUserById = async (
+  id: string,
+): Promise<OrderWithRestaurantAndProduct | null> => {
+  const session = await auth();
+  const userId = session?.user.id;
+
+  if (!userId) {
+    return null;
+  }
+
+  const orders = await prisma.order.findFirst({
+    where: {
+      id,
+      userId,
+    },
+    include: {
+      product: true,
+      restaurant: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return serializeData(orders);
+};
+
+export {
+  getOrderForCurrentUserById,
+  getOrdersForCurrentRestaurant,
+  getOrdersForCurrentUser,
+};

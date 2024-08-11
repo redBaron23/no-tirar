@@ -1,9 +1,9 @@
 import DaySelect from "@/components/molecules/DaySelect";
 import OrdersSection from "@/components/templates/OrdersSection";
-import { getCurrentRestaurantOrders } from "@/lib/queries/orderQueries";
+import { getOrdersForCurrentRestaurant } from "@/lib/queries/orderQueries";
 
 export default async function Page() {
-  const orders = await getCurrentRestaurantOrders();
+  const orders = await getOrdersForCurrentRestaurant();
 
   return (
     <div className="mx-auto flex w-full max-w-screen-md flex-col gap-8 px-4 md:container">

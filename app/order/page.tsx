@@ -2,12 +2,12 @@ import LoginButton from "@/components/atoms/LoginButton";
 import { OrderList } from "@/components/organisms/order/OrderList";
 import { APP_NAME } from "@/constants";
 import { auth } from "@/lib/auth";
-import { getCurrentUserOrders } from "@/lib/queries/orderQueries";
+import { getOrdersForCurrentUser } from "@/lib/queries/orderQueries";
 import { ArrowRight, ShoppingBag } from "lucide-react";
 import Image from "next/image";
 
 export default async function Page() {
-  const orders = await getCurrentUserOrders();
+  const orders = await getOrdersForCurrentUser();
   const session = await auth();
 
   if (!session?.user.id) {
