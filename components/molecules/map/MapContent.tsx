@@ -130,19 +130,17 @@ const MapContent = ({ restaurants }: Props) => {
         >
           <CarouselContent>
             {restaurants &&
-              [...restaurants, ...restaurants].map(
-                (restaurant: Restaurant, index: number) => (
-                  <CarouselItem key={index} className="max-w-xs sm:basis-1/3">
-                    <RestaurantInfoCard
-                      restaurant={restaurant}
-                      distance={calculateDistance(
-                        restaurant.latitude as number,
-                        restaurant.longitude as number,
-                      )}
-                    />
-                  </CarouselItem>
-                ),
-              )}
+              restaurants.map((restaurant: Restaurant, index: number) => (
+                <CarouselItem key={index} className="max-w-xs sm:basis-1/3">
+                  <RestaurantInfoCard
+                    restaurant={restaurant}
+                    distance={calculateDistance(
+                      restaurant.latitude as number,
+                      restaurant.longitude as number,
+                    )}
+                  />
+                </CarouselItem>
+              ))}
           </CarouselContent>
         </Carousel>
       </div>
