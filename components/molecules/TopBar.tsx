@@ -13,7 +13,7 @@ export default function TopBar({ isLoggedIn, role }: Props) {
   const isBusiness = role === UserRole.BUSINESS;
 
   return (
-    <header className="flex h-16 items-center justify-between gap-4 border-b bg-background">
+    <header className="flex h-16 items-center justify-between gap-4 border-b bg-background px-4">
       <div className="w-full flex-grow">{!isBusiness && <SearchBar />}</div>
       <div className="flex items-center justify-end gap-4">
         {isLoggedIn ? (
